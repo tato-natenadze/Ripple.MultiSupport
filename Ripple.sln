@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.13.35825.156 d17.13
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ripple", "Ripple.csproj", "{03B12F17-0E3A-4011-A245-516D4EB4E19E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ripple.Tests", "tests\Ripple.Tests\Ripple.Tests.csproj", "{78C2642E-7F4F-45C1-8930-90007E2FE25A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{03B12F17-0E3A-4011-A245-516D4EB4E19E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{03B12F17-0E3A-4011-A245-516D4EB4E19E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{03B12F17-0E3A-4011-A245-516D4EB4E19E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{03B12F17-0E3A-4011-A245-516D4EB4E19E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{78C2642E-7F4F-45C1-8930-90007E2FE25A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{78C2642E-7F4F-45C1-8930-90007E2FE25A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{78C2642E-7F4F-45C1-8930-90007E2FE25A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{78C2642E-7F4F-45C1-8930-90007E2FE25A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {5D3B206C-C8D2-48EC-9C6A-EA31544D19B9}
+	EndGlobalSection
+EndGlobal

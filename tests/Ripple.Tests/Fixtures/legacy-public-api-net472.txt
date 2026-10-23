@@ -1,0 +1,922 @@
+Ripple.LibraryClasses.CreateAddress.AddressData CTOR PrivateScope, Public, HideBySig, SpecialName, RTSpecialName 
+Ripple.LibraryClasses.CreateAddress.AddressData METHOD get_Address PrivateScope, Public, HideBySig, SpecialName System.String ()
+Ripple.LibraryClasses.CreateAddress.AddressData METHOD get_Seed PrivateScope, Public, HideBySig, SpecialName System.String ()
+Ripple.LibraryClasses.CreateAddress.AddressData METHOD set_Address PrivateScope, Public, HideBySig, SpecialName System.Void (value:System.String:None:)
+Ripple.LibraryClasses.CreateAddress.AddressData METHOD set_Seed PrivateScope, Public, HideBySig, SpecialName System.Void (value:System.String:None:)
+Ripple.LibraryClasses.CreateAddress.Seed CTOR PrivateScope, Public, HideBySig, SpecialName, RTSpecialName seedBytes:System.Byte[]:None:
+Ripple.LibraryClasses.CreateAddress.Seed CTOR PrivateScope, Public, HideBySig, SpecialName, RTSpecialName version:System.String:None:;seedBytes:System.Byte[]:None:
+Ripple.LibraryClasses.CreateAddress.Seed METHOD Bytes PrivateScope, Public, HideBySig System.Byte[] ()
+Ripple.LibraryClasses.CreateAddress.Seed METHOD FromBase58 PrivateScope, Public, Static, HideBySig Ripple.LibraryClasses.CreateAddress.Seed (b58:System.String:None:)
+Ripple.LibraryClasses.CreateAddress.Seed METHOD FromPassPhrase PrivateScope, Public, Static, HideBySig Ripple.LibraryClasses.CreateAddress.Seed (passPhrase:System.String:None:)
+Ripple.LibraryClasses.CreateAddress.Seed METHOD FromRandom PrivateScope, Public, Static, HideBySig Ripple.LibraryClasses.CreateAddress.Seed ()
+Ripple.LibraryClasses.CreateAddress.Seed METHOD KeyPair PrivateScope, Public, HideBySig Ripple.LibraryClasses.Signer.Interfaces.IKeyPair ()
+Ripple.LibraryClasses.CreateAddress.Seed METHOD KeyPair PrivateScope, Public, HideBySig Ripple.LibraryClasses.Signer.Interfaces.IKeyPair (pairIndex:System.Int32:None:)
+Ripple.LibraryClasses.CreateAddress.Seed METHOD RootKeyPair PrivateScope, Public, HideBySig Ripple.LibraryClasses.Signer.Interfaces.IKeyPair ()
+Ripple.LibraryClasses.CreateAddress.Seed METHOD SetEd25519 PrivateScope, Public, HideBySig Ripple.LibraryClasses.CreateAddress.Seed ()
+Ripple.LibraryClasses.CreateAddress.Seed METHOD SetNodeKey PrivateScope, Public, HideBySig Ripple.LibraryClasses.CreateAddress.Seed ()
+Ripple.LibraryClasses.CreateAddress.Seed METHOD ToString PrivateScope, Public, Virtual, HideBySig System.String ()
+Ripple.LibraryClasses.Signer.AccountId CTOR PrivateScope, Public, HideBySig, SpecialName, RTSpecialName hash:System.Byte[]:None:
+Ripple.LibraryClasses.Signer.AccountId CTOR PrivateScope, Public, HideBySig, SpecialName, RTSpecialName hash:System.Byte[]:None:;encoded:System.String:None:
+Ripple.LibraryClasses.Signer.AccountId CTOR PrivateScope, Public, HideBySig, SpecialName, RTSpecialName v:System.String:None:
+Ripple.LibraryClasses.Signer.AccountId FIELD Neutral Public, Static, InitOnly Ripple.LibraryClasses.Signer.AccountId
+Ripple.LibraryClasses.Signer.AccountId FIELD Zero Public, Static, InitOnly Ripple.LibraryClasses.Signer.AccountId
+Ripple.LibraryClasses.Signer.AccountId METHOD FromJson PrivateScope, Public, Static, HideBySig Ripple.LibraryClasses.Signer.AccountId (json:Newtonsoft.Json.Linq.JToken:None:)
+Ripple.LibraryClasses.Signer.AccountId METHOD FromParser PrivateScope, Public, Static, HideBySig Ripple.LibraryClasses.Signer.AccountId (parser:Ripple.LibraryClasses.Signer.BinaryParser:None:;hint:System.Nullable`1[System.Int32]:Optional, HasDefault:)
+Ripple.LibraryClasses.Signer.AccountId METHOD ToString PrivateScope, Public, Virtual, HideBySig System.String ()
+Ripple.LibraryClasses.Signer.AccountId METHOD op_Implicit PrivateScope, Public, Static, HideBySig, SpecialName Newtonsoft.Json.Linq.JToken (v:Ripple.LibraryClasses.Signer.AccountId:None:)
+Ripple.LibraryClasses.Signer.AccountId METHOD op_Implicit PrivateScope, Public, Static, HideBySig, SpecialName Ripple.LibraryClasses.Signer.AccountId (json:Newtonsoft.Json.Linq.JToken:None:)
+Ripple.LibraryClasses.Signer.AccountId METHOD op_Implicit PrivateScope, Public, Static, HideBySig, SpecialName Ripple.LibraryClasses.Signer.AccountId (value:System.String:None:)
+Ripple.LibraryClasses.Signer.AccountId METHOD op_Implicit PrivateScope, Public, Static, HideBySig, SpecialName Ripple.LibraryClasses.Signer.AccountId (value:System.UInt32:None:)
+Ripple.LibraryClasses.Signer.Amount CTOR PrivateScope, Public, HideBySig, SpecialName, RTSpecialName v:System.String:Optional, HasDefault:0;c:Ripple.LibraryClasses.Signer.Currency:Optional, HasDefault:;i:Ripple.LibraryClasses.Signer.AccountId:Optional, HasDefault:
+Ripple.LibraryClasses.Signer.Amount CTOR PrivateScope, Public, HideBySig, SpecialName, RTSpecialName value:Ripple.LibraryClasses.Signer.AmountValue:None:;currency:Ripple.LibraryClasses.Signer.Currency:Optional, HasDefault:;issuer:Ripple.LibraryClasses.Signer.AccountId:Optional, HasDefault:
+Ripple.LibraryClasses.Signer.Amount CTOR PrivateScope, Public, HideBySig, SpecialName, RTSpecialName value:System.Decimal:None:;currency:Ripple.LibraryClasses.Signer.Currency:None:;issuer:Ripple.LibraryClasses.Signer.AccountId:Optional, HasDefault:
+Ripple.LibraryClasses.Signer.Amount FIELD Currency Public, InitOnly Ripple.LibraryClasses.Signer.Currency
+Ripple.LibraryClasses.Signer.Amount FIELD Issuer Public, InitOnly Ripple.LibraryClasses.Signer.AccountId
+Ripple.LibraryClasses.Signer.Amount FIELD MaximumIouPrecision Public, Static, Literal, HasDefault System.Int32
+Ripple.LibraryClasses.Signer.Amount FIELD Value Public Ripple.LibraryClasses.Signer.AmountValue
+Ripple.LibraryClasses.Signer.Amount METHOD DecimalValue PrivateScope, Public, HideBySig System.Decimal ()
+Ripple.LibraryClasses.Signer.Amount METHOD FromJson PrivateScope, Public, Static, HideBySig Ripple.LibraryClasses.Signer.Amount (token:Newtonsoft.Json.Linq.JToken:None:)
+Ripple.LibraryClasses.Signer.Amount METHOD FromParser PrivateScope, Public, Static, HideBySig Ripple.LibraryClasses.Signer.Amount (parser:Ripple.LibraryClasses.Signer.BinaryParser:None:;hint:System.Nullable`1[System.Int32]:Optional, HasDefault:)
+Ripple.LibraryClasses.Signer.Amount METHOD NewValue PrivateScope, Public, HideBySig Ripple.LibraryClasses.Signer.Amount (decimal:System.Decimal:None:)
+Ripple.LibraryClasses.Signer.Amount METHOD ToBytes PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask System.Void (sink:Ripple.LibraryClasses.Signer.Interfaces.IBytesSink:None:)
+Ripple.LibraryClasses.Signer.Amount METHOD ToJson PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask Newtonsoft.Json.Linq.JToken ()
+Ripple.LibraryClasses.Signer.Amount METHOD get_IsNative PrivateScope, Public, HideBySig, SpecialName System.Boolean ()
+Ripple.LibraryClasses.Signer.Amount METHOD op_GreaterThan PrivateScope, Public, Static, HideBySig, SpecialName System.Boolean (a:System.Decimal:None:;b:Ripple.LibraryClasses.Signer.Amount:None:)
+Ripple.LibraryClasses.Signer.Amount METHOD op_Implicit PrivateScope, Public, Static, HideBySig, SpecialName Ripple.LibraryClasses.Signer.Amount (a:System.UInt64:None:)
+Ripple.LibraryClasses.Signer.Amount METHOD op_Implicit PrivateScope, Public, Static, HideBySig, SpecialName Ripple.LibraryClasses.Signer.Amount (v:System.String:None:)
+Ripple.LibraryClasses.Signer.Amount METHOD op_LessThan PrivateScope, Public, Static, HideBySig, SpecialName System.Boolean (a:System.Decimal:None:;b:Ripple.LibraryClasses.Signer.Amount:None:)
+Ripple.LibraryClasses.Signer.Amount METHOD op_Multiply PrivateScope, Public, Static, HideBySig, SpecialName Ripple.LibraryClasses.Signer.Amount (a:Ripple.LibraryClasses.Signer.Amount:None:;b:System.Decimal:None:)
+Ripple.LibraryClasses.Signer.AmountValue METHOD FromParser PrivateScope, Public, Static, HideBySig Ripple.LibraryClasses.Signer.AmountValue (parser:Ripple.LibraryClasses.Signer.BinaryParser:None:)
+Ripple.LibraryClasses.Signer.AmountValue METHOD FromString PrivateScope, Public, Static, HideBySig Ripple.LibraryClasses.Signer.AmountValue (value:System.String:None:;native:System.Boolean:Optional, HasDefault:False)
+Ripple.LibraryClasses.Signer.AmountValue METHOD ToBytes PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask, Abstract System.Byte[] ()
+Ripple.LibraryClasses.Signer.AmountValue METHOD ToString PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask, Abstract System.String ()
+Ripple.LibraryClasses.Signer.AmountValue METHOD get_IsIou PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask, Abstract, SpecialName System.Boolean ()
+Ripple.LibraryClasses.Signer.B16 CTOR PrivateScope, Public, HideBySig, SpecialName, RTSpecialName 
+Ripple.LibraryClasses.Signer.B16 METHOD Decode PrivateScope, Public, Static, HideBySig System.Byte[] (hexString:System.String:None:)
+Ripple.LibraryClasses.Signer.B16 METHOD Encode PrivateScope, Public, Static, HideBySig System.String (data:System.Byte[]:None:)
+Ripple.LibraryClasses.Signer.B58 CTOR PrivateScope, Public, HideBySig, SpecialName, RTSpecialName alphabet:System.String:None:
+Ripple.LibraryClasses.Signer.B58 METHOD Decode PrivateScope, Public, HideBySig Ripple.LibraryClasses.Signer.B58+Decoded (input:System.String:None:;versions:Ripple.LibraryClasses.Signer.B58+Versions:None:)
+Ripple.LibraryClasses.Signer.B58 METHOD Decode PrivateScope, Public, HideBySig System.Byte[] (input:System.String:None:)
+Ripple.LibraryClasses.Signer.B58 METHOD Decode PrivateScope, Public, HideBySig System.Byte[] (input:System.String:None:;version:Ripple.LibraryClasses.Signer.B58+Version:None:)
+Ripple.LibraryClasses.Signer.B58 METHOD Encode PrivateScope, Public, HideBySig System.String (buffer:System.Byte[]:None:;version:Ripple.LibraryClasses.Signer.B58+Version:None:)
+Ripple.LibraryClasses.Signer.B58 METHOD Encode PrivateScope, Public, HideBySig System.String (buffer:System.Byte[]:None:;versionName:System.String:None:;versions:Ripple.LibraryClasses.Signer.B58+Versions:None:)
+Ripple.LibraryClasses.Signer.B58 METHOD EncodeToBytes PrivateScope, Public, HideBySig System.Byte[] (input:System.Byte[]:None:)
+Ripple.LibraryClasses.Signer.B58 METHOD EncodeToBytesChecked PrivateScope, Public, HideBySig System.Byte[] (input:System.Byte[]:None:;version:System.Byte[]:None:)
+Ripple.LibraryClasses.Signer.B58 METHOD EncodeToBytesChecked PrivateScope, Public, HideBySig System.Byte[] (input:System.Byte[]:None:;version:System.Int32:None:)
+Ripple.LibraryClasses.Signer.B58 METHOD EncodeToString PrivateScope, Public, HideBySig System.String (input:System.Byte[]:None:)
+Ripple.LibraryClasses.Signer.B58 METHOD EncodeToStringChecked PrivateScope, Public, HideBySig System.String (input:System.Byte[]:None:;version:System.Byte[]:None:)
+Ripple.LibraryClasses.Signer.B58 METHOD EncodeToStringChecked PrivateScope, Public, HideBySig System.String (input:System.Byte[]:None:;version:System.Int32:None:)
+Ripple.LibraryClasses.Signer.B58 METHOD FindPrefix PrivateScope, Public, HideBySig System.Byte[] (payLoadLength:System.Int32:None:;desiredPrefix:System.String:None:)
+Ripple.LibraryClasses.Signer.B58 METHOD IsValid PrivateScope, Public, HideBySig System.Boolean (input:System.String:None:;version:Ripple.LibraryClasses.Signer.B58+Version:None:)
+Ripple.LibraryClasses.Signer.B58 METHOD IsValid PrivateScope, Public, HideBySig System.Boolean (input:System.String:None:;version:Ripple.LibraryClasses.Signer.B58+Versions:None:)
+Ripple.LibraryClasses.Signer.B58+Decoded CTOR PrivateScope, Public, HideBySig, SpecialName, RTSpecialName version:System.Byte[]:None:;payload:System.Byte[]:None:;typeName:System.String:None:
+Ripple.LibraryClasses.Signer.B58+Decoded FIELD Payload Public, InitOnly System.Byte[]
+Ripple.LibraryClasses.Signer.B58+Decoded FIELD Type Public, InitOnly System.String
+Ripple.LibraryClasses.Signer.B58+Decoded FIELD VersionBytes Public, InitOnly System.Byte[]
+Ripple.LibraryClasses.Signer.B58+Version CTOR PrivateScope, Public, HideBySig, SpecialName, RTSpecialName versionBytes:System.Byte[]:None:;expectedLength:System.Int32:None:
+Ripple.LibraryClasses.Signer.B58+Version FIELD ExpectedLength Public System.Int32
+Ripple.LibraryClasses.Signer.B58+Version FIELD VersionBytes Public System.Byte[]
+Ripple.LibraryClasses.Signer.B58+Version METHOD With PrivateScope, Public, Static, HideBySig Ripple.LibraryClasses.Signer.B58+Version (versionByte:System.Byte:None:;expectedLength:System.Int32:None:)
+Ripple.LibraryClasses.Signer.B58+Version METHOD With PrivateScope, Public, Static, HideBySig Ripple.LibraryClasses.Signer.B58+Version (versionBytes:System.Byte[]:None:;expectedLength:System.Int32:None:)
+Ripple.LibraryClasses.Signer.B58+Versions CTOR PrivateScope, Public, HideBySig, SpecialName, RTSpecialName versionsArray:Ripple.LibraryClasses.Signer.B58+Version[]:None:;namesArray:System.String[]:None:
+Ripple.LibraryClasses.Signer.B58+Versions FIELD NamesArray Public System.String[]
+Ripple.LibraryClasses.Signer.B58+Versions FIELD VersionsArray Public Ripple.LibraryClasses.Signer.B58+Version[]
+Ripple.LibraryClasses.Signer.B58+Versions METHOD And PrivateScope, Public, HideBySig Ripple.LibraryClasses.Signer.B58+Versions (typeName:System.String:None:;version:Ripple.LibraryClasses.Signer.B58+Version:None:)
+Ripple.LibraryClasses.Signer.B58+Versions METHOD Find PrivateScope, Public, HideBySig Ripple.LibraryClasses.Signer.B58+Version (sought:System.String:None:)
+Ripple.LibraryClasses.Signer.B58+Versions METHOD With PrivateScope, Public, Static, HideBySig Ripple.LibraryClasses.Signer.B58+Versions (typeName:System.String:None:;version:Ripple.LibraryClasses.Signer.B58+Version:None:)
+Ripple.LibraryClasses.Signer.BinaryParser METHOD End PrivateScope, Public, HideBySig System.Boolean ()
+Ripple.LibraryClasses.Signer.BinaryParser METHOD End PrivateScope, Public, HideBySig System.Boolean (customEnd:System.Nullable`1[System.Int32]:None:)
+Ripple.LibraryClasses.Signer.BinaryParser METHOD Pos PrivateScope, Public, HideBySig System.Int32 ()
+Ripple.LibraryClasses.Signer.BinaryParser METHOD Read PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask, Abstract System.Byte[] (n:System.Int32:None:)
+Ripple.LibraryClasses.Signer.BinaryParser METHOD ReadField PrivateScope, Public, HideBySig Ripple.LibraryClasses.Signer.Fields.Field ()
+Ripple.LibraryClasses.Signer.BinaryParser METHOD ReadFieldCode PrivateScope, Public, HideBySig System.Int32 ()
+Ripple.LibraryClasses.Signer.BinaryParser METHOD ReadOne PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask, Abstract System.Byte ()
+Ripple.LibraryClasses.Signer.BinaryParser METHOD ReadOneInt PrivateScope, Public, HideBySig System.Int32 ()
+Ripple.LibraryClasses.Signer.BinaryParser METHOD ReadVlLength PrivateScope, Public, HideBySig System.Int32 ()
+Ripple.LibraryClasses.Signer.BinaryParser METHOD Skip PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask, Abstract System.Void (n:System.Int32:None:)
+Ripple.LibraryClasses.Signer.BinarySerializer CTOR PrivateScope, Public, HideBySig, SpecialName, RTSpecialName sink:Ripple.LibraryClasses.Signer.Interfaces.IBytesSink:None:
+Ripple.LibraryClasses.Signer.BinarySerializer METHOD Add PrivateScope, Public, HideBySig System.Void (bl:Ripple.LibraryClasses.Signer.BytesList:None:)
+Ripple.LibraryClasses.Signer.BinarySerializer METHOD Add PrivateScope, Public, HideBySig System.Void (field:Ripple.LibraryClasses.Signer.Fields.Field:None:;value:Ripple.LibraryClasses.Signer.Interfaces.ISerializedType:None:)
+Ripple.LibraryClasses.Signer.BinarySerializer METHOD AddFieldHeader PrivateScope, Public, HideBySig System.Int32 (f:Ripple.LibraryClasses.Signer.Fields.Field:None:)
+Ripple.LibraryClasses.Signer.BinarySerializer METHOD AddLengthEncoded PrivateScope, Public, HideBySig System.Void (bytes:Ripple.LibraryClasses.Signer.BytesList:None:)
+Ripple.LibraryClasses.Signer.BinarySerializer METHOD AddLengthEncoded PrivateScope, Public, HideBySig System.Void (n:System.Byte[]:None:)
+Ripple.LibraryClasses.Signer.BinarySerializer METHOD AddLengthEncoded PrivateScope, Public, HideBySig System.Void (value:Ripple.LibraryClasses.Signer.Interfaces.ISerializedType:None:)
+Ripple.LibraryClasses.Signer.BinarySerializer METHOD EncodeVl PrivateScope, Public, Static, HideBySig System.Byte[] (length:System.Int32:None:)
+Ripple.LibraryClasses.Signer.BinarySerializer METHOD Put PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask System.Void (n:System.Byte[]:None:)
+Ripple.LibraryClasses.Signer.BinarySerializer METHOD Put PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask System.Void (type:System.Byte:None:)
+Ripple.LibraryClasses.Signer.Bits METHOD DoubleToInt64Bits PrivateScope, Public, Static, HideBySig System.Int64 (value:System.Double:None:)
+Ripple.LibraryClasses.Signer.Bits METHOD GetBytes PrivateScope, Public, Static, HideBySig System.Byte[] (value:System.Boolean:None:)
+Ripple.LibraryClasses.Signer.Bits METHOD GetBytes PrivateScope, Public, Static, HideBySig System.Byte[] (value:System.Byte:None:)
+Ripple.LibraryClasses.Signer.Bits METHOD GetBytes PrivateScope, Public, Static, HideBySig System.Byte[] (value:System.Char:None:)
+Ripple.LibraryClasses.Signer.Bits METHOD GetBytes PrivateScope, Public, Static, HideBySig System.Byte[] (value:System.Double:None:)
+Ripple.LibraryClasses.Signer.Bits METHOD GetBytes PrivateScope, Public, Static, HideBySig System.Byte[] (value:System.Int16:None:)
+Ripple.LibraryClasses.Signer.Bits METHOD GetBytes PrivateScope, Public, Static, HideBySig System.Byte[] (value:System.Int32:None:)
+Ripple.LibraryClasses.Signer.Bits METHOD GetBytes PrivateScope, Public, Static, HideBySig System.Byte[] (value:System.Int64:None:)
+Ripple.LibraryClasses.Signer.Bits METHOD GetBytes PrivateScope, Public, Static, HideBySig System.Byte[] (value:System.Single:None:)
+Ripple.LibraryClasses.Signer.Bits METHOD GetBytes PrivateScope, Public, Static, HideBySig System.Byte[] (value:System.UInt16:None:)
+Ripple.LibraryClasses.Signer.Bits METHOD GetBytes PrivateScope, Public, Static, HideBySig System.Byte[] (value:System.UInt32:None:)
+Ripple.LibraryClasses.Signer.Bits METHOD GetBytes PrivateScope, Public, Static, HideBySig System.Byte[] (value:System.UInt64:None:)
+Ripple.LibraryClasses.Signer.Bits METHOD Int64BitsToDouble PrivateScope, Public, Static, HideBySig System.Double (value:System.Int64:None:)
+Ripple.LibraryClasses.Signer.Bits METHOD ToBoolean PrivateScope, Public, Static, HideBySig System.Boolean (value:System.Byte[]:None:;startIndex:System.Int32:None:)
+Ripple.LibraryClasses.Signer.Bits METHOD ToChar PrivateScope, Public, Static, HideBySig System.Char (value:System.Byte[]:None:;startIndex:System.Int32:None:)
+Ripple.LibraryClasses.Signer.Bits METHOD ToDouble PrivateScope, Public, Static, HideBySig System.Double (value:System.Byte[]:None:;startIndex:System.Int32:None:)
+Ripple.LibraryClasses.Signer.Bits METHOD ToInt16 PrivateScope, Public, Static, HideBySig System.Int16 (value:System.Byte[]:None:;startIndex:System.Int32:None:)
+Ripple.LibraryClasses.Signer.Bits METHOD ToInt32 PrivateScope, Public, Static, HideBySig System.Int32 (value:System.Byte[]:None:;startIndex:System.Int32:None:)
+Ripple.LibraryClasses.Signer.Bits METHOD ToInt64 PrivateScope, Public, Static, HideBySig System.Int64 (value:System.Byte[]:None:;startIndex:System.Int32:None:)
+Ripple.LibraryClasses.Signer.Bits METHOD ToSingle PrivateScope, Public, Static, HideBySig System.Single (value:System.Byte[]:None:;startIndex:System.Int32:None:)
+Ripple.LibraryClasses.Signer.Bits METHOD ToString PrivateScope, Public, Static, HideBySig System.String (value:System.Byte[]:None:)
+Ripple.LibraryClasses.Signer.Bits METHOD ToString PrivateScope, Public, Static, HideBySig System.String (value:System.Byte[]:None:;startIndex:System.Int32:None:)
+Ripple.LibraryClasses.Signer.Bits METHOD ToString PrivateScope, Public, Static, HideBySig System.String (value:System.Byte[]:None:;startIndex:System.Int32:None:;length:System.Int32:None:)
+Ripple.LibraryClasses.Signer.Bits METHOD ToUInt16 PrivateScope, Public, Static, HideBySig System.UInt16 (value:System.Byte[]:None:;startIndex:System.Int32:None:)
+Ripple.LibraryClasses.Signer.Bits METHOD ToUInt32 PrivateScope, Public, Static, HideBySig System.UInt32 (value:System.Byte[]:None:;startIndex:System.Int32:None:)
+Ripple.LibraryClasses.Signer.Bits METHOD ToUInt64 PrivateScope, Public, Static, HideBySig System.UInt64 (value:System.Byte[]:None:;startIndex:System.Int32:None:)
+Ripple.LibraryClasses.Signer.Bits METHOD get_IsLittleEndian PrivateScope, Public, Static, HideBySig, SpecialName System.Boolean ()
+Ripple.LibraryClasses.Signer.Bits METHOD set_IsLittleEndian PrivateScope, Public, Static, HideBySig, SpecialName System.Void (value:System.Boolean:None:)
+Ripple.LibraryClasses.Signer.Blob FIELD Buffer Public, InitOnly System.Byte[]
+Ripple.LibraryClasses.Signer.Blob METHOD FromAscii PrivateScope, Public, Static, HideBySig Ripple.LibraryClasses.Signer.Blob (blob:System.String:None:)
+Ripple.LibraryClasses.Signer.Blob METHOD FromHex PrivateScope, Public, Static, HideBySig Ripple.LibraryClasses.Signer.Blob (value:System.String:None:)
+Ripple.LibraryClasses.Signer.Blob METHOD FromJson PrivateScope, Public, Static, HideBySig Ripple.LibraryClasses.Signer.Blob (token:Newtonsoft.Json.Linq.JToken:None:)
+Ripple.LibraryClasses.Signer.Blob METHOD FromParser PrivateScope, Public, Static, HideBySig Ripple.LibraryClasses.Signer.Blob (parser:Ripple.LibraryClasses.Signer.BinaryParser:None:;hint:System.Nullable`1[System.Int32]:Optional, HasDefault:)
+Ripple.LibraryClasses.Signer.Blob METHOD FromString PrivateScope, Public, Static, HideBySig Ripple.LibraryClasses.Signer.Blob (blob:System.String:None:;encoding:System.Text.Encoding:None:)
+Ripple.LibraryClasses.Signer.Blob METHOD ToBytes PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask System.Void (sink:Ripple.LibraryClasses.Signer.Interfaces.IBytesSink:None:)
+Ripple.LibraryClasses.Signer.Blob METHOD ToJson PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask Newtonsoft.Json.Linq.JToken ()
+Ripple.LibraryClasses.Signer.Blob METHOD ToString PrivateScope, Public, Virtual, HideBySig System.String ()
+Ripple.LibraryClasses.Signer.Blob METHOD op_Implicit PrivateScope, Public, Static, HideBySig, SpecialName Ripple.LibraryClasses.Signer.Blob (token:Newtonsoft.Json.Linq.JToken:None:)
+Ripple.LibraryClasses.Signer.Blob METHOD op_Implicit PrivateScope, Public, Static, HideBySig, SpecialName Ripple.LibraryClasses.Signer.Blob (value:System.Byte[]:None:)
+Ripple.LibraryClasses.Signer.BufferParser CTOR PrivateScope, Public, HideBySig, SpecialName, RTSpecialName bytes:System.Byte[]:None:
+Ripple.LibraryClasses.Signer.BufferParser CTOR PrivateScope, Public, HideBySig, SpecialName, RTSpecialName hex:System.String:None:
+Ripple.LibraryClasses.Signer.BufferParser METHOD Read PrivateScope, Public, Virtual, HideBySig System.Byte[] (n:System.Int32:None:)
+Ripple.LibraryClasses.Signer.BufferParser METHOD ReadOne PrivateScope, Public, Virtual, HideBySig System.Byte ()
+Ripple.LibraryClasses.Signer.BufferParser METHOD Skip PrivateScope, Public, Virtual, HideBySig System.Void (n:System.Int32:None:)
+Ripple.LibraryClasses.Signer.BytesList CTOR PrivateScope, Public, HideBySig, SpecialName, RTSpecialName 
+Ripple.LibraryClasses.Signer.BytesList FIELD HexLookup Public, Static System.String[]
+Ripple.LibraryClasses.Signer.BytesList METHOD Add PrivateScope, Public, HideBySig System.Void (bl:Ripple.LibraryClasses.Signer.BytesList:None:)
+Ripple.LibraryClasses.Signer.BytesList METHOD Bytes PrivateScope, Public, HideBySig System.Byte[] ()
+Ripple.LibraryClasses.Signer.BytesList METHOD BytesHex PrivateScope, Public, HideBySig System.String ()
+Ripple.LibraryClasses.Signer.BytesList METHOD BytesLength PrivateScope, Public, HideBySig System.Int32 ()
+Ripple.LibraryClasses.Signer.BytesList METHOD Put PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask System.Void (aByte:System.Byte:None:)
+Ripple.LibraryClasses.Signer.BytesList METHOD Put PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask System.Void (bytes:System.Byte[]:None:)
+Ripple.LibraryClasses.Signer.BytesList METHOD RawList PrivateScope, Public, HideBySig System.Collections.Generic.List`1[System.Byte[]] ()
+Ripple.LibraryClasses.Signer.Currency CTOR PrivateScope, Public, HideBySig, SpecialName, RTSpecialName buffer:System.Byte[]:None:
+Ripple.LibraryClasses.Signer.Currency FIELD IsNative Public, InitOnly System.Boolean
+Ripple.LibraryClasses.Signer.Currency FIELD IsoCode Public, InitOnly System.String
+Ripple.LibraryClasses.Signer.Currency FIELD Xrp Public, Static, InitOnly Ripple.LibraryClasses.Signer.Currency
+Ripple.LibraryClasses.Signer.Currency METHOD EncodeCurrency PrivateScope, Public, Static, HideBySig System.Byte[] (currencyCode:System.String:None:)
+Ripple.LibraryClasses.Signer.Currency METHOD FromJson PrivateScope, Public, Static, HideBySig Ripple.LibraryClasses.Signer.Currency (token:Newtonsoft.Json.Linq.JToken:None:)
+Ripple.LibraryClasses.Signer.Currency METHOD FromParser PrivateScope, Public, Static, HideBySig Ripple.LibraryClasses.Signer.Currency (parser:Ripple.LibraryClasses.Signer.BinaryParser:None:;hint:System.Nullable`1[System.Int32]:Optional, HasDefault:)
+Ripple.LibraryClasses.Signer.Currency METHOD FromString PrivateScope, Public, Static, HideBySig Ripple.LibraryClasses.Signer.Currency (str:System.String:None:)
+Ripple.LibraryClasses.Signer.Currency METHOD GetCurrencyCodeFromTlcBytes PrivateScope, Public, Static, HideBySig System.String (bytes:System.Byte[]:None:;isNative:System.Boolean&:Out:)
+Ripple.LibraryClasses.Signer.Currency METHOD ToString PrivateScope, Public, Virtual, HideBySig System.String ()
+Ripple.LibraryClasses.Signer.Currency METHOD op_Division PrivateScope, Public, Static, HideBySig, SpecialName Ripple.LibraryClasses.Signer.Currency+Issue (c:Ripple.LibraryClasses.Signer.Currency:None:;ac:Ripple.LibraryClasses.Signer.AccountId:None:)
+Ripple.LibraryClasses.Signer.Currency METHOD op_Division PrivateScope, Public, Static, HideBySig, SpecialName Ripple.LibraryClasses.Signer.UnissuedAmount (v:System.Decimal:None:;c:Ripple.LibraryClasses.Signer.Currency:None:)
+Ripple.LibraryClasses.Signer.Currency METHOD op_Implicit PrivateScope, Public, Static, HideBySig, SpecialName Newtonsoft.Json.Linq.JToken (v:Ripple.LibraryClasses.Signer.Currency:None:)
+Ripple.LibraryClasses.Signer.Currency METHOD op_Implicit PrivateScope, Public, Static, HideBySig, SpecialName Ripple.LibraryClasses.Signer.Currency (v:Newtonsoft.Json.Linq.JToken:None:)
+Ripple.LibraryClasses.Signer.Currency METHOD op_Implicit PrivateScope, Public, Static, HideBySig, SpecialName Ripple.LibraryClasses.Signer.Currency (v:System.String:None:)
+Ripple.LibraryClasses.Signer.Currency+Issue CTOR PrivateScope, Public, HideBySig, SpecialName, RTSpecialName 
+Ripple.LibraryClasses.Signer.EcdsaSignature CTOR PrivateScope, Public, HideBySig, SpecialName, RTSpecialName r:Org.BouncyCastle.Math.BigInteger [BouncyCastle.Crypto]:None:;s:Org.BouncyCastle.Math.BigInteger [BouncyCastle.Crypto]:None:
+Ripple.LibraryClasses.Signer.EcdsaSignature FIELD R Public Org.BouncyCastle.Math.BigInteger [BouncyCastle.Crypto]
+Ripple.LibraryClasses.Signer.EcdsaSignature FIELD S Public Org.BouncyCastle.Math.BigInteger [BouncyCastle.Crypto]
+Ripple.LibraryClasses.Signer.EcdsaSignature METHOD CheckIsCanonical PrivateScope, Public, Static, HideBySig System.Boolean (sig:System.Byte[]:None:;strict:System.Boolean:None:)
+Ripple.LibraryClasses.Signer.EcdsaSignature METHOD DecodeFromDer PrivateScope, Public, Static, HideBySig Ripple.LibraryClasses.Signer.EcdsaSignature (bytes:System.Byte[]:None:)
+Ripple.LibraryClasses.Signer.EcdsaSignature METHOD EncodeToDer PrivateScope, Public, HideBySig System.Byte[] ()
+Ripple.LibraryClasses.Signer.EcdsaSignature METHOD IsStrictlyCanonical PrivateScope, Public, Static, HideBySig System.Boolean (sig:System.Byte[]:None:)
+Ripple.LibraryClasses.Signer.EdKeyPair METHOD CanonicalPubBytes PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask System.Byte[] ()
+Ripple.LibraryClasses.Signer.EdKeyPair METHOD Id PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask System.String ()
+Ripple.LibraryClasses.Signer.EdKeyPair METHOD Sign PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask System.Byte[] (message:System.Byte[]:None:)
+Ripple.LibraryClasses.Signer.EdKeyPair METHOD Verify PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask System.Boolean (message:System.Byte[]:None:;signature:System.Byte[]:None:)
+Ripple.LibraryClasses.Signer.EngineResult CTOR PrivateScope, Public, HideBySig, SpecialName, RTSpecialName name:System.String:None:;ordinal:System.Int32:None:;description:System.String:None:
+Ripple.LibraryClasses.Signer.EngineResult FIELD Values Public, Static Ripple.LibraryClasses.Signer.EngineResult+EngineResultValues
+Ripple.LibraryClasses.Signer.EngineResult FIELD tecCLAIM Public, Static, InitOnly Ripple.LibraryClasses.Signer.EngineResult
+Ripple.LibraryClasses.Signer.EngineResult FIELD tecDIR_FULL Public, Static, InitOnly Ripple.LibraryClasses.Signer.EngineResult
+Ripple.LibraryClasses.Signer.EngineResult FIELD tecDST_TAG_NEEDED Public, Static, InitOnly Ripple.LibraryClasses.Signer.EngineResult
+Ripple.LibraryClasses.Signer.EngineResult FIELD tecFAILED_PROCESSING Public, Static, InitOnly Ripple.LibraryClasses.Signer.EngineResult
+Ripple.LibraryClasses.Signer.EngineResult FIELD tecFROZEN Public, Static, InitOnly Ripple.LibraryClasses.Signer.EngineResult
+Ripple.LibraryClasses.Signer.EngineResult FIELD tecINSUFFICIENT_RESERVE Public, Static, InitOnly Ripple.LibraryClasses.Signer.EngineResult
+Ripple.LibraryClasses.Signer.EngineResult FIELD tecINSUFF_FEE Public, Static, InitOnly Ripple.LibraryClasses.Signer.EngineResult
+Ripple.LibraryClasses.Signer.EngineResult FIELD tecINSUF_RESERVE_LINE Public, Static, InitOnly Ripple.LibraryClasses.Signer.EngineResult
+Ripple.LibraryClasses.Signer.EngineResult FIELD tecINSUF_RESERVE_OFFER Public, Static, InitOnly Ripple.LibraryClasses.Signer.EngineResult
+Ripple.LibraryClasses.Signer.EngineResult FIELD tecINTERNAL Public, Static, InitOnly Ripple.LibraryClasses.Signer.EngineResult
+Ripple.LibraryClasses.Signer.EngineResult FIELD tecNEED_MASTER_KEY Public, Static, InitOnly Ripple.LibraryClasses.Signer.EngineResult
+Ripple.LibraryClasses.Signer.EngineResult FIELD tecNO_ALTERNATIVE_KEY Public, Static, InitOnly Ripple.LibraryClasses.Signer.EngineResult
+Ripple.LibraryClasses.Signer.EngineResult FIELD tecNO_AUTH Public, Static, InitOnly Ripple.LibraryClasses.Signer.EngineResult
+Ripple.LibraryClasses.Signer.EngineResult FIELD tecNO_DST Public, Static, InitOnly Ripple.LibraryClasses.Signer.EngineResult
+Ripple.LibraryClasses.Signer.EngineResult FIELD tecNO_DST_INSUF_XRP Public, Static, InitOnly Ripple.LibraryClasses.Signer.EngineResult
+Ripple.LibraryClasses.Signer.EngineResult FIELD tecNO_ENTRY Public, Static, InitOnly Ripple.LibraryClasses.Signer.EngineResult
+Ripple.LibraryClasses.Signer.EngineResult FIELD tecNO_ISSUER Public, Static, InitOnly Ripple.LibraryClasses.Signer.EngineResult
+Ripple.LibraryClasses.Signer.EngineResult FIELD tecNO_LINE Public, Static, InitOnly Ripple.LibraryClasses.Signer.EngineResult
+Ripple.LibraryClasses.Signer.EngineResult FIELD tecNO_LINE_INSUF_RESERVE Public, Static, InitOnly Ripple.LibraryClasses.Signer.EngineResult
+Ripple.LibraryClasses.Signer.EngineResult FIELD tecNO_LINE_REDUNDANT Public, Static, InitOnly Ripple.LibraryClasses.Signer.EngineResult
+Ripple.LibraryClasses.Signer.EngineResult FIELD tecNO_PERMISSION Public, Static, InitOnly Ripple.LibraryClasses.Signer.EngineResult
+Ripple.LibraryClasses.Signer.EngineResult FIELD tecNO_REGULAR_KEY Public, Static, InitOnly Ripple.LibraryClasses.Signer.EngineResult
+Ripple.LibraryClasses.Signer.EngineResult FIELD tecNO_TARGET Public, Static, InitOnly Ripple.LibraryClasses.Signer.EngineResult
+Ripple.LibraryClasses.Signer.EngineResult FIELD tecOVERSIZE Public, Static, InitOnly Ripple.LibraryClasses.Signer.EngineResult
+Ripple.LibraryClasses.Signer.EngineResult FIELD tecOWNERS Public, Static, InitOnly Ripple.LibraryClasses.Signer.EngineResult
+Ripple.LibraryClasses.Signer.EngineResult FIELD tecPATH_DRY Public, Static, InitOnly Ripple.LibraryClasses.Signer.EngineResult
+Ripple.LibraryClasses.Signer.EngineResult FIELD tecPATH_PARTIAL Public, Static, InitOnly Ripple.LibraryClasses.Signer.EngineResult
+Ripple.LibraryClasses.Signer.EngineResult FIELD tecUNFUNDED Public, Static, InitOnly Ripple.LibraryClasses.Signer.EngineResult
+Ripple.LibraryClasses.Signer.EngineResult FIELD tecUNFUNDED_ADD Public, Static, InitOnly Ripple.LibraryClasses.Signer.EngineResult
+Ripple.LibraryClasses.Signer.EngineResult FIELD tecUNFUNDED_OFFER Public, Static, InitOnly Ripple.LibraryClasses.Signer.EngineResult
+Ripple.LibraryClasses.Signer.EngineResult FIELD tecUNFUNDED_PAYMENT Public, Static, InitOnly Ripple.LibraryClasses.Signer.EngineResult
+Ripple.LibraryClasses.Signer.EngineResult FIELD tefALREADY Public, Static, InitOnly Ripple.LibraryClasses.Signer.EngineResult
+Ripple.LibraryClasses.Signer.EngineResult FIELD tefBAD_ADD_AUTH Public, Static, InitOnly Ripple.LibraryClasses.Signer.EngineResult
+Ripple.LibraryClasses.Signer.EngineResult FIELD tefBAD_AUTH Public, Static, InitOnly Ripple.LibraryClasses.Signer.EngineResult
+Ripple.LibraryClasses.Signer.EngineResult FIELD tefBAD_LEDGER Public, Static, InitOnly Ripple.LibraryClasses.Signer.EngineResult
+Ripple.LibraryClasses.Signer.EngineResult FIELD tefCREATED Public, Static, InitOnly Ripple.LibraryClasses.Signer.EngineResult
+Ripple.LibraryClasses.Signer.EngineResult FIELD tefDST_TAG_NEEDED Public, Static, InitOnly Ripple.LibraryClasses.Signer.EngineResult
+Ripple.LibraryClasses.Signer.EngineResult FIELD tefEXCEPTION Public, Static, InitOnly Ripple.LibraryClasses.Signer.EngineResult
+Ripple.LibraryClasses.Signer.EngineResult FIELD tefFAILURE Public, Static, InitOnly Ripple.LibraryClasses.Signer.EngineResult
+Ripple.LibraryClasses.Signer.EngineResult FIELD tefINTERNAL Public, Static, InitOnly Ripple.LibraryClasses.Signer.EngineResult
+Ripple.LibraryClasses.Signer.EngineResult FIELD tefMASTER_DISABLED Public, Static, InitOnly Ripple.LibraryClasses.Signer.EngineResult
+Ripple.LibraryClasses.Signer.EngineResult FIELD tefMAX_LEDGER Public, Static, InitOnly Ripple.LibraryClasses.Signer.EngineResult
+Ripple.LibraryClasses.Signer.EngineResult FIELD tefNO_AUTH_REQUIRED Public, Static, InitOnly Ripple.LibraryClasses.Signer.EngineResult
+Ripple.LibraryClasses.Signer.EngineResult FIELD tefPAST_SEQ Public, Static, InitOnly Ripple.LibraryClasses.Signer.EngineResult
+Ripple.LibraryClasses.Signer.EngineResult FIELD tefWRONG_PRIOR Public, Static, InitOnly Ripple.LibraryClasses.Signer.EngineResult
+Ripple.LibraryClasses.Signer.EngineResult FIELD telBAD_DOMAIN Public, Static, InitOnly Ripple.LibraryClasses.Signer.EngineResult
+Ripple.LibraryClasses.Signer.EngineResult FIELD telBAD_PATH_COUNT Public, Static, InitOnly Ripple.LibraryClasses.Signer.EngineResult
+Ripple.LibraryClasses.Signer.EngineResult FIELD telBAD_PUBLIC_KEY Public, Static, InitOnly Ripple.LibraryClasses.Signer.EngineResult
+Ripple.LibraryClasses.Signer.EngineResult FIELD telFAILED_PROCESSING Public, Static, InitOnly Ripple.LibraryClasses.Signer.EngineResult
+Ripple.LibraryClasses.Signer.EngineResult FIELD telINSUF_FEE_P Public, Static, InitOnly Ripple.LibraryClasses.Signer.EngineResult
+Ripple.LibraryClasses.Signer.EngineResult FIELD telLOCAL_ERROR Public, Static, InitOnly Ripple.LibraryClasses.Signer.EngineResult
+Ripple.LibraryClasses.Signer.EngineResult FIELD telNO_DST_PARTIAL Public, Static, InitOnly Ripple.LibraryClasses.Signer.EngineResult
+Ripple.LibraryClasses.Signer.EngineResult FIELD temBAD_AMOUNT Public, Static, InitOnly Ripple.LibraryClasses.Signer.EngineResult
+Ripple.LibraryClasses.Signer.EngineResult FIELD temBAD_AUTH_MASTER Public, Static, InitOnly Ripple.LibraryClasses.Signer.EngineResult
+Ripple.LibraryClasses.Signer.EngineResult FIELD temBAD_CURRENCY Public, Static, InitOnly Ripple.LibraryClasses.Signer.EngineResult
+Ripple.LibraryClasses.Signer.EngineResult FIELD temBAD_EXPIRATION Public, Static, InitOnly Ripple.LibraryClasses.Signer.EngineResult
+Ripple.LibraryClasses.Signer.EngineResult FIELD temBAD_FEE Public, Static, InitOnly Ripple.LibraryClasses.Signer.EngineResult
+Ripple.LibraryClasses.Signer.EngineResult FIELD temBAD_ISSUER Public, Static, InitOnly Ripple.LibraryClasses.Signer.EngineResult
+Ripple.LibraryClasses.Signer.EngineResult FIELD temBAD_LIMIT Public, Static, InitOnly Ripple.LibraryClasses.Signer.EngineResult
+Ripple.LibraryClasses.Signer.EngineResult FIELD temBAD_OFFER Public, Static, InitOnly Ripple.LibraryClasses.Signer.EngineResult
+Ripple.LibraryClasses.Signer.EngineResult FIELD temBAD_PATH Public, Static, InitOnly Ripple.LibraryClasses.Signer.EngineResult
+Ripple.LibraryClasses.Signer.EngineResult FIELD temBAD_PATH_LOOP Public, Static, InitOnly Ripple.LibraryClasses.Signer.EngineResult
+Ripple.LibraryClasses.Signer.EngineResult FIELD temBAD_SEND_XRP_LIMIT Public, Static, InitOnly Ripple.LibraryClasses.Signer.EngineResult
+Ripple.LibraryClasses.Signer.EngineResult FIELD temBAD_SEND_XRP_MAX Public, Static, InitOnly Ripple.LibraryClasses.Signer.EngineResult
+Ripple.LibraryClasses.Signer.EngineResult FIELD temBAD_SEND_XRP_NO_DIRECT Public, Static, InitOnly Ripple.LibraryClasses.Signer.EngineResult
+Ripple.LibraryClasses.Signer.EngineResult FIELD temBAD_SEND_XRP_PARTIAL Public, Static, InitOnly Ripple.LibraryClasses.Signer.EngineResult
+Ripple.LibraryClasses.Signer.EngineResult FIELD temBAD_SEND_XRP_PATHS Public, Static, InitOnly Ripple.LibraryClasses.Signer.EngineResult
+Ripple.LibraryClasses.Signer.EngineResult FIELD temBAD_SEQUENCE Public, Static, InitOnly Ripple.LibraryClasses.Signer.EngineResult
+Ripple.LibraryClasses.Signer.EngineResult FIELD temBAD_SIGNATURE Public, Static, InitOnly Ripple.LibraryClasses.Signer.EngineResult
+Ripple.LibraryClasses.Signer.EngineResult FIELD temBAD_SRC_ACCOUNT Public, Static, InitOnly Ripple.LibraryClasses.Signer.EngineResult
+Ripple.LibraryClasses.Signer.EngineResult FIELD temBAD_TRANSFER_RATE Public, Static, InitOnly Ripple.LibraryClasses.Signer.EngineResult
+Ripple.LibraryClasses.Signer.EngineResult FIELD temDST_IS_SRC Public, Static, InitOnly Ripple.LibraryClasses.Signer.EngineResult
+Ripple.LibraryClasses.Signer.EngineResult FIELD temDST_NEEDED Public, Static, InitOnly Ripple.LibraryClasses.Signer.EngineResult
+Ripple.LibraryClasses.Signer.EngineResult FIELD temINVALID Public, Static, InitOnly Ripple.LibraryClasses.Signer.EngineResult
+Ripple.LibraryClasses.Signer.EngineResult FIELD temINVALID_FLAG Public, Static, InitOnly Ripple.LibraryClasses.Signer.EngineResult
+Ripple.LibraryClasses.Signer.EngineResult FIELD temMALFORMED Public, Static, InitOnly Ripple.LibraryClasses.Signer.EngineResult
+Ripple.LibraryClasses.Signer.EngineResult FIELD temREDUNDANT Public, Static, InitOnly Ripple.LibraryClasses.Signer.EngineResult
+Ripple.LibraryClasses.Signer.EngineResult FIELD temREDUNDANT_SEND_MAX Public, Static, InitOnly Ripple.LibraryClasses.Signer.EngineResult
+Ripple.LibraryClasses.Signer.EngineResult FIELD temRIPPLE_EMPTY Public, Static, InitOnly Ripple.LibraryClasses.Signer.EngineResult
+Ripple.LibraryClasses.Signer.EngineResult FIELD temUNCERTAIN Public, Static, InitOnly Ripple.LibraryClasses.Signer.EngineResult
+Ripple.LibraryClasses.Signer.EngineResult FIELD temUNKNOWN Public, Static, InitOnly Ripple.LibraryClasses.Signer.EngineResult
+Ripple.LibraryClasses.Signer.EngineResult FIELD terFUNDS_SPENT Public, Static, InitOnly Ripple.LibraryClasses.Signer.EngineResult
+Ripple.LibraryClasses.Signer.EngineResult FIELD terINSUF_FEE_B Public, Static, InitOnly Ripple.LibraryClasses.Signer.EngineResult
+Ripple.LibraryClasses.Signer.EngineResult FIELD terLAST Public, Static, InitOnly Ripple.LibraryClasses.Signer.EngineResult
+Ripple.LibraryClasses.Signer.EngineResult FIELD terNO_ACCOUNT Public, Static, InitOnly Ripple.LibraryClasses.Signer.EngineResult
+Ripple.LibraryClasses.Signer.EngineResult FIELD terNO_AUTH Public, Static, InitOnly Ripple.LibraryClasses.Signer.EngineResult
+Ripple.LibraryClasses.Signer.EngineResult FIELD terNO_LINE Public, Static, InitOnly Ripple.LibraryClasses.Signer.EngineResult
+Ripple.LibraryClasses.Signer.EngineResult FIELD terNO_RIPPLE Public, Static, InitOnly Ripple.LibraryClasses.Signer.EngineResult
+Ripple.LibraryClasses.Signer.EngineResult FIELD terOWNERS Public, Static, InitOnly Ripple.LibraryClasses.Signer.EngineResult
+Ripple.LibraryClasses.Signer.EngineResult FIELD terPRE_SEQ Public, Static, InitOnly Ripple.LibraryClasses.Signer.EngineResult
+Ripple.LibraryClasses.Signer.EngineResult FIELD terRETRY Public, Static, InitOnly Ripple.LibraryClasses.Signer.EngineResult
+Ripple.LibraryClasses.Signer.EngineResult FIELD tesSUCCESS Public, Static, InitOnly Ripple.LibraryClasses.Signer.EngineResult
+Ripple.LibraryClasses.Signer.EngineResult METHOD ShouldClaimFee PrivateScope, Public, HideBySig System.Boolean ()
+Ripple.LibraryClasses.Signer.EngineResult+EngineResultValues CTOR PrivateScope, Public, HideBySig, SpecialName, RTSpecialName 
+Ripple.LibraryClasses.Signer.EnumItem CTOR PrivateScope, Public, HideBySig, SpecialName, RTSpecialName name:System.String:None:;ordinal:System.Int32:None:
+Ripple.LibraryClasses.Signer.EnumItem FIELD Name Public, InitOnly System.String
+Ripple.LibraryClasses.Signer.EnumItem FIELD Ordinal Public, InitOnly System.Int32
+Ripple.LibraryClasses.Signer.EnumItem METHOD CompareTo PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask System.Int32 (other:Ripple.LibraryClasses.Signer.EnumItem:None:)
+Ripple.LibraryClasses.Signer.EnumItem METHOD GetHashCode PrivateScope, Public, Virtual, HideBySig System.Int32 ()
+Ripple.LibraryClasses.Signer.EnumItem METHOD ToString PrivateScope, Public, Virtual, HideBySig System.String ()
+Ripple.LibraryClasses.Signer.EnumItem METHOD op_Implicit PrivateScope, Public, Static, HideBySig, SpecialName System.Int32 (item:Ripple.LibraryClasses.Signer.EnumItem:None:)
+Ripple.LibraryClasses.Signer.EnumItem METHOD op_Implicit PrivateScope, Public, Static, HideBySig, SpecialName System.String (item:Ripple.LibraryClasses.Signer.EnumItem:None:)
+Ripple.LibraryClasses.Signer.Enumeration`1 CTOR PrivateScope, Public, HideBySig, SpecialName, RTSpecialName 
+Ripple.LibraryClasses.Signer.Enumeration`1 METHOD AddEnum PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask T (T:T:None:)
+Ripple.LibraryClasses.Signer.Enumeration`1 METHOD GetEnumerator PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask System.Collections.Generic.IEnumerator`1[T] ()
+Ripple.LibraryClasses.Signer.Enumeration`1 METHOD Has PrivateScope, Public, HideBySig System.Boolean (key:System.String:None:)
+Ripple.LibraryClasses.Signer.Enumeration`1 METHOD get_Item PrivateScope, Public, HideBySig, SpecialName T (name:System.Int32:None:)
+Ripple.LibraryClasses.Signer.Enumeration`1 METHOD get_Item PrivateScope, Public, HideBySig, SpecialName T (name:System.String:None:)
+Ripple.LibraryClasses.Signer.Enumeration`1 METHOD set_Item PrivateScope, Public, HideBySig, SpecialName System.Void (name:System.Int32:None:;value:T:None:)
+Ripple.LibraryClasses.Signer.Enumeration`1 METHOD set_Item PrivateScope, Public, HideBySig, SpecialName System.Void (name:System.String:None:;value:T:None:)
+Ripple.LibraryClasses.Signer.Fields.AccountIdField CTOR PrivateScope, Public, HideBySig, SpecialName, RTSpecialName name:System.String:None:;nthOfType:System.Int32:None:;isSigningField:System.Boolean:Optional, HasDefault:True;isSerialised:System.Boolean:Optional, HasDefault:True
+Ripple.LibraryClasses.Signer.Fields.AmountField CTOR PrivateScope, Public, HideBySig, SpecialName, RTSpecialName name:System.String:None:;nthOfType:System.Int32:None:;isSigningField:System.Boolean:Optional, HasDefault:True;isSerialised:System.Boolean:Optional, HasDefault:True
+Ripple.LibraryClasses.Signer.Fields.BlobField CTOR PrivateScope, Public, HideBySig, SpecialName, RTSpecialName name:System.String:None:;nthOfType:System.Int32:None:;isSigningField:System.Boolean:Optional, HasDefault:True;isSerialised:System.Boolean:Optional, HasDefault:True
+Ripple.LibraryClasses.Signer.Fields.EngineResultField CTOR PrivateScope, Public, HideBySig, SpecialName, RTSpecialName name:System.String:None:;nthOfType:System.Int32:None:
+Ripple.LibraryClasses.Signer.Fields.Field CTOR PrivateScope, Public, HideBySig, SpecialName, RTSpecialName name:System.String:None:;nthOfType:System.Int32:None:;type:Ripple.LibraryClasses.Signer.Fields.FieldType:None:;isSigningField:System.Boolean:Optional, HasDefault:True;isSerialised:System.Boolean:Optional, HasDefault:True
+Ripple.LibraryClasses.Signer.Fields.Field FIELD Account Public, Static, InitOnly Ripple.LibraryClasses.Signer.Fields.AccountIdField
+Ripple.LibraryClasses.Signer.Fields.Field FIELD AccountHash Public, Static, InitOnly Ripple.LibraryClasses.Signer.Fields.Hash256Field
+Ripple.LibraryClasses.Signer.Fields.Field FIELD AccountTxnID Public, Static, InitOnly Ripple.LibraryClasses.Signer.Fields.Hash256Field
+Ripple.LibraryClasses.Signer.Fields.Field FIELD AffectedNodes Public, Static, InitOnly Ripple.LibraryClasses.Signer.Fields.StArrayField
+Ripple.LibraryClasses.Signer.Fields.Field FIELD Amendment Public, Static, InitOnly Ripple.LibraryClasses.Signer.Fields.Hash256Field
+Ripple.LibraryClasses.Signer.Fields.Field FIELD Amount Public, Static, InitOnly Ripple.LibraryClasses.Signer.Fields.AmountField
+Ripple.LibraryClasses.Signer.Fields.Field FIELD ArrayEndMarker Public, Static, InitOnly Ripple.LibraryClasses.Signer.Fields.StArrayField
+Ripple.LibraryClasses.Signer.Fields.Field FIELD Balance Public, Static, InitOnly Ripple.LibraryClasses.Signer.Fields.AmountField
+Ripple.LibraryClasses.Signer.Fields.Field FIELD BaseFee Public, Static, InitOnly Ripple.LibraryClasses.Signer.Fields.Uint64Field
+Ripple.LibraryClasses.Signer.Fields.Field FIELD BondAmount Public, Static, InitOnly Ripple.LibraryClasses.Signer.Fields.Uint32Field
+Ripple.LibraryClasses.Signer.Fields.Field FIELD BookDirectory Public, Static, InitOnly Ripple.LibraryClasses.Signer.Fields.Hash256Field
+Ripple.LibraryClasses.Signer.Fields.Field FIELD BookNode Public, Static, InitOnly Ripple.LibraryClasses.Signer.Fields.Uint64Field
+Ripple.LibraryClasses.Signer.Fields.Field FIELD BrokerFee Public, Static, InitOnly Ripple.LibraryClasses.Signer.Fields.AmountField
+Ripple.LibraryClasses.Signer.Fields.Field FIELD BurnedTokens Public, Static, InitOnly Ripple.LibraryClasses.Signer.Fields.Uint32Field
+Ripple.LibraryClasses.Signer.Fields.Field FIELD CancelAfter Public, Static, InitOnly Ripple.LibraryClasses.Signer.Fields.Uint32Field
+Ripple.LibraryClasses.Signer.Fields.Field FIELD Channel Public, Static, InitOnly Ripple.LibraryClasses.Signer.Fields.Hash256Field
+Ripple.LibraryClasses.Signer.Fields.Field FIELD ClearFlag Public, Static, InitOnly Ripple.LibraryClasses.Signer.Fields.Uint32Field
+Ripple.LibraryClasses.Signer.Fields.Field FIELD CloseResolution Public, Static, InitOnly Ripple.LibraryClasses.Signer.Fields.Uint8Field
+Ripple.LibraryClasses.Signer.Fields.Field FIELD CloseTime Public, Static, InitOnly Ripple.LibraryClasses.Signer.Fields.Uint32Field
+Ripple.LibraryClasses.Signer.Fields.Field FIELD Condition Public, Static, InitOnly Ripple.LibraryClasses.Signer.Fields.BlobField
+Ripple.LibraryClasses.Signer.Fields.Field FIELD ConsensusHash Public, Static, InitOnly Ripple.LibraryClasses.Signer.Fields.Hash256Field
+Ripple.LibraryClasses.Signer.Fields.Field FIELD CreateCode Public, Static, InitOnly Ripple.LibraryClasses.Signer.Fields.BlobField
+Ripple.LibraryClasses.Signer.Fields.Field FIELD CreatedNode Public, Static, InitOnly Ripple.LibraryClasses.Signer.Fields.StObjectField
+Ripple.LibraryClasses.Signer.Fields.Field FIELD DeletedNode Public, Static, InitOnly Ripple.LibraryClasses.Signer.Fields.StObjectField
+Ripple.LibraryClasses.Signer.Fields.Field FIELD DeliverMin Public, Static, InitOnly Ripple.LibraryClasses.Signer.Fields.AmountField
+Ripple.LibraryClasses.Signer.Fields.Field FIELD DeliveredAmount Public, Static, InitOnly Ripple.LibraryClasses.Signer.Fields.AmountField
+Ripple.LibraryClasses.Signer.Fields.Field FIELD Destination Public, Static, InitOnly Ripple.LibraryClasses.Signer.Fields.AccountIdField
+Ripple.LibraryClasses.Signer.Fields.Field FIELD DestinationTag Public, Static, InitOnly Ripple.LibraryClasses.Signer.Fields.Uint32Field
+Ripple.LibraryClasses.Signer.Fields.Field FIELD Digest Public, Static, InitOnly Ripple.LibraryClasses.Signer.Fields.Hash256Field
+Ripple.LibraryClasses.Signer.Fields.Field FIELD Domain Public, Static, InitOnly Ripple.LibraryClasses.Signer.Fields.BlobField
+Ripple.LibraryClasses.Signer.Fields.Field FIELD EmailHash Public, Static, InitOnly Ripple.LibraryClasses.Signer.Fields.Hash128Field
+Ripple.LibraryClasses.Signer.Fields.Field FIELD ExchangeRate Public, Static, InitOnly Ripple.LibraryClasses.Signer.Fields.Uint64Field
+Ripple.LibraryClasses.Signer.Fields.Field FIELD Expiration Public, Static, InitOnly Ripple.LibraryClasses.Signer.Fields.Uint32Field
+Ripple.LibraryClasses.Signer.Fields.Field FIELD ExpireCode Public, Static, InitOnly Ripple.LibraryClasses.Signer.Fields.BlobField
+Ripple.LibraryClasses.Signer.Fields.Field FIELD Features Public, Static, InitOnly Ripple.LibraryClasses.Signer.Fields.Vector256Field
+Ripple.LibraryClasses.Signer.Fields.Field FIELD Fee Public, Static, InitOnly Ripple.LibraryClasses.Signer.Fields.AmountField
+Ripple.LibraryClasses.Signer.Fields.Field FIELD FinalFields Public, Static, InitOnly Ripple.LibraryClasses.Signer.Fields.StObjectField
+Ripple.LibraryClasses.Signer.Fields.Field FIELD FinishAfter Public, Static, InitOnly Ripple.LibraryClasses.Signer.Fields.Uint32Field
+Ripple.LibraryClasses.Signer.Fields.Field FIELD FirstLedgerSequence Public, Static, InitOnly Ripple.LibraryClasses.Signer.Fields.Uint32Field
+Ripple.LibraryClasses.Signer.Fields.Field FIELD Flags Public, Static, InitOnly Ripple.LibraryClasses.Signer.Fields.Uint32Field
+Ripple.LibraryClasses.Signer.Fields.Field FIELD FromJson Public Ripple.LibraryClasses.Signer.FromJson
+Ripple.LibraryClasses.Signer.Fields.Field FIELD FromParser Public Ripple.LibraryClasses.Signer.FromParser
+Ripple.LibraryClasses.Signer.Fields.Field FIELD Fulfillment Public, Static, InitOnly Ripple.LibraryClasses.Signer.Fields.BlobField
+Ripple.LibraryClasses.Signer.Fields.Field FIELD FundCode Public, Static, InitOnly Ripple.LibraryClasses.Signer.Fields.BlobField
+Ripple.LibraryClasses.Signer.Fields.Field FIELD Generic Public, Static, InitOnly Ripple.LibraryClasses.Signer.Fields.Field
+Ripple.LibraryClasses.Signer.Fields.Field FIELD Hashes Public, Static, InitOnly Ripple.LibraryClasses.Signer.Fields.Vector256Field
+Ripple.LibraryClasses.Signer.Fields.Field FIELD Header Public, InitOnly System.Byte[]
+Ripple.LibraryClasses.Signer.Fields.Field FIELD HighLimit Public, Static, InitOnly Ripple.LibraryClasses.Signer.Fields.AmountField
+Ripple.LibraryClasses.Signer.Fields.Field FIELD HighNode Public, Static, InitOnly Ripple.LibraryClasses.Signer.Fields.Uint64Field
+Ripple.LibraryClasses.Signer.Fields.Field FIELD HighQualityIn Public, Static, InitOnly Ripple.LibraryClasses.Signer.Fields.Uint32Field
+Ripple.LibraryClasses.Signer.Fields.Field FIELD HighQualityOut Public, Static, InitOnly Ripple.LibraryClasses.Signer.Fields.Uint32Field
+Ripple.LibraryClasses.Signer.Fields.Field FIELD IndexNext Public, Static, InitOnly Ripple.LibraryClasses.Signer.Fields.Uint64Field
+Ripple.LibraryClasses.Signer.Fields.Field FIELD IndexPrevious Public, Static, InitOnly Ripple.LibraryClasses.Signer.Fields.Uint64Field
+Ripple.LibraryClasses.Signer.Fields.Field FIELD Indexes Public, Static, InitOnly Ripple.LibraryClasses.Signer.Fields.Vector256Field
+Ripple.LibraryClasses.Signer.Fields.Field FIELD Invalid Public, Static, InitOnly Ripple.LibraryClasses.Signer.Fields.Field
+Ripple.LibraryClasses.Signer.Fields.Field FIELD InvoiceID Public, Static, InitOnly Ripple.LibraryClasses.Signer.Fields.Hash256Field
+Ripple.LibraryClasses.Signer.Fields.Field FIELD IsSerialised Public, InitOnly System.Boolean
+Ripple.LibraryClasses.Signer.Fields.Field FIELD IsSigningField Public, InitOnly System.Boolean
+Ripple.LibraryClasses.Signer.Fields.Field FIELD IsVlEncoded Public, InitOnly System.Boolean
+Ripple.LibraryClasses.Signer.Fields.Field FIELD Issuer Public, Static, InitOnly Ripple.LibraryClasses.Signer.Fields.AccountIdField
+Ripple.LibraryClasses.Signer.Fields.Field FIELD LastLedgerSequence Public, Static, InitOnly Ripple.LibraryClasses.Signer.Fields.Uint32Field
+Ripple.LibraryClasses.Signer.Fields.Field FIELD LedgerEntry Public, Static, InitOnly Ripple.LibraryClasses.Signer.Fields.Field
+Ripple.LibraryClasses.Signer.Fields.Field FIELD LedgerEntryType Public, Static, InitOnly Ripple.LibraryClasses.Signer.Fields.LedgerEntryTypeField
+Ripple.LibraryClasses.Signer.Fields.Field FIELD LedgerHash Public, Static, InitOnly Ripple.LibraryClasses.Signer.Fields.Hash256Field
+Ripple.LibraryClasses.Signer.Fields.Field FIELD LedgerIndex Public, Static, InitOnly Ripple.LibraryClasses.Signer.Fields.Hash256Field
+Ripple.LibraryClasses.Signer.Fields.Field FIELD LedgerSequence Public, Static, InitOnly Ripple.LibraryClasses.Signer.Fields.Uint32Field
+Ripple.LibraryClasses.Signer.Fields.Field FIELD LimitAmount Public, Static, InitOnly Ripple.LibraryClasses.Signer.Fields.AmountField
+Ripple.LibraryClasses.Signer.Fields.Field FIELD LoadFee Public, Static, InitOnly Ripple.LibraryClasses.Signer.Fields.Uint32Field
+Ripple.LibraryClasses.Signer.Fields.Field FIELD LowLimit Public, Static, InitOnly Ripple.LibraryClasses.Signer.Fields.AmountField
+Ripple.LibraryClasses.Signer.Fields.Field FIELD LowNode Public, Static, InitOnly Ripple.LibraryClasses.Signer.Fields.Uint64Field
+Ripple.LibraryClasses.Signer.Fields.Field FIELD LowQualityIn Public, Static, InitOnly Ripple.LibraryClasses.Signer.Fields.Uint32Field
+Ripple.LibraryClasses.Signer.Fields.Field FIELD LowQualityOut Public, Static, InitOnly Ripple.LibraryClasses.Signer.Fields.Uint32Field
+Ripple.LibraryClasses.Signer.Fields.Field FIELD Majority Public, Static, InitOnly Ripple.LibraryClasses.Signer.Fields.StObjectField
+Ripple.LibraryClasses.Signer.Fields.Field FIELD MasterSignature Public, Static, InitOnly Ripple.LibraryClasses.Signer.Fields.BlobField
+Ripple.LibraryClasses.Signer.Fields.Field FIELD Memo Public, Static, InitOnly Ripple.LibraryClasses.Signer.Fields.StObjectField
+Ripple.LibraryClasses.Signer.Fields.Field FIELD MemoData Public, Static, InitOnly Ripple.LibraryClasses.Signer.Fields.BlobField
+Ripple.LibraryClasses.Signer.Fields.Field FIELD MemoFormat Public, Static, InitOnly Ripple.LibraryClasses.Signer.Fields.BlobField
+Ripple.LibraryClasses.Signer.Fields.Field FIELD MemoType Public, Static, InitOnly Ripple.LibraryClasses.Signer.Fields.BlobField
+Ripple.LibraryClasses.Signer.Fields.Field FIELD Memos Public, Static, InitOnly Ripple.LibraryClasses.Signer.Fields.StArrayField
+Ripple.LibraryClasses.Signer.Fields.Field FIELD MessageKey Public, Static, InitOnly Ripple.LibraryClasses.Signer.Fields.BlobField
+Ripple.LibraryClasses.Signer.Fields.Field FIELD Method Public, Static, InitOnly Ripple.LibraryClasses.Signer.Fields.Uint8Field
+Ripple.LibraryClasses.Signer.Fields.Field FIELD MinimumOffer Public, Static, InitOnly Ripple.LibraryClasses.Signer.Fields.AmountField
+Ripple.LibraryClasses.Signer.Fields.Field FIELD MintedTokens Public, Static, InitOnly Ripple.LibraryClasses.Signer.Fields.Uint32Field
+Ripple.LibraryClasses.Signer.Fields.Field FIELD ModifiedNode Public, Static, InitOnly Ripple.LibraryClasses.Signer.Fields.StObjectField
+Ripple.LibraryClasses.Signer.Fields.Field FIELD NFTokenBuyOffer Public, Static, InitOnly Ripple.LibraryClasses.Signer.Fields.Hash256Field
+Ripple.LibraryClasses.Signer.Fields.Field FIELD NFTokenID Public, Static, InitOnly Ripple.LibraryClasses.Signer.Fields.Hash256Field
+Ripple.LibraryClasses.Signer.Fields.Field FIELD NFTokenOffers Public, Static, InitOnly Ripple.LibraryClasses.Signer.Fields.Vector256Field
+Ripple.LibraryClasses.Signer.Fields.Field FIELD NFTokenSellOffer Public, Static, InitOnly Ripple.LibraryClasses.Signer.Fields.Hash256Field
+Ripple.LibraryClasses.Signer.Fields.Field FIELD NFTokenTaxon Public, Static, InitOnly Ripple.LibraryClasses.Signer.Fields.Uint32Field
+Ripple.LibraryClasses.Signer.Fields.Field FIELD Necessary Public, Static, InitOnly Ripple.LibraryClasses.Signer.Fields.StArrayField
+Ripple.LibraryClasses.Signer.Fields.Field FIELD NewFields Public, Static, InitOnly Ripple.LibraryClasses.Signer.Fields.StObjectField
+Ripple.LibraryClasses.Signer.Fields.Field FIELD Nickname Public, Static, InitOnly Ripple.LibraryClasses.Signer.Fields.Hash256Field
+Ripple.LibraryClasses.Signer.Fields.Field FIELD NthOfType Public, InitOnly System.Int32
+Ripple.LibraryClasses.Signer.Fields.Field FIELD ObjectEndMarker Public, Static, InitOnly Ripple.LibraryClasses.Signer.Fields.StObjectField
+Ripple.LibraryClasses.Signer.Fields.Field FIELD OfferSequence Public, Static, InitOnly Ripple.LibraryClasses.Signer.Fields.Uint32Field
+Ripple.LibraryClasses.Signer.Fields.Field FIELD OperationLimit Public, Static, InitOnly Ripple.LibraryClasses.Signer.Fields.Uint32Field
+Ripple.LibraryClasses.Signer.Fields.Field FIELD Owner Public, Static, InitOnly Ripple.LibraryClasses.Signer.Fields.AccountIdField
+Ripple.LibraryClasses.Signer.Fields.Field FIELD OwnerCount Public, Static, InitOnly Ripple.LibraryClasses.Signer.Fields.Uint32Field
+Ripple.LibraryClasses.Signer.Fields.Field FIELD OwnerNode Public, Static, InitOnly Ripple.LibraryClasses.Signer.Fields.Uint64Field
+Ripple.LibraryClasses.Signer.Fields.Field FIELD ParentCloseTime Public, Static, InitOnly Ripple.LibraryClasses.Signer.Fields.Uint32Field
+Ripple.LibraryClasses.Signer.Fields.Field FIELD ParentHash Public, Static, InitOnly Ripple.LibraryClasses.Signer.Fields.Hash256Field
+Ripple.LibraryClasses.Signer.Fields.Field FIELD Paths Public, Static, InitOnly Ripple.LibraryClasses.Signer.Fields.PathSetField
+Ripple.LibraryClasses.Signer.Fields.Field FIELD PreviousFields Public, Static, InitOnly Ripple.LibraryClasses.Signer.Fields.StObjectField
+Ripple.LibraryClasses.Signer.Fields.Field FIELD PreviousTxnID Public, Static, InitOnly Ripple.LibraryClasses.Signer.Fields.Hash256Field
+Ripple.LibraryClasses.Signer.Fields.Field FIELD PreviousTxnLgrSeq Public, Static, InitOnly Ripple.LibraryClasses.Signer.Fields.Uint32Field
+Ripple.LibraryClasses.Signer.Fields.Field FIELD PublicKey Public, Static, InitOnly Ripple.LibraryClasses.Signer.Fields.BlobField
+Ripple.LibraryClasses.Signer.Fields.Field FIELD QualityIn Public, Static, InitOnly Ripple.LibraryClasses.Signer.Fields.Uint32Field
+Ripple.LibraryClasses.Signer.Fields.Field FIELD QualityOut Public, Static, InitOnly Ripple.LibraryClasses.Signer.Fields.Uint32Field
+Ripple.LibraryClasses.Signer.Fields.Field FIELD ReferenceFeeUnits Public, Static, InitOnly Ripple.LibraryClasses.Signer.Fields.Uint32Field
+Ripple.LibraryClasses.Signer.Fields.Field FIELD RegularKey Public, Static, InitOnly Ripple.LibraryClasses.Signer.Fields.AccountIdField
+Ripple.LibraryClasses.Signer.Fields.Field FIELD RemoveCode Public, Static, InitOnly Ripple.LibraryClasses.Signer.Fields.BlobField
+Ripple.LibraryClasses.Signer.Fields.Field FIELD ReserveBase Public, Static, InitOnly Ripple.LibraryClasses.Signer.Fields.Uint32Field
+Ripple.LibraryClasses.Signer.Fields.Field FIELD ReserveIncrement Public, Static, InitOnly Ripple.LibraryClasses.Signer.Fields.Uint32Field
+Ripple.LibraryClasses.Signer.Fields.Field FIELD RippleEscrow Public, Static, InitOnly Ripple.LibraryClasses.Signer.Fields.AmountField
+Ripple.LibraryClasses.Signer.Fields.Field FIELD RootIndex Public, Static, InitOnly Ripple.LibraryClasses.Signer.Fields.Hash256Field
+Ripple.LibraryClasses.Signer.Fields.Field FIELD SendMax Public, Static, InitOnly Ripple.LibraryClasses.Signer.Fields.AmountField
+Ripple.LibraryClasses.Signer.Fields.Field FIELD Sequence Public, Static, InitOnly Ripple.LibraryClasses.Signer.Fields.Uint32Field
+Ripple.LibraryClasses.Signer.Fields.Field FIELD SetFlag Public, Static, InitOnly Ripple.LibraryClasses.Signer.Fields.Uint32Field
+Ripple.LibraryClasses.Signer.Fields.Field FIELD SettleDelay Public, Static, InitOnly Ripple.LibraryClasses.Signer.Fields.Uint32Field
+Ripple.LibraryClasses.Signer.Fields.Field FIELD Signature Public, Static, InitOnly Ripple.LibraryClasses.Signer.Fields.BlobField
+Ripple.LibraryClasses.Signer.Fields.Field FIELD Signer Public, Static, InitOnly Ripple.LibraryClasses.Signer.Fields.StObjectField
+Ripple.LibraryClasses.Signer.Fields.Field FIELD SignerEntries Public, Static, InitOnly Ripple.LibraryClasses.Signer.Fields.StArrayField
+Ripple.LibraryClasses.Signer.Fields.Field FIELD SignerEntry Public, Static, InitOnly Ripple.LibraryClasses.Signer.Fields.StObjectField
+Ripple.LibraryClasses.Signer.Fields.Field FIELD SignerListID Public, Static, InitOnly Ripple.LibraryClasses.Signer.Fields.Uint32Field
+Ripple.LibraryClasses.Signer.Fields.Field FIELD SignerQuorum Public, Static, InitOnly Ripple.LibraryClasses.Signer.Fields.Uint32Field
+Ripple.LibraryClasses.Signer.Fields.Field FIELD SignerWeight Public, Static, InitOnly Ripple.LibraryClasses.Signer.Fields.Uint16Field
+Ripple.LibraryClasses.Signer.Fields.Field FIELD Signers Public, Static, InitOnly Ripple.LibraryClasses.Signer.Fields.StArrayField
+Ripple.LibraryClasses.Signer.Fields.Field FIELD SigningPubKey Public, Static, InitOnly Ripple.LibraryClasses.Signer.Fields.BlobField
+Ripple.LibraryClasses.Signer.Fields.Field FIELD SigningTime Public, Static, InitOnly Ripple.LibraryClasses.Signer.Fields.Uint32Field
+Ripple.LibraryClasses.Signer.Fields.Field FIELD SourceTag Public, Static, InitOnly Ripple.LibraryClasses.Signer.Fields.Uint32Field
+Ripple.LibraryClasses.Signer.Fields.Field FIELD StampEscrow Public, Static, InitOnly Ripple.LibraryClasses.Signer.Fields.Uint32Field
+Ripple.LibraryClasses.Signer.Fields.Field FIELD Sufficient Public, Static, InitOnly Ripple.LibraryClasses.Signer.Fields.StArrayField
+Ripple.LibraryClasses.Signer.Fields.Field FIELD TakerGets Public, Static, InitOnly Ripple.LibraryClasses.Signer.Fields.AmountField
+Ripple.LibraryClasses.Signer.Fields.Field FIELD TakerGetsCurrency Public, Static, InitOnly Ripple.LibraryClasses.Signer.Fields.Hash160Field
+Ripple.LibraryClasses.Signer.Fields.Field FIELD TakerGetsIssuer Public, Static, InitOnly Ripple.LibraryClasses.Signer.Fields.Hash160Field
+Ripple.LibraryClasses.Signer.Fields.Field FIELD TakerPays Public, Static, InitOnly Ripple.LibraryClasses.Signer.Fields.AmountField
+Ripple.LibraryClasses.Signer.Fields.Field FIELD TakerPaysCurrency Public, Static, InitOnly Ripple.LibraryClasses.Signer.Fields.Hash160Field
+Ripple.LibraryClasses.Signer.Fields.Field FIELD TakerPaysIssuer Public, Static, InitOnly Ripple.LibraryClasses.Signer.Fields.Hash160Field
+Ripple.LibraryClasses.Signer.Fields.Field FIELD Target Public, Static, InitOnly Ripple.LibraryClasses.Signer.Fields.AccountIdField
+Ripple.LibraryClasses.Signer.Fields.Field FIELD Template Public, Static, InitOnly Ripple.LibraryClasses.Signer.Fields.StArrayField
+Ripple.LibraryClasses.Signer.Fields.Field FIELD TemplateEntry Public, Static, InitOnly Ripple.LibraryClasses.Signer.Fields.StObjectField
+Ripple.LibraryClasses.Signer.Fields.Field FIELD TickSize Public, Static, InitOnly Ripple.LibraryClasses.Signer.Fields.Uint8Field
+Ripple.LibraryClasses.Signer.Fields.Field FIELD TicketCount Public, Static, InitOnly Ripple.LibraryClasses.Signer.Fields.Uint32Field
+Ripple.LibraryClasses.Signer.Fields.Field FIELD TicketID Public, Static, InitOnly Ripple.LibraryClasses.Signer.Fields.Hash256Field
+Ripple.LibraryClasses.Signer.Fields.Field FIELD TicketSequence Public, Static, InitOnly Ripple.LibraryClasses.Signer.Fields.Uint32Field
+Ripple.LibraryClasses.Signer.Fields.Field FIELD Transaction Public, Static, InitOnly Ripple.LibraryClasses.Signer.Fields.Field
+Ripple.LibraryClasses.Signer.Fields.Field FIELD TransactionHash Public, Static, InitOnly Ripple.LibraryClasses.Signer.Fields.Hash256Field
+Ripple.LibraryClasses.Signer.Fields.Field FIELD TransactionIndex Public, Static, InitOnly Ripple.LibraryClasses.Signer.Fields.Uint32Field
+Ripple.LibraryClasses.Signer.Fields.Field FIELD TransactionMetaData Public, Static, InitOnly Ripple.LibraryClasses.Signer.Fields.StObjectField
+Ripple.LibraryClasses.Signer.Fields.Field FIELD TransactionResult Public, Static, InitOnly Ripple.LibraryClasses.Signer.Fields.EngineResultField
+Ripple.LibraryClasses.Signer.Fields.Field FIELD TransactionType Public, Static, InitOnly Ripple.LibraryClasses.Signer.Fields.TransactionTypeField
+Ripple.LibraryClasses.Signer.Fields.Field FIELD TransferFee Public, Static, InitOnly Ripple.LibraryClasses.Signer.Fields.Uint16Field
+Ripple.LibraryClasses.Signer.Fields.Field FIELD TransferRate Public, Static, InitOnly Ripple.LibraryClasses.Signer.Fields.Uint32Field
+Ripple.LibraryClasses.Signer.Fields.Field FIELD TxnSignature Public, Static, InitOnly Ripple.LibraryClasses.Signer.Fields.BlobField
+Ripple.LibraryClasses.Signer.Fields.Field FIELD Type Public, InitOnly Ripple.LibraryClasses.Signer.Fields.FieldType
+Ripple.LibraryClasses.Signer.Fields.Field FIELD URI Public, Static, InitOnly Ripple.LibraryClasses.Signer.Fields.BlobField
+Ripple.LibraryClasses.Signer.Fields.Field FIELD Validation Public, Static, InitOnly Ripple.LibraryClasses.Signer.Fields.Field
+Ripple.LibraryClasses.Signer.Fields.Field FIELD Values Public, Static, InitOnly Ripple.LibraryClasses.Signer.Enumeration`1[Ripple.LibraryClasses.Signer.Fields.Field]
+Ripple.LibraryClasses.Signer.Fields.Field FIELD WalletLocator Public, Static, InitOnly Ripple.LibraryClasses.Signer.Fields.Hash256Field
+Ripple.LibraryClasses.Signer.Fields.Field FIELD WalletSize Public, Static, InitOnly Ripple.LibraryClasses.Signer.Fields.Uint32Field
+Ripple.LibraryClasses.Signer.Fields.Field FIELD hash Public, Static, InitOnly Ripple.LibraryClasses.Signer.Fields.Hash256Field
+Ripple.LibraryClasses.Signer.Fields.Field FIELD index Public, Static, InitOnly Ripple.LibraryClasses.Signer.Fields.Hash256Field
+Ripple.LibraryClasses.Signer.Fields.Field FIELD taker_gets_funded Public, Static, InitOnly Ripple.LibraryClasses.Signer.Fields.AmountField
+Ripple.LibraryClasses.Signer.Fields.Field FIELD taker_pays_funded Public, Static, InitOnly Ripple.LibraryClasses.Signer.Fields.AmountField
+Ripple.LibraryClasses.Signer.Fields.Field METHOD op_Implicit PrivateScope, Public, Static, HideBySig, SpecialName Ripple.LibraryClasses.Signer.Fields.Field (s:System.String:None:)
+Ripple.LibraryClasses.Signer.Fields.FieldType CTOR PrivateScope, Public, HideBySig, SpecialName, RTSpecialName name:System.String:None:;ordinal:System.Int32:None:
+Ripple.LibraryClasses.Signer.Fields.FieldType FIELD AccountId Public, Static, InitOnly Ripple.LibraryClasses.Signer.Fields.FieldType
+Ripple.LibraryClasses.Signer.Fields.FieldType FIELD Amount Public, Static, InitOnly Ripple.LibraryClasses.Signer.Fields.FieldType
+Ripple.LibraryClasses.Signer.Fields.FieldType FIELD Blob Public, Static, InitOnly Ripple.LibraryClasses.Signer.Fields.FieldType
+Ripple.LibraryClasses.Signer.Fields.FieldType FIELD Done Public, Static, InitOnly Ripple.LibraryClasses.Signer.Fields.FieldType
+Ripple.LibraryClasses.Signer.Fields.FieldType FIELD Hash128 Public, Static, InitOnly Ripple.LibraryClasses.Signer.Fields.FieldType
+Ripple.LibraryClasses.Signer.Fields.FieldType FIELD Hash160 Public, Static, InitOnly Ripple.LibraryClasses.Signer.Fields.FieldType
+Ripple.LibraryClasses.Signer.Fields.FieldType FIELD Hash256 Public, Static, InitOnly Ripple.LibraryClasses.Signer.Fields.FieldType
+Ripple.LibraryClasses.Signer.Fields.FieldType FIELD LedgerEntry Public, Static, InitOnly Ripple.LibraryClasses.Signer.Fields.FieldType
+Ripple.LibraryClasses.Signer.Fields.FieldType FIELD NotPresent Public, Static, InitOnly Ripple.LibraryClasses.Signer.Fields.FieldType
+Ripple.LibraryClasses.Signer.Fields.FieldType FIELD PathSet Public, Static, InitOnly Ripple.LibraryClasses.Signer.Fields.FieldType
+Ripple.LibraryClasses.Signer.Fields.FieldType FIELD StArray Public, Static, InitOnly Ripple.LibraryClasses.Signer.Fields.FieldType
+Ripple.LibraryClasses.Signer.Fields.FieldType FIELD StObject Public, Static, InitOnly Ripple.LibraryClasses.Signer.Fields.FieldType
+Ripple.LibraryClasses.Signer.Fields.FieldType FIELD Transaction Public, Static, InitOnly Ripple.LibraryClasses.Signer.Fields.FieldType
+Ripple.LibraryClasses.Signer.Fields.FieldType FIELD Uint16 Public, Static, InitOnly Ripple.LibraryClasses.Signer.Fields.FieldType
+Ripple.LibraryClasses.Signer.Fields.FieldType FIELD Uint32 Public, Static, InitOnly Ripple.LibraryClasses.Signer.Fields.FieldType
+Ripple.LibraryClasses.Signer.Fields.FieldType FIELD Uint64 Public, Static, InitOnly Ripple.LibraryClasses.Signer.Fields.FieldType
+Ripple.LibraryClasses.Signer.Fields.FieldType FIELD Uint8 Public, Static, InitOnly Ripple.LibraryClasses.Signer.Fields.FieldType
+Ripple.LibraryClasses.Signer.Fields.FieldType FIELD Unknown Public, Static, InitOnly Ripple.LibraryClasses.Signer.Fields.FieldType
+Ripple.LibraryClasses.Signer.Fields.FieldType FIELD Validation Public, Static, InitOnly Ripple.LibraryClasses.Signer.Fields.FieldType
+Ripple.LibraryClasses.Signer.Fields.FieldType FIELD Values Public, Static Ripple.LibraryClasses.Signer.Enumeration`1[Ripple.LibraryClasses.Signer.Fields.FieldType]
+Ripple.LibraryClasses.Signer.Fields.FieldType FIELD Vector256 Public, Static, InitOnly Ripple.LibraryClasses.Signer.Fields.FieldType
+Ripple.LibraryClasses.Signer.Fields.Hash128Field CTOR PrivateScope, Public, HideBySig, SpecialName, RTSpecialName name:System.String:None:;nthOfType:System.Int32:None:;isSigningField:System.Boolean:Optional, HasDefault:True;isSerialised:System.Boolean:Optional, HasDefault:True
+Ripple.LibraryClasses.Signer.Fields.Hash160Field CTOR PrivateScope, Public, HideBySig, SpecialName, RTSpecialName name:System.String:None:;nthOfType:System.Int32:None:;isSigningField:System.Boolean:Optional, HasDefault:True;isSerialised:System.Boolean:Optional, HasDefault:True
+Ripple.LibraryClasses.Signer.Fields.Hash256Field CTOR PrivateScope, Public, HideBySig, SpecialName, RTSpecialName name:System.String:None:;nthOfType:System.Int32:None:;isSigningField:System.Boolean:Optional, HasDefault:True;isSerialised:System.Boolean:Optional, HasDefault:True
+Ripple.LibraryClasses.Signer.Fields.LedgerEntryTypeField CTOR PrivateScope, Public, HideBySig, SpecialName, RTSpecialName name:System.String:None:;nthOfType:System.Int32:None:
+Ripple.LibraryClasses.Signer.Fields.PathSetField CTOR PrivateScope, Public, HideBySig, SpecialName, RTSpecialName name:System.String:None:;nthOfType:System.Int32:None:;isSigningField:System.Boolean:Optional, HasDefault:True;isSerialised:System.Boolean:Optional, HasDefault:True
+Ripple.LibraryClasses.Signer.Fields.StArrayField CTOR PrivateScope, Public, HideBySig, SpecialName, RTSpecialName name:System.String:None:;nthOfType:System.Int32:None:;isSigningField:System.Boolean:Optional, HasDefault:True;isSerialised:System.Boolean:Optional, HasDefault:True
+Ripple.LibraryClasses.Signer.Fields.StObjectField CTOR PrivateScope, Public, HideBySig, SpecialName, RTSpecialName name:System.String:None:;nthOfType:System.Int32:None:;isSigningField:System.Boolean:Optional, HasDefault:True;isSerialised:System.Boolean:Optional, HasDefault:True
+Ripple.LibraryClasses.Signer.Fields.TransactionTypeField CTOR PrivateScope, Public, HideBySig, SpecialName, RTSpecialName name:System.String:None:;nthOfType:System.Int32:None:
+Ripple.LibraryClasses.Signer.Fields.Uint16Field CTOR PrivateScope, Public, HideBySig, SpecialName, RTSpecialName name:System.String:None:;nthOfType:System.Int32:None:;isSigningField:System.Boolean:Optional, HasDefault:True;isSerialised:System.Boolean:Optional, HasDefault:True
+Ripple.LibraryClasses.Signer.Fields.Uint32Field CTOR PrivateScope, Public, HideBySig, SpecialName, RTSpecialName name:System.String:None:;nthOfType:System.Int32:None:;isSigningField:System.Boolean:Optional, HasDefault:True;isSerialised:System.Boolean:Optional, HasDefault:True
+Ripple.LibraryClasses.Signer.Fields.Uint64Field CTOR PrivateScope, Public, HideBySig, SpecialName, RTSpecialName name:System.String:None:;nthOfType:System.Int32:None:;isSigningField:System.Boolean:Optional, HasDefault:True;isSerialised:System.Boolean:Optional, HasDefault:True
+Ripple.LibraryClasses.Signer.Fields.Uint8Field CTOR PrivateScope, Public, HideBySig, SpecialName, RTSpecialName name:System.String:None:;nthOfType:System.Int32:None:;isSigningField:System.Boolean:Optional, HasDefault:True;isSerialised:System.Boolean:Optional, HasDefault:True
+Ripple.LibraryClasses.Signer.Fields.Vector256Field CTOR PrivateScope, Public, HideBySig, SpecialName, RTSpecialName name:System.String:None:;nthOfType:System.Int32:None:;isSigningField:System.Boolean:Optional, HasDefault:True;isSerialised:System.Boolean:Optional, HasDefault:True
+Ripple.LibraryClasses.Signer.FromJson CTOR PrivateScope, Public, HideBySig, SpecialName, RTSpecialName object:System.Object:None:;method:System.IntPtr:None:
+Ripple.LibraryClasses.Signer.FromJson METHOD BeginInvoke PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask System.IAsyncResult (token:Newtonsoft.Json.Linq.JToken:None:;callback:System.AsyncCallback:None:;object:System.Object:None:)
+Ripple.LibraryClasses.Signer.FromJson METHOD EndInvoke PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask Ripple.LibraryClasses.Signer.Interfaces.ISerializedType (result:System.IAsyncResult:None:)
+Ripple.LibraryClasses.Signer.FromJson METHOD Invoke PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask Ripple.LibraryClasses.Signer.Interfaces.ISerializedType (token:Newtonsoft.Json.Linq.JToken:None:)
+Ripple.LibraryClasses.Signer.FromParser CTOR PrivateScope, Public, HideBySig, SpecialName, RTSpecialName object:System.Object:None:;method:System.IntPtr:None:
+Ripple.LibraryClasses.Signer.FromParser METHOD BeginInvoke PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask System.IAsyncResult (parser:Ripple.LibraryClasses.Signer.BinaryParser:None:;hint:System.Nullable`1[System.Int32]:None:;callback:System.AsyncCallback:None:;object:System.Object:None:)
+Ripple.LibraryClasses.Signer.FromParser METHOD EndInvoke PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask Ripple.LibraryClasses.Signer.Interfaces.ISerializedType (result:System.IAsyncResult:None:)
+Ripple.LibraryClasses.Signer.FromParser METHOD Invoke PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask Ripple.LibraryClasses.Signer.Interfaces.ISerializedType (parser:Ripple.LibraryClasses.Signer.BinaryParser:None:;hint:System.Nullable`1[System.Int32]:Optional, HasDefault:)
+Ripple.LibraryClasses.Signer.Hashes.Hash FIELD Buffer Public, InitOnly System.Byte[]
+Ripple.LibraryClasses.Signer.Hashes.Hash METHOD Equals PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask System.Boolean (other:Ripple.LibraryClasses.Signer.Hashes.Hash:None:)
+Ripple.LibraryClasses.Signer.Hashes.Hash METHOD ToBytes PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask System.Void (sink:Ripple.LibraryClasses.Signer.Interfaces.IBytesSink:None:)
+Ripple.LibraryClasses.Signer.Hashes.Hash METHOD ToJson PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask Newtonsoft.Json.Linq.JToken ()
+Ripple.LibraryClasses.Signer.Hashes.Hash METHOD ToString PrivateScope, Public, Virtual, HideBySig System.String ()
+Ripple.LibraryClasses.Signer.Hashes.Hash METHOD op_Explicit PrivateScope, Public, Static, HideBySig, SpecialName System.String (h:Ripple.LibraryClasses.Signer.Hashes.Hash:None:)
+Ripple.LibraryClasses.Signer.Hashes.Hash128 CTOR PrivateScope, Public, HideBySig, SpecialName, RTSpecialName buffer:System.Byte[]:None:
+Ripple.LibraryClasses.Signer.Hashes.Hash128 METHOD FromJson PrivateScope, Public, Static, HideBySig Ripple.LibraryClasses.Signer.Hashes.Hash128 (token:Newtonsoft.Json.Linq.JToken:None:)
+Ripple.LibraryClasses.Signer.Hashes.Hash128 METHOD FromParser PrivateScope, Public, Static, HideBySig Ripple.LibraryClasses.Signer.Hashes.Hash128 (parser:Ripple.LibraryClasses.Signer.BinaryParser:None:;hint:System.Nullable`1[System.Int32]:Optional, HasDefault:)
+Ripple.LibraryClasses.Signer.Hashes.Hash160 CTOR PrivateScope, Public, HideBySig, SpecialName, RTSpecialName buffer:System.Byte[]:None:
+Ripple.LibraryClasses.Signer.Hashes.Hash160 METHOD FromJson PrivateScope, Public, Static, HideBySig Ripple.LibraryClasses.Signer.Hashes.Hash160 (token:Newtonsoft.Json.Linq.JToken:None:)
+Ripple.LibraryClasses.Signer.Hashes.Hash160 METHOD FromParser PrivateScope, Public, Static, HideBySig Ripple.LibraryClasses.Signer.Hashes.Hash160 (parser:Ripple.LibraryClasses.Signer.BinaryParser:None:;hint:System.Nullable`1[System.Int32]:Optional, HasDefault:)
+Ripple.LibraryClasses.Signer.Hashes.Hash256 CTOR PrivateScope, Public, HideBySig, SpecialName, RTSpecialName buffer:System.Byte[]:None:
+Ripple.LibraryClasses.Signer.Hashes.Hash256 FIELD Zero Public, Static, InitOnly Ripple.LibraryClasses.Signer.Hashes.Hash256
+Ripple.LibraryClasses.Signer.Hashes.Hash256 METHOD FromHex PrivateScope, Public, Static, HideBySig Ripple.LibraryClasses.Signer.Hashes.Hash256 (token:System.String:None:)
+Ripple.LibraryClasses.Signer.Hashes.Hash256 METHOD FromJson PrivateScope, Public, Static, HideBySig Ripple.LibraryClasses.Signer.Hashes.Hash256 (token:Newtonsoft.Json.Linq.JToken:None:)
+Ripple.LibraryClasses.Signer.Hashes.Hash256 METHOD FromParser PrivateScope, Public, Static, HideBySig Ripple.LibraryClasses.Signer.Hashes.Hash256 (parser:Ripple.LibraryClasses.Signer.BinaryParser:None:;hint:System.Nullable`1[System.Int32]:Optional, HasDefault:)
+Ripple.LibraryClasses.Signer.Hashes.Hash256 METHOD Nibblet PrivateScope, Public, HideBySig System.Int32 (depth:System.Int32:None:)
+Ripple.LibraryClasses.Signer.Hashes.HashPrefix FIELD InnerNode Public, Static, Literal, HasDefault Ripple.LibraryClasses.Signer.Hashes.HashPrefix
+Ripple.LibraryClasses.Signer.Hashes.HashPrefix FIELD LeafNode Public, Static, Literal, HasDefault Ripple.LibraryClasses.Signer.Hashes.HashPrefix
+Ripple.LibraryClasses.Signer.Hashes.HashPrefix FIELD LedgerMaster Public, Static, Literal, HasDefault Ripple.LibraryClasses.Signer.Hashes.HashPrefix
+Ripple.LibraryClasses.Signer.Hashes.HashPrefix FIELD Proposal Public, Static, Literal, HasDefault Ripple.LibraryClasses.Signer.Hashes.HashPrefix
+Ripple.LibraryClasses.Signer.Hashes.HashPrefix FIELD TransactionId Public, Static, Literal, HasDefault Ripple.LibraryClasses.Signer.Hashes.HashPrefix
+Ripple.LibraryClasses.Signer.Hashes.HashPrefix FIELD TxNode Public, Static, Literal, HasDefault Ripple.LibraryClasses.Signer.Hashes.HashPrefix
+Ripple.LibraryClasses.Signer.Hashes.HashPrefix FIELD TxSign Public, Static, Literal, HasDefault Ripple.LibraryClasses.Signer.Hashes.HashPrefix
+Ripple.LibraryClasses.Signer.Hashes.HashPrefix FIELD Validation Public, Static, Literal, HasDefault Ripple.LibraryClasses.Signer.Hashes.HashPrefix
+Ripple.LibraryClasses.Signer.Hashes.HashPrefix FIELD value__ Public, SpecialName, RTSpecialName System.UInt32
+Ripple.LibraryClasses.Signer.Hashes.HashPrefixExtensions METHOD Bytes PrivateScope, Public, Static, HideBySig System.Byte[] (prefix:Ripple.LibraryClasses.Signer.Hashes.HashPrefix:None:)
+Ripple.LibraryClasses.Signer.Hashes.HashUtils CTOR PrivateScope, Public, HideBySig, SpecialName, RTSpecialName 
+Ripple.LibraryClasses.Signer.Hashes.HashUtils METHOD DoubleDigest PrivateScope, Public, Static, HideBySig System.Byte[] (buffer:System.Byte[]:None:)
+Ripple.LibraryClasses.Signer.Hashes.HashUtils METHOD PublicKeyHash PrivateScope, Public, Static, HideBySig System.Byte[] (bytes:System.Byte[]:None:)
+Ripple.LibraryClasses.Signer.Hashes.HashUtils METHOD Sha256 PrivateScope, Public, Static, HideBySig System.Byte[] (buffer:System.Byte[]:None:)
+Ripple.LibraryClasses.Signer.Interfaces.IBytesSink METHOD Put PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask, Abstract System.Void (aByte:System.Byte:None:)
+Ripple.LibraryClasses.Signer.Interfaces.IBytesSink METHOD Put PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask, Abstract System.Void (bytes:System.Byte[]:None:)
+Ripple.LibraryClasses.Signer.Interfaces.IKeyPair METHOD CanonicalPubBytes PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask, Abstract System.Byte[] ()
+Ripple.LibraryClasses.Signer.Interfaces.IKeyPair METHOD Id PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask, Abstract System.String ()
+Ripple.LibraryClasses.Signer.Interfaces.IKeyPair METHOD Sign PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask, Abstract System.Byte[] (message:System.Byte[]:None:)
+Ripple.LibraryClasses.Signer.Interfaces.IKeyPair METHOD Verify PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask, Abstract System.Boolean (message:System.Byte[]:None:;signature:System.Byte[]:None:)
+Ripple.LibraryClasses.Signer.Interfaces.ISerializedType METHOD ToBytes PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask, Abstract System.Void (sink:Ripple.LibraryClasses.Signer.Interfaces.IBytesSink:None:)
+Ripple.LibraryClasses.Signer.Interfaces.ISerializedType METHOD ToJson PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask, Abstract Newtonsoft.Json.Linq.JToken ()
+Ripple.LibraryClasses.Signer.IouValue CTOR PrivateScope, Public, HideBySig, SpecialName, RTSpecialName mantissa:System.Byte[]:None:;sign:System.Int32:None:;exponent:System.Int32:Optional, HasDefault:0
+Ripple.LibraryClasses.Signer.IouValue CTOR PrivateScope, Public, HideBySig, SpecialName, RTSpecialName mantissa:System.UInt64:None:;exponent:System.Int32:None:;isNegative:System.Boolean:None:;precision:System.Nullable`1[System.Int32]:Optional, HasDefault:;normalise:System.Boolean:Optional, HasDefault:True
+Ripple.LibraryClasses.Signer.IouValue FIELD Exponent Public, InitOnly System.Int32
+Ripple.LibraryClasses.Signer.IouValue FIELD IllegalOffer Public, Static, InitOnly Ripple.LibraryClasses.Signer.IouValue
+Ripple.LibraryClasses.Signer.IouValue FIELD IllegalOfferMantissaString Public, Static, Literal, HasDefault System.String
+Ripple.LibraryClasses.Signer.IouValue FIELD IsNegative Public, InitOnly System.Boolean
+Ripple.LibraryClasses.Signer.IouValue FIELD Mantissa Public, InitOnly System.UInt64
+Ripple.LibraryClasses.Signer.IouValue FIELD MaxExponent Public, Static, Literal, HasDefault System.Int32
+Ripple.LibraryClasses.Signer.IouValue FIELD MaxMantissa Public, Static, InitOnly System.UInt64
+Ripple.LibraryClasses.Signer.IouValue FIELD MaxPrecision Public, Static, Literal, HasDefault System.Int32
+Ripple.LibraryClasses.Signer.IouValue FIELD MinExponent Public, Static, Literal, HasDefault System.Int32
+Ripple.LibraryClasses.Signer.IouValue FIELD MinMantissa Public, Static, InitOnly System.UInt64
+Ripple.LibraryClasses.Signer.IouValue FIELD Precision Public, InitOnly System.Int32
+Ripple.LibraryClasses.Signer.IouValue FIELD ValueRegex Public, Static, Literal, HasDefault System.String
+Ripple.LibraryClasses.Signer.IouValue METHOD FromString PrivateScope, Public, Static, HideBySig Ripple.LibraryClasses.Signer.IouValue (value:System.String:None:)
+Ripple.LibraryClasses.Signer.IouValue METHOD MantissaBytes PrivateScope, Public, HideBySig System.Byte[] ()
+Ripple.LibraryClasses.Signer.IouValue METHOD ToBytes PrivateScope, Public, Virtual, HideBySig System.Byte[] ()
+Ripple.LibraryClasses.Signer.IouValue METHOD ToString PrivateScope, Public, Virtual, HideBySig System.String ()
+Ripple.LibraryClasses.Signer.IouValue METHOD get_IsIou PrivateScope, Public, Virtual, HideBySig, SpecialName System.Boolean ()
+Ripple.LibraryClasses.Signer.IouValue METHOD get_IsZero PrivateScope, Public, HideBySig, SpecialName System.Boolean ()
+Ripple.LibraryClasses.Signer.KeyPairExtensions METHOD PubKeyHash PrivateScope, Public, Static, HideBySig System.Byte[] (pair:Ripple.LibraryClasses.Signer.Interfaces.IKeyPair:None:)
+Ripple.LibraryClasses.Signer.Keys.K256KeyGenerator CTOR PrivateScope, Public, HideBySig, SpecialName, RTSpecialName 
+Ripple.LibraryClasses.Signer.Keys.K256KeyGenerator METHOD ComputePrivateGen PrivateScope, Public, Static, HideBySig Org.BouncyCastle.Math.BigInteger [BouncyCastle.Crypto] (seedBytes:System.Byte[]:None:)
+Ripple.LibraryClasses.Signer.Keys.K256KeyGenerator METHOD ComputePublicGenerator PrivateScope, Public, Static, HideBySig Org.BouncyCastle.Math.EC.ECPoint [BouncyCastle.Crypto] (privateGen:Org.BouncyCastle.Math.BigInteger [BouncyCastle.Crypto]:None:)
+Ripple.LibraryClasses.Signer.Keys.K256KeyGenerator METHOD ComputePublicKey PrivateScope, Public, Static, HideBySig Org.BouncyCastle.Math.EC.ECPoint [BouncyCastle.Crypto] (secretKey:Org.BouncyCastle.Math.BigInteger [BouncyCastle.Crypto]:None:)
+Ripple.LibraryClasses.Signer.Keys.K256KeyGenerator METHOD ComputePublicKey PrivateScope, Public, Static, HideBySig System.Byte[] (publicGenBytes:System.Byte[]:None:;accountNumber:System.UInt32:None:)
+Ripple.LibraryClasses.Signer.Keys.K256KeyGenerator METHOD ComputeScalar PrivateScope, Public, Static, HideBySig Org.BouncyCastle.Math.BigInteger [BouncyCastle.Crypto] (seedBytes:System.Byte[]:None:;discriminator:System.Nullable`1[System.UInt32]:None:)
+Ripple.LibraryClasses.Signer.Keys.K256KeyGenerator METHOD ComputeSecretKey PrivateScope, Public, Static, HideBySig Org.BouncyCastle.Math.BigInteger [BouncyCastle.Crypto] (privateGen:Org.BouncyCastle.Math.BigInteger [BouncyCastle.Crypto]:None:;accountNumber:System.UInt32:None:)
+Ripple.LibraryClasses.Signer.Keys.K256KeyGenerator METHOD From128Seed PrivateScope, Public, Static, HideBySig Ripple.LibraryClasses.Signer.Keys.K256KeyPair (seedBytes:System.Byte[]:None:;keyIndex:System.Int32:None:)
+Ripple.LibraryClasses.Signer.Keys.K256KeyPair CTOR PrivateScope, Public, HideBySig, SpecialName, RTSpecialName priv:Org.BouncyCastle.Math.BigInteger [BouncyCastle.Crypto]:None:
+Ripple.LibraryClasses.Signer.Keys.K256KeyPair METHOD Id PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask System.String ()
+Ripple.LibraryClasses.Signer.Keys.K256KeyPair METHOD Priv PrivateScope, Public, HideBySig Org.BouncyCastle.Math.BigInteger [BouncyCastle.Crypto] ()
+Ripple.LibraryClasses.Signer.Keys.K256KeyPair METHOD Sign PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask System.Byte[] (message:System.Byte[]:None:)
+Ripple.LibraryClasses.Signer.Keys.K256VerifyingKey CTOR PrivateScope, Public, HideBySig, SpecialName, RTSpecialName pub:Org.BouncyCastle.Math.EC.ECPoint [BouncyCastle.Crypto]:None:
+Ripple.LibraryClasses.Signer.Keys.K256VerifyingKey METHOD CanonicalPubBytes PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask System.Byte[] ()
+Ripple.LibraryClasses.Signer.Keys.K256VerifyingKey METHOD Verify PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask System.Boolean (message:System.Byte[]:None:;signature:System.Byte[]:None:)
+Ripple.LibraryClasses.Signer.Keys.Secp256K1 CTOR PrivateScope, Public, HideBySig, SpecialName, RTSpecialName 
+Ripple.LibraryClasses.Signer.Keys.Secp256K1 METHOD BasePoint PrivateScope, Public, Static, HideBySig Org.BouncyCastle.Math.EC.ECPoint [BouncyCastle.Crypto] ()
+Ripple.LibraryClasses.Signer.Keys.Secp256K1 METHOD Curve PrivateScope, Public, Static, HideBySig Org.BouncyCastle.Math.EC.ECCurve [BouncyCastle.Crypto] ()
+Ripple.LibraryClasses.Signer.Keys.Secp256K1 METHOD Order PrivateScope, Public, Static, HideBySig Org.BouncyCastle.Math.BigInteger [BouncyCastle.Crypto] ()
+Ripple.LibraryClasses.Signer.Keys.Secp256K1 METHOD Parameters PrivateScope, Public, Static, HideBySig Org.BouncyCastle.Crypto.Parameters.ECDomainParameters [BouncyCastle.Crypto] ()
+Ripple.LibraryClasses.Signer.Keys.Sha512 CTOR PrivateScope, Public, HideBySig, SpecialName, RTSpecialName 
+Ripple.LibraryClasses.Signer.Keys.Sha512 CTOR PrivateScope, Public, HideBySig, SpecialName, RTSpecialName prefix:System.UInt32:None:
+Ripple.LibraryClasses.Signer.Keys.Sha512 CTOR PrivateScope, Public, HideBySig, SpecialName, RTSpecialName start:System.Byte[]:None:
+Ripple.LibraryClasses.Signer.Keys.Sha512 METHOD Add PrivateScope, Public, HideBySig Ripple.LibraryClasses.Signer.Keys.Sha512 (bytes:System.Byte[]:None:)
+Ripple.LibraryClasses.Signer.Keys.Sha512 METHOD Add PrivateScope, Public, HideBySig Ripple.LibraryClasses.Signer.Keys.Sha512 (one:System.Byte:None:)
+Ripple.LibraryClasses.Signer.Keys.Sha512 METHOD AddU32 PrivateScope, Public, HideBySig Ripple.LibraryClasses.Signer.Keys.Sha512 (i:System.UInt32:None:)
+Ripple.LibraryClasses.Signer.Keys.Sha512 METHOD Finish PrivateScope, Public, HideBySig System.Byte[] ()
+Ripple.LibraryClasses.Signer.Keys.Sha512 METHOD Finish128 PrivateScope, Public, HideBySig System.Byte[] ()
+Ripple.LibraryClasses.Signer.Keys.Sha512 METHOD Finish256 PrivateScope, Public, HideBySig System.Byte[] ()
+Ripple.LibraryClasses.Signer.Keys.Sha512 METHOD Half PrivateScope, Public, Static, HideBySig System.Byte[] (input:System.Byte[]:None:;prefix:System.Nullable`1[System.UInt32]:Optional, HasDefault:)
+Ripple.LibraryClasses.Signer.Keys.Sha512 METHOD Put PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask System.Void (aByte:System.Byte:None:)
+Ripple.LibraryClasses.Signer.Keys.Sha512 METHOD Put PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask System.Void (bytes:System.Byte[]:None:)
+Ripple.LibraryClasses.Signer.Keys.Sha512 METHOD Quarter PrivateScope, Public, Static, HideBySig System.Byte[] (input:System.Byte[]:None:)
+Ripple.LibraryClasses.Signer.LedgerEntryType FIELD AccountRoot Public, Static, InitOnly Ripple.LibraryClasses.Signer.LedgerEntryType
+Ripple.LibraryClasses.Signer.LedgerEntryType FIELD Contract Public, Static, InitOnly Ripple.LibraryClasses.Signer.LedgerEntryType
+Ripple.LibraryClasses.Signer.LedgerEntryType FIELD DirectoryNode Public, Static, InitOnly Ripple.LibraryClasses.Signer.LedgerEntryType
+Ripple.LibraryClasses.Signer.LedgerEntryType FIELD EnabledAmendments Public, Static, InitOnly Ripple.LibraryClasses.Signer.LedgerEntryType
+Ripple.LibraryClasses.Signer.LedgerEntryType FIELD FeeSettings Public, Static, InitOnly Ripple.LibraryClasses.Signer.LedgerEntryType
+Ripple.LibraryClasses.Signer.LedgerEntryType FIELD GeneratorMap Public, Static, InitOnly Ripple.LibraryClasses.Signer.LedgerEntryType
+Ripple.LibraryClasses.Signer.LedgerEntryType FIELD Invalid Public, Static, InitOnly Ripple.LibraryClasses.Signer.LedgerEntryType
+Ripple.LibraryClasses.Signer.LedgerEntryType FIELD LedgerHashes Public, Static, InitOnly Ripple.LibraryClasses.Signer.LedgerEntryType
+Ripple.LibraryClasses.Signer.LedgerEntryType FIELD Offer Public, Static, InitOnly Ripple.LibraryClasses.Signer.LedgerEntryType
+Ripple.LibraryClasses.Signer.LedgerEntryType FIELD RippleState Public, Static, InitOnly Ripple.LibraryClasses.Signer.LedgerEntryType
+Ripple.LibraryClasses.Signer.LedgerEntryType FIELD SignerList Public, Static, InitOnly Ripple.LibraryClasses.Signer.LedgerEntryType
+Ripple.LibraryClasses.Signer.LedgerEntryType FIELD Ticket Public, Static, InitOnly Ripple.LibraryClasses.Signer.LedgerEntryType
+Ripple.LibraryClasses.Signer.LedgerEntryType FIELD Values Public, Static Ripple.LibraryClasses.Signer.LedgerEntryType+Enumeration
+Ripple.LibraryClasses.Signer.LedgerEntryType METHOD FromJson PrivateScope, Public, Static, HideBySig Ripple.LibraryClasses.Signer.LedgerEntryType (jToken:Newtonsoft.Json.Linq.JToken:None:)
+Ripple.LibraryClasses.Signer.LedgerEntryType+Enumeration CTOR PrivateScope, Public, HideBySig, SpecialName, RTSpecialName 
+Ripple.LibraryClasses.Signer.Misc CTOR PrivateScope, Public, HideBySig, SpecialName, RTSpecialName 
+Ripple.LibraryClasses.Signer.Misc METHOD BigHex PrivateScope, Public, Static, HideBySig System.String (pub:Org.BouncyCastle.Math.BigInteger [BouncyCastle.Crypto]:None:)
+Ripple.LibraryClasses.Signer.Misc METHOD ToHex PrivateScope, Public, Static, HideBySig System.String (bytes:System.Byte[]:None:)
+Ripple.LibraryClasses.Signer.Misc METHOD UBigInt PrivateScope, Public, Static, HideBySig Org.BouncyCastle.Math.BigInteger [BouncyCastle.Crypto] (bytes:System.Byte[]:None:)
+Ripple.LibraryClasses.Signer.NativeValue CTOR PrivateScope, Public, HideBySig, SpecialName, RTSpecialName mantissa:System.Byte[]:None:;sign:System.Int32:None:
+Ripple.LibraryClasses.Signer.NativeValue CTOR PrivateScope, Public, HideBySig, SpecialName, RTSpecialName value:System.String:None:
+Ripple.LibraryClasses.Signer.NativeValue FIELD IsNegative Public System.Boolean
+Ripple.LibraryClasses.Signer.NativeValue FIELD Mantissa Public System.UInt64
+Ripple.LibraryClasses.Signer.NativeValue METHOD ToBytes PrivateScope, Public, Virtual, HideBySig System.Byte[] ()
+Ripple.LibraryClasses.Signer.NativeValue METHOD ToString PrivateScope, Public, Virtual, HideBySig System.String ()
+Ripple.LibraryClasses.Signer.NativeValue METHOD get_IsIou PrivateScope, Public, Virtual, HideBySig, SpecialName System.Boolean ()
+Ripple.LibraryClasses.Signer.Path CTOR PrivateScope, Public, HideBySig, SpecialName, RTSpecialName 
+Ripple.LibraryClasses.Signer.Path CTOR PrivateScope, Public, HideBySig, SpecialName, RTSpecialName enumerable:System.Collections.Generic.IEnumerable`1[Ripple.LibraryClasses.Signer.PathHop]:None:
+Ripple.LibraryClasses.Signer.Path METHOD FromJson PrivateScope, Public, Static, HideBySig Ripple.LibraryClasses.Signer.Path (json:Newtonsoft.Json.Linq.JToken:None:)
+Ripple.LibraryClasses.Signer.Path METHOD ToJson PrivateScope, Public, HideBySig Newtonsoft.Json.Linq.JArray ()
+Ripple.LibraryClasses.Signer.PathHop CTOR PrivateScope, Public, HideBySig, SpecialName, RTSpecialName account:Ripple.LibraryClasses.Signer.AccountId:None:;issuer:Ripple.LibraryClasses.Signer.AccountId:None:;currency:Ripple.LibraryClasses.Signer.Currency:None:
+Ripple.LibraryClasses.Signer.PathHop FIELD Account Public, InitOnly Ripple.LibraryClasses.Signer.AccountId
+Ripple.LibraryClasses.Signer.PathHop FIELD Currency Public, InitOnly Ripple.LibraryClasses.Signer.Currency
+Ripple.LibraryClasses.Signer.PathHop FIELD Issuer Public, InitOnly Ripple.LibraryClasses.Signer.AccountId
+Ripple.LibraryClasses.Signer.PathHop FIELD Type Public, InitOnly System.Int32
+Ripple.LibraryClasses.Signer.PathHop FIELD TypeAccount Public, Static System.Byte
+Ripple.LibraryClasses.Signer.PathHop FIELD TypeCurrency Public, Static System.Byte
+Ripple.LibraryClasses.Signer.PathHop FIELD TypeIssuer Public, Static System.Byte
+Ripple.LibraryClasses.Signer.PathHop METHOD FromJson PrivateScope, Public, Static, HideBySig Ripple.LibraryClasses.Signer.PathHop (json:Newtonsoft.Json.Linq.JToken:None:)
+Ripple.LibraryClasses.Signer.PathHop METHOD HasAccount PrivateScope, Public, HideBySig System.Boolean ()
+Ripple.LibraryClasses.Signer.PathHop METHOD HasCurrency PrivateScope, Public, HideBySig System.Boolean ()
+Ripple.LibraryClasses.Signer.PathHop METHOD HasIssuer PrivateScope, Public, HideBySig System.Boolean ()
+Ripple.LibraryClasses.Signer.PathHop METHOD SynthesizeType PrivateScope, Public, HideBySig System.Int32 ()
+Ripple.LibraryClasses.Signer.PathHop METHOD ToJson PrivateScope, Public, HideBySig Newtonsoft.Json.Linq.JObject ()
+Ripple.LibraryClasses.Signer.PathSet CTOR PrivateScope, Public, HideBySig, SpecialName, RTSpecialName collection:System.Collections.Generic.IEnumerable`1[Ripple.LibraryClasses.Signer.Path]:None:
+Ripple.LibraryClasses.Signer.PathSet FIELD PathSeparatorByte Public, Static System.Byte
+Ripple.LibraryClasses.Signer.PathSet FIELD PathsetEndByte Public, Static System.Byte
+Ripple.LibraryClasses.Signer.PathSet METHOD FromJson PrivateScope, Public, Static, HideBySig Ripple.LibraryClasses.Signer.PathSet (token:Newtonsoft.Json.Linq.JToken:None:)
+Ripple.LibraryClasses.Signer.PathSet METHOD FromParser PrivateScope, Public, Static, HideBySig Ripple.LibraryClasses.Signer.PathSet (parser:Ripple.LibraryClasses.Signer.BinaryParser:None:;hint:System.Nullable`1[System.Int32]:Optional, HasDefault:)
+Ripple.LibraryClasses.Signer.PathSet METHOD ToBytes PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask System.Void (buffer:Ripple.LibraryClasses.Signer.Interfaces.IBytesSink:None:)
+Ripple.LibraryClasses.Signer.PathSet METHOD ToJson PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask Newtonsoft.Json.Linq.JToken ()
+Ripple.LibraryClasses.Signer.SerializedEnumItem`1 METHOD ToBytes PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask System.Void (sink:Ripple.LibraryClasses.Signer.Interfaces.IBytesSink:None:)
+Ripple.LibraryClasses.Signer.SerializedEnumItem`1 METHOD ToJson PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask Newtonsoft.Json.Linq.JToken ()
+Ripple.LibraryClasses.Signer.SerializedEnumeration`2 METHOD FromJson PrivateScope, Public, HideBySig TEnum (value:Newtonsoft.Json.Linq.JToken:None:)
+Ripple.LibraryClasses.Signer.SerializedEnumeration`2 METHOD FromParser PrivateScope, Public, HideBySig TEnum (parser:Ripple.LibraryClasses.Signer.BinaryParser:None:;hint:System.Nullable`1[System.Int32]:Optional, HasDefault:)
+Ripple.LibraryClasses.Signer.SerializedEnumeration`2 METHOD ReadOrdinal PrivateScope, Public, HideBySig System.Int32 (parser:Ripple.LibraryClasses.Signer.BinaryParser:None:)
+Ripple.LibraryClasses.Signer.SerializedEnumeration`2 METHOD get_Width PrivateScope, Public, HideBySig, SpecialName System.Int32 ()
+Ripple.LibraryClasses.Signer.SignedTx CTOR PrivateScope, Public, HideBySig, SpecialName, RTSpecialName hash:System.String:None:;txBlob:System.String:None:;txJson:Newtonsoft.Json.Linq.JObject:None:
+Ripple.LibraryClasses.Signer.SignedTx FIELD Hash Public, InitOnly System.String
+Ripple.LibraryClasses.Signer.SignedTx FIELD TxBlob Public, InitOnly System.String
+Ripple.LibraryClasses.Signer.SignedTx FIELD TxJson Public, InitOnly Newtonsoft.Json.Linq.JObject
+Ripple.LibraryClasses.Signer.StArray CTOR PrivateScope, Public, HideBySig, SpecialName, RTSpecialName 
+Ripple.LibraryClasses.Signer.StArray CTOR PrivateScope, Public, HideBySig, SpecialName, RTSpecialName collection:System.Collections.Generic.IEnumerable`1[Ripple.LibraryClasses.Signer.StObject]:None:
+Ripple.LibraryClasses.Signer.StArray METHOD FromJson PrivateScope, Public, Static, HideBySig Ripple.LibraryClasses.Signer.StArray (token:Newtonsoft.Json.Linq.JToken:None:)
+Ripple.LibraryClasses.Signer.StArray METHOD FromParser PrivateScope, Public, Static, HideBySig Ripple.LibraryClasses.Signer.StArray (parser:Ripple.LibraryClasses.Signer.BinaryParser:None:;hint:System.Nullable`1[System.Int32]:Optional, HasDefault:)
+Ripple.LibraryClasses.Signer.StArray METHOD ToBytes PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask System.Void (sink:Ripple.LibraryClasses.Signer.Interfaces.IBytesSink:None:)
+Ripple.LibraryClasses.Signer.StArray METHOD ToJson PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask Newtonsoft.Json.Linq.JToken ()
+Ripple.LibraryClasses.Signer.StExtensions METHOD ToDebuggedHex PrivateScope, Public, Static, HideBySig System.String (st:Ripple.LibraryClasses.Signer.Interfaces.ISerializedType:None:)
+Ripple.LibraryClasses.Signer.StExtensions METHOD ToHex PrivateScope, Public, Static, HideBySig System.String (st:Ripple.LibraryClasses.Signer.Interfaces.ISerializedType:None:)
+Ripple.LibraryClasses.Signer.StObject CTOR PrivateScope, Public, HideBySig, SpecialName, RTSpecialName 
+Ripple.LibraryClasses.Signer.StObject METHOD FromHex PrivateScope, Public, Static, HideBySig Ripple.LibraryClasses.Signer.StObject (s:System.String:None:)
+Ripple.LibraryClasses.Signer.StObject METHOD FromJson PrivateScope, Public, Static, HideBySig Ripple.LibraryClasses.Signer.StObject (token:Newtonsoft.Json.Linq.JToken:None:)
+Ripple.LibraryClasses.Signer.StObject METHOD FromJson PrivateScope, Public, Static, HideBySig Ripple.LibraryClasses.Signer.StObject (token:Newtonsoft.Json.Linq.JToken:None:;strict:System.Boolean:None:)
+Ripple.LibraryClasses.Signer.StObject METHOD FromParser PrivateScope, Public, Static, HideBySig Ripple.LibraryClasses.Signer.StObject (parser:Ripple.LibraryClasses.Signer.BinaryParser:None:;hint:System.Nullable`1[System.Int32]:Optional, HasDefault:)
+Ripple.LibraryClasses.Signer.StObject METHOD Has PrivateScope, Public, HideBySig System.Boolean (field:Ripple.LibraryClasses.Signer.Fields.Field:None:)
+Ripple.LibraryClasses.Signer.StObject METHOD SetFlag PrivateScope, Public, HideBySig Ripple.LibraryClasses.Signer.StObject (flags:System.UInt32:None:)
+Ripple.LibraryClasses.Signer.StObject METHOD SigningData PrivateScope, Public, HideBySig System.Byte[] ()
+Ripple.LibraryClasses.Signer.StObject METHOD ToBytes PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask System.Void (to:Ripple.LibraryClasses.Signer.Interfaces.IBytesSink:None:)
+Ripple.LibraryClasses.Signer.StObject METHOD ToBytes PrivateScope, Public, HideBySig System.Byte[] ()
+Ripple.LibraryClasses.Signer.StObject METHOD ToBytes PrivateScope, Public, HideBySig System.Void (to:Ripple.LibraryClasses.Signer.Interfaces.IBytesSink:None:;p:System.Func`2[Ripple.LibraryClasses.Signer.Fields.Field,System.Boolean]:None:)
+Ripple.LibraryClasses.Signer.StObject METHOD ToJson PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask Newtonsoft.Json.Linq.JToken ()
+Ripple.LibraryClasses.Signer.StObject METHOD ToJsonObject PrivateScope, Public, HideBySig Newtonsoft.Json.Linq.JObject ()
+Ripple.LibraryClasses.Signer.StObject METHOD get_Item PrivateScope, Public, HideBySig, SpecialName Ripple.LibraryClasses.Signer.AccountId (f:Ripple.LibraryClasses.Signer.Fields.AccountIdField:None:)
+Ripple.LibraryClasses.Signer.StObject METHOD get_Item PrivateScope, Public, HideBySig, SpecialName Ripple.LibraryClasses.Signer.Amount (f:Ripple.LibraryClasses.Signer.Fields.AmountField:None:)
+Ripple.LibraryClasses.Signer.StObject METHOD get_Item PrivateScope, Public, HideBySig, SpecialName Ripple.LibraryClasses.Signer.Blob (f:Ripple.LibraryClasses.Signer.Fields.BlobField:None:)
+Ripple.LibraryClasses.Signer.StObject METHOD get_Item PrivateScope, Public, HideBySig, SpecialName Ripple.LibraryClasses.Signer.EngineResult (f:Ripple.LibraryClasses.Signer.Fields.EngineResultField:None:)
+Ripple.LibraryClasses.Signer.StObject METHOD get_Item PrivateScope, Public, HideBySig, SpecialName Ripple.LibraryClasses.Signer.Hashes.Hash128 (f:Ripple.LibraryClasses.Signer.Fields.Hash128Field:None:)
+Ripple.LibraryClasses.Signer.StObject METHOD get_Item PrivateScope, Public, HideBySig, SpecialName Ripple.LibraryClasses.Signer.Hashes.Hash160 (f:Ripple.LibraryClasses.Signer.Fields.Hash160Field:None:)
+Ripple.LibraryClasses.Signer.StObject METHOD get_Item PrivateScope, Public, HideBySig, SpecialName Ripple.LibraryClasses.Signer.Hashes.Hash256 (f:Ripple.LibraryClasses.Signer.Fields.Hash256Field:None:)
+Ripple.LibraryClasses.Signer.StObject METHOD get_Item PrivateScope, Public, HideBySig, SpecialName Ripple.LibraryClasses.Signer.LedgerEntryType (f:Ripple.LibraryClasses.Signer.Fields.LedgerEntryTypeField:None:)
+Ripple.LibraryClasses.Signer.StObject METHOD get_Item PrivateScope, Public, HideBySig, SpecialName Ripple.LibraryClasses.Signer.PathSet (f:Ripple.LibraryClasses.Signer.Fields.PathSetField:None:)
+Ripple.LibraryClasses.Signer.StObject METHOD get_Item PrivateScope, Public, HideBySig, SpecialName Ripple.LibraryClasses.Signer.StArray (f:Ripple.LibraryClasses.Signer.Fields.StArrayField:None:)
+Ripple.LibraryClasses.Signer.StObject METHOD get_Item PrivateScope, Public, HideBySig, SpecialName Ripple.LibraryClasses.Signer.StObject (f:Ripple.LibraryClasses.Signer.Fields.StObjectField:None:)
+Ripple.LibraryClasses.Signer.StObject METHOD get_Item PrivateScope, Public, HideBySig, SpecialName Ripple.LibraryClasses.Signer.TransactionType (f:Ripple.LibraryClasses.Signer.Fields.TransactionTypeField:None:)
+Ripple.LibraryClasses.Signer.StObject METHOD get_Item PrivateScope, Public, HideBySig, SpecialName Ripple.LibraryClasses.Signer.Uints.Uint16 (f:Ripple.LibraryClasses.Signer.Fields.Uint16Field:None:)
+Ripple.LibraryClasses.Signer.StObject METHOD get_Item PrivateScope, Public, HideBySig, SpecialName Ripple.LibraryClasses.Signer.Uints.Uint32 (f:Ripple.LibraryClasses.Signer.Fields.Uint32Field:None:)
+Ripple.LibraryClasses.Signer.StObject METHOD get_Item PrivateScope, Public, HideBySig, SpecialName Ripple.LibraryClasses.Signer.Uints.Uint64 (f:Ripple.LibraryClasses.Signer.Fields.Uint64Field:None:)
+Ripple.LibraryClasses.Signer.StObject METHOD get_Item PrivateScope, Public, HideBySig, SpecialName Ripple.LibraryClasses.Signer.Uints.Uint8 (f:Ripple.LibraryClasses.Signer.Fields.Uint8Field:None:)
+Ripple.LibraryClasses.Signer.StObject METHOD get_Item PrivateScope, Public, HideBySig, SpecialName Ripple.LibraryClasses.Signer.Vector256 (f:Ripple.LibraryClasses.Signer.Fields.Vector256Field:None:)
+Ripple.LibraryClasses.Signer.StObject METHOD op_Implicit PrivateScope, Public, Static, HideBySig, SpecialName Ripple.LibraryClasses.Signer.StObject (v:Newtonsoft.Json.Linq.JToken:None:)
+Ripple.LibraryClasses.Signer.StObject METHOD set_Item PrivateScope, Public, HideBySig, SpecialName System.Void (f:Ripple.LibraryClasses.Signer.Fields.AccountIdField:None:;value:Ripple.LibraryClasses.Signer.AccountId:None:)
+Ripple.LibraryClasses.Signer.StObject METHOD set_Item PrivateScope, Public, HideBySig, SpecialName System.Void (f:Ripple.LibraryClasses.Signer.Fields.AmountField:None:;value:Ripple.LibraryClasses.Signer.Amount:None:)
+Ripple.LibraryClasses.Signer.StObject METHOD set_Item PrivateScope, Public, HideBySig, SpecialName System.Void (f:Ripple.LibraryClasses.Signer.Fields.BlobField:None:;value:Ripple.LibraryClasses.Signer.Blob:None:)
+Ripple.LibraryClasses.Signer.StObject METHOD set_Item PrivateScope, Public, HideBySig, SpecialName System.Void (f:Ripple.LibraryClasses.Signer.Fields.EngineResultField:None:;value:Ripple.LibraryClasses.Signer.EngineResult:None:)
+Ripple.LibraryClasses.Signer.StObject METHOD set_Item PrivateScope, Public, HideBySig, SpecialName System.Void (f:Ripple.LibraryClasses.Signer.Fields.Hash128Field:None:;value:Ripple.LibraryClasses.Signer.Hashes.Hash128:None:)
+Ripple.LibraryClasses.Signer.StObject METHOD set_Item PrivateScope, Public, HideBySig, SpecialName System.Void (f:Ripple.LibraryClasses.Signer.Fields.Hash160Field:None:;value:Ripple.LibraryClasses.Signer.Hashes.Hash160:None:)
+Ripple.LibraryClasses.Signer.StObject METHOD set_Item PrivateScope, Public, HideBySig, SpecialName System.Void (f:Ripple.LibraryClasses.Signer.Fields.Hash256Field:None:;value:Ripple.LibraryClasses.Signer.Hashes.Hash256:None:)
+Ripple.LibraryClasses.Signer.StObject METHOD set_Item PrivateScope, Public, HideBySig, SpecialName System.Void (f:Ripple.LibraryClasses.Signer.Fields.LedgerEntryTypeField:None:;value:Ripple.LibraryClasses.Signer.LedgerEntryType:None:)
+Ripple.LibraryClasses.Signer.StObject METHOD set_Item PrivateScope, Public, HideBySig, SpecialName System.Void (f:Ripple.LibraryClasses.Signer.Fields.PathSetField:None:;value:Ripple.LibraryClasses.Signer.PathSet:None:)
+Ripple.LibraryClasses.Signer.StObject METHOD set_Item PrivateScope, Public, HideBySig, SpecialName System.Void (f:Ripple.LibraryClasses.Signer.Fields.StArrayField:None:;value:Ripple.LibraryClasses.Signer.StArray:None:)
+Ripple.LibraryClasses.Signer.StObject METHOD set_Item PrivateScope, Public, HideBySig, SpecialName System.Void (f:Ripple.LibraryClasses.Signer.Fields.StObjectField:None:;value:Ripple.LibraryClasses.Signer.StObject:None:)
+Ripple.LibraryClasses.Signer.StObject METHOD set_Item PrivateScope, Public, HideBySig, SpecialName System.Void (f:Ripple.LibraryClasses.Signer.Fields.TransactionTypeField:None:;value:Ripple.LibraryClasses.Signer.TransactionType:None:)
+Ripple.LibraryClasses.Signer.StObject METHOD set_Item PrivateScope, Public, HideBySig, SpecialName System.Void (f:Ripple.LibraryClasses.Signer.Fields.Uint16Field:None:;value:Ripple.LibraryClasses.Signer.Uints.Uint16:None:)
+Ripple.LibraryClasses.Signer.StObject METHOD set_Item PrivateScope, Public, HideBySig, SpecialName System.Void (f:Ripple.LibraryClasses.Signer.Fields.Uint32Field:None:;value:Ripple.LibraryClasses.Signer.Uints.Uint32:None:)
+Ripple.LibraryClasses.Signer.StObject METHOD set_Item PrivateScope, Public, HideBySig, SpecialName System.Void (f:Ripple.LibraryClasses.Signer.Fields.Uint64Field:None:;value:Ripple.LibraryClasses.Signer.Uints.Uint64:None:)
+Ripple.LibraryClasses.Signer.StObject METHOD set_Item PrivateScope, Public, HideBySig, SpecialName System.Void (f:Ripple.LibraryClasses.Signer.Fields.Uint8Field:None:;value:Ripple.LibraryClasses.Signer.Uints.Uint8:None:)
+Ripple.LibraryClasses.Signer.StObject METHOD set_Item PrivateScope, Public, HideBySig, SpecialName System.Void (f:Ripple.LibraryClasses.Signer.Fields.Vector256Field:None:;value:Ripple.LibraryClasses.Signer.Vector256:None:)
+Ripple.LibraryClasses.Signer.TransactionType FIELD AccountSet Public, Static, InitOnly Ripple.LibraryClasses.Signer.TransactionType
+Ripple.LibraryClasses.Signer.TransactionType FIELD EnableAmendment Public, Static, InitOnly Ripple.LibraryClasses.Signer.TransactionType
+Ripple.LibraryClasses.Signer.TransactionType FIELD EscrowCancel Public, Static, InitOnly Ripple.LibraryClasses.Signer.TransactionType
+Ripple.LibraryClasses.Signer.TransactionType FIELD EscrowCreate Public, Static, InitOnly Ripple.LibraryClasses.Signer.TransactionType
+Ripple.LibraryClasses.Signer.TransactionType FIELD EscrowFinish Public, Static, InitOnly Ripple.LibraryClasses.Signer.TransactionType
+Ripple.LibraryClasses.Signer.TransactionType FIELD Invalid Public, Static, InitOnly Ripple.LibraryClasses.Signer.TransactionType
+Ripple.LibraryClasses.Signer.TransactionType FIELD NFTokenAcceptOffer Public, Static, InitOnly Ripple.LibraryClasses.Signer.TransactionType
+Ripple.LibraryClasses.Signer.TransactionType FIELD NFTokenBurn Public, Static, InitOnly Ripple.LibraryClasses.Signer.TransactionType
+Ripple.LibraryClasses.Signer.TransactionType FIELD NFTokenCancelOffer Public, Static, InitOnly Ripple.LibraryClasses.Signer.TransactionType
+Ripple.LibraryClasses.Signer.TransactionType FIELD NFTokenCreateOffer Public, Static, InitOnly Ripple.LibraryClasses.Signer.TransactionType
+Ripple.LibraryClasses.Signer.TransactionType FIELD NFTokenMint Public, Static, InitOnly Ripple.LibraryClasses.Signer.TransactionType
+Ripple.LibraryClasses.Signer.TransactionType FIELD OfferCancel Public, Static, InitOnly Ripple.LibraryClasses.Signer.TransactionType
+Ripple.LibraryClasses.Signer.TransactionType FIELD OfferCreate Public, Static, InitOnly Ripple.LibraryClasses.Signer.TransactionType
+Ripple.LibraryClasses.Signer.TransactionType FIELD Payment Public, Static, InitOnly Ripple.LibraryClasses.Signer.TransactionType
+Ripple.LibraryClasses.Signer.TransactionType FIELD PaymentChannelClaim Public, Static, InitOnly Ripple.LibraryClasses.Signer.TransactionType
+Ripple.LibraryClasses.Signer.TransactionType FIELD PaymentChannelCreate Public, Static, InitOnly Ripple.LibraryClasses.Signer.TransactionType
+Ripple.LibraryClasses.Signer.TransactionType FIELD PaymentChannelFund Public, Static, InitOnly Ripple.LibraryClasses.Signer.TransactionType
+Ripple.LibraryClasses.Signer.TransactionType FIELD SetFee Public, Static, InitOnly Ripple.LibraryClasses.Signer.TransactionType
+Ripple.LibraryClasses.Signer.TransactionType FIELD SetRegularKey Public, Static, InitOnly Ripple.LibraryClasses.Signer.TransactionType
+Ripple.LibraryClasses.Signer.TransactionType FIELD SignerListSet Public, Static, InitOnly Ripple.LibraryClasses.Signer.TransactionType
+Ripple.LibraryClasses.Signer.TransactionType FIELD TicketCancel Public, Static, InitOnly Ripple.LibraryClasses.Signer.TransactionType
+Ripple.LibraryClasses.Signer.TransactionType FIELD TicketCreate Public, Static, InitOnly Ripple.LibraryClasses.Signer.TransactionType
+Ripple.LibraryClasses.Signer.TransactionType FIELD TrustSet Public, Static, InitOnly Ripple.LibraryClasses.Signer.TransactionType
+Ripple.LibraryClasses.Signer.TransactionType FIELD Values Public, Static Ripple.LibraryClasses.Signer.TransactionType+Enumeration
+Ripple.LibraryClasses.Signer.TransactionType+Enumeration CTOR PrivateScope, Public, HideBySig, SpecialName, RTSpecialName 
+Ripple.LibraryClasses.Signer.TxFormat CTOR PrivateScope, Public, HideBySig, SpecialName, RTSpecialName 
+Ripple.LibraryClasses.Signer.TxFormat FIELD Formats Public, Static System.Collections.Generic.Dictionary`2[Ripple.LibraryClasses.Signer.TransactionType,Ripple.LibraryClasses.Signer.TxFormat]
+Ripple.LibraryClasses.Signer.TxFormat METHOD Validate PrivateScope, Public, Static, HideBySig System.Void (obj:Ripple.LibraryClasses.Signer.StObject:None:)
+Ripple.LibraryClasses.Signer.TxFormat+Requirement FIELD Default Public, Static, Literal, HasDefault Ripple.LibraryClasses.Signer.TxFormat+Requirement
+Ripple.LibraryClasses.Signer.TxFormat+Requirement FIELD Optional Public, Static, Literal, HasDefault Ripple.LibraryClasses.Signer.TxFormat+Requirement
+Ripple.LibraryClasses.Signer.TxFormat+Requirement FIELD Required Public, Static, Literal, HasDefault Ripple.LibraryClasses.Signer.TxFormat+Requirement
+Ripple.LibraryClasses.Signer.TxFormat+Requirement FIELD value__ Public, SpecialName, RTSpecialName System.Int32
+Ripple.LibraryClasses.Signer.TxSigner FIELD CanonicalSigFlag Public, Static, Literal, HasDefault System.UInt32
+Ripple.LibraryClasses.Signer.TxSigner METHOD FromKeyPair PrivateScope, Public, Static, HideBySig Ripple.LibraryClasses.Signer.TxSigner (keyPair:Ripple.LibraryClasses.Signer.Interfaces.IKeyPair:None:)
+Ripple.LibraryClasses.Signer.TxSigner METHOD FromSecret PrivateScope, Public, Static, HideBySig Ripple.LibraryClasses.Signer.TxSigner (secret:System.String:None:)
+Ripple.LibraryClasses.Signer.TxSigner METHOD SignJson PrivateScope, Public, HideBySig Ripple.LibraryClasses.Signer.SignedTx (tx:Newtonsoft.Json.Linq.JObject:None:)
+Ripple.LibraryClasses.Signer.TxSigner METHOD SignJson PrivateScope, Public, Static, HideBySig Ripple.LibraryClasses.Signer.SignedTx (tx:Newtonsoft.Json.Linq.JObject:None:;secret:System.String:None:)
+Ripple.LibraryClasses.Signer.TxSigner METHOD SignStObject PrivateScope, Public, HideBySig Ripple.LibraryClasses.Signer.SignedTx (tx:Ripple.LibraryClasses.Signer.StObject:None:)
+Ripple.LibraryClasses.Signer.TxSigner METHOD ValidateAndEncode PrivateScope, Public, Static, HideBySig Ripple.LibraryClasses.Signer.SignedTx (tx:Ripple.LibraryClasses.Signer.StObject:None:)
+Ripple.LibraryClasses.Signer.Uints.Uint16 CTOR PrivateScope, Public, HideBySig, SpecialName, RTSpecialName value:System.UInt16:None:
+Ripple.LibraryClasses.Signer.Uints.Uint16 METHOD FromJson PrivateScope, Public, Static, HideBySig Ripple.LibraryClasses.Signer.Uints.Uint16 (token:Newtonsoft.Json.Linq.JToken:None:)
+Ripple.LibraryClasses.Signer.Uints.Uint16 METHOD FromParser PrivateScope, Public, Static, HideBySig Ripple.LibraryClasses.Signer.Uints.Uint16 (parser:Ripple.LibraryClasses.Signer.BinaryParser:None:;hint:System.Nullable`1[System.Int32]:Optional, HasDefault:)
+Ripple.LibraryClasses.Signer.Uints.Uint16 METHOD ToBytes PrivateScope, Public, Virtual, HideBySig System.Byte[] ()
+Ripple.LibraryClasses.Signer.Uints.Uint16 METHOD op_Implicit PrivateScope, Public, Static, HideBySig, SpecialName Ripple.LibraryClasses.Signer.Uints.Uint16 (v:System.UInt16:None:)
+Ripple.LibraryClasses.Signer.Uints.Uint32 CTOR PrivateScope, Public, HideBySig, SpecialName, RTSpecialName value:System.UInt32:None:
+Ripple.LibraryClasses.Signer.Uints.Uint32 METHOD FromJson PrivateScope, Public, Static, HideBySig Ripple.LibraryClasses.Signer.Uints.Uint32 (token:Newtonsoft.Json.Linq.JToken:None:)
+Ripple.LibraryClasses.Signer.Uints.Uint32 METHOD FromParser PrivateScope, Public, Static, HideBySig Ripple.LibraryClasses.Signer.Uints.Uint32 (parser:Ripple.LibraryClasses.Signer.BinaryParser:None:;hint:System.Nullable`1[System.Int32]:Optional, HasDefault:)
+Ripple.LibraryClasses.Signer.Uints.Uint32 METHOD ToBytes PrivateScope, Public, Virtual, HideBySig System.Byte[] ()
+Ripple.LibraryClasses.Signer.Uints.Uint32 METHOD op_Implicit PrivateScope, Public, Static, HideBySig, SpecialName Ripple.LibraryClasses.Signer.Uints.Uint32 (v:System.UInt32:None:)
+Ripple.LibraryClasses.Signer.Uints.Uint32 METHOD op_Implicit PrivateScope, Public, Static, HideBySig, SpecialName System.UInt32 (v:Ripple.LibraryClasses.Signer.Uints.Uint32:None:)
+Ripple.LibraryClasses.Signer.Uints.Uint64 CTOR PrivateScope, Public, HideBySig, SpecialName, RTSpecialName value:System.UInt64:None:
+Ripple.LibraryClasses.Signer.Uints.Uint64 METHOD FromJson PrivateScope, Public, Static, HideBySig Ripple.LibraryClasses.Signer.Uints.Uint64 (token:Newtonsoft.Json.Linq.JToken:None:)
+Ripple.LibraryClasses.Signer.Uints.Uint64 METHOD FromParser PrivateScope, Public, Static, HideBySig Ripple.LibraryClasses.Signer.Uints.Uint64 (parser:Ripple.LibraryClasses.Signer.BinaryParser:None:;hint:System.Nullable`1[System.Int32]:Optional, HasDefault:)
+Ripple.LibraryClasses.Signer.Uints.Uint64 METHOD ToBytes PrivateScope, Public, Virtual, HideBySig System.Byte[] ()
+Ripple.LibraryClasses.Signer.Uints.Uint64 METHOD ToJson PrivateScope, Public, Virtual, HideBySig Newtonsoft.Json.Linq.JToken ()
+Ripple.LibraryClasses.Signer.Uints.Uint64 METHOD ToString PrivateScope, Public, Virtual, HideBySig System.String ()
+Ripple.LibraryClasses.Signer.Uints.Uint64 METHOD op_Implicit PrivateScope, Public, Static, HideBySig, SpecialName Ripple.LibraryClasses.Signer.Uints.Uint64 (v:System.UInt64:None:)
+Ripple.LibraryClasses.Signer.Uints.Uint8 CTOR PrivateScope, Public, HideBySig, SpecialName, RTSpecialName value:System.Byte:None:
+Ripple.LibraryClasses.Signer.Uints.Uint8 METHOD FromJson PrivateScope, Public, Static, HideBySig Ripple.LibraryClasses.Signer.Uints.Uint8 (token:Newtonsoft.Json.Linq.JToken:None:)
+Ripple.LibraryClasses.Signer.Uints.Uint8 METHOD FromParser PrivateScope, Public, Static, HideBySig Ripple.LibraryClasses.Signer.Uints.Uint8 (parser:Ripple.LibraryClasses.Signer.BinaryParser:None:;hint:System.Nullable`1[System.Int32]:Optional, HasDefault:)
+Ripple.LibraryClasses.Signer.Uints.Uint8 METHOD ToBytes PrivateScope, Public, Virtual, HideBySig System.Byte[] ()
+Ripple.LibraryClasses.Signer.Uints.Uint8 METHOD op_Implicit PrivateScope, Public, Static, HideBySig, SpecialName Ripple.LibraryClasses.Signer.Uints.Uint8 (v:System.Byte:None:)
+Ripple.LibraryClasses.Signer.Uints.Uint`1 FIELD Value Public, InitOnly T
+Ripple.LibraryClasses.Signer.Uints.Uint`1 METHOD ToBytes PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask System.Void (sink:Ripple.LibraryClasses.Signer.Interfaces.IBytesSink:None:)
+Ripple.LibraryClasses.Signer.Uints.Uint`1 METHOD ToBytes PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask, Abstract System.Byte[] ()
+Ripple.LibraryClasses.Signer.Uints.Uint`1 METHOD ToJson PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask Newtonsoft.Json.Linq.JToken ()
+Ripple.LibraryClasses.Signer.Uints.Uint`1 METHOD ToString PrivateScope, Public, Virtual, HideBySig System.String ()
+Ripple.LibraryClasses.Signer.UnissuedAmount CTOR PrivateScope, Public, HideBySig, SpecialName, RTSpecialName value:System.Decimal:None:;currency:Ripple.LibraryClasses.Signer.Currency:None:
+Ripple.LibraryClasses.Signer.UnissuedAmount METHOD op_Division PrivateScope, Public, Static, HideBySig, SpecialName Ripple.LibraryClasses.Signer.Amount (ui:Ripple.LibraryClasses.Signer.UnissuedAmount:None:;issuer:Ripple.LibraryClasses.Signer.AccountId:None:)
+Ripple.LibraryClasses.Signer.UnissuedAmount METHOD op_Implicit PrivateScope, Public, Static, HideBySig, SpecialName Ripple.LibraryClasses.Signer.Amount (a:Ripple.LibraryClasses.Signer.UnissuedAmount:None:)
+Ripple.LibraryClasses.Signer.Utils METHOD TransactionIdBytes PrivateScope, Public, Static, HideBySig System.Byte[] (txBlob:System.Byte[]:None:)
+Ripple.LibraryClasses.Signer.Vector256 CTOR PrivateScope, Public, HideBySig, SpecialName, RTSpecialName 
+Ripple.LibraryClasses.Signer.Vector256 METHOD FromJson PrivateScope, Public, Static, HideBySig Ripple.LibraryClasses.Signer.Vector256 (token:Newtonsoft.Json.Linq.JToken:None:)
+Ripple.LibraryClasses.Signer.Vector256 METHOD FromParser PrivateScope, Public, Static, HideBySig Ripple.LibraryClasses.Signer.Vector256 (parser:Ripple.LibraryClasses.Signer.BinaryParser:None:;hint:System.Nullable`1[System.Int32]:Optional, HasDefault:)
+Ripple.LibraryClasses.Signer.Vector256 METHOD ToBytes PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask System.Void (sink:Ripple.LibraryClasses.Signer.Interfaces.IBytesSink:None:)
+Ripple.LibraryClasses.Signer.Vector256 METHOD ToJson PrivateScope, Public, Final, Virtual, HideBySig, VtableLayoutMask Newtonsoft.Json.Linq.JToken ()
+Ripple.LibraryClasses.ValidateAddress.AddressCodec CTOR PrivateScope, Public, HideBySig, SpecialName, RTSpecialName 
+Ripple.LibraryClasses.ValidateAddress.AddressCodec FIELD AccountId Public, Static Ripple.LibraryClasses.Signer.B58+Version
+Ripple.LibraryClasses.ValidateAddress.AddressCodec FIELD AccountPrivate Public, Static Ripple.LibraryClasses.Signer.B58+Version
+Ripple.LibraryClasses.ValidateAddress.AddressCodec FIELD AccountPublic Public, Static Ripple.LibraryClasses.Signer.B58+Version
+Ripple.LibraryClasses.ValidateAddress.AddressCodec FIELD Alphabet Public, Static, Literal, HasDefault System.String
+Ripple.LibraryClasses.ValidateAddress.AddressCodec FIELD AnySeed Public, Static Ripple.LibraryClasses.Signer.B58+Versions
+Ripple.LibraryClasses.ValidateAddress.AddressCodec FIELD Ed25519Seed Public, Static Ripple.LibraryClasses.Signer.B58+Version
+Ripple.LibraryClasses.ValidateAddress.AddressCodec FIELD FamilyGenerator Public, Static Ripple.LibraryClasses.Signer.B58+Version
+Ripple.LibraryClasses.ValidateAddress.AddressCodec FIELD K256Seed Public, Static Ripple.LibraryClasses.Signer.B58+Version
+Ripple.LibraryClasses.ValidateAddress.AddressCodec FIELD NodePrivate Public, Static Ripple.LibraryClasses.Signer.B58+Version
+Ripple.LibraryClasses.ValidateAddress.AddressCodec FIELD NodePublic Public, Static Ripple.LibraryClasses.Signer.B58+Version
+Ripple.LibraryClasses.ValidateAddress.AddressCodec METHOD DecodeAddress PrivateScope, Public, Static, HideBySig System.Byte[] (address:System.String:None:)
+Ripple.LibraryClasses.ValidateAddress.AddressCodec METHOD DecodeEdSeed PrivateScope, Public, Static, HideBySig System.Byte[] (base58:System.String:None:)
+Ripple.LibraryClasses.ValidateAddress.AddressCodec METHOD DecodeK256Seed PrivateScope, Public, Static, HideBySig System.Byte[] (seed:System.String:None:)
+Ripple.LibraryClasses.ValidateAddress.AddressCodec METHOD DecodeNodePublic PrivateScope, Public, Static, HideBySig System.Byte[] (publicKey:System.String:None:)
+Ripple.LibraryClasses.ValidateAddress.AddressCodec METHOD DecodeSeed PrivateScope, Public, Static, HideBySig Ripple.LibraryClasses.ValidateAddress.AddressCodec+DecodedSeed (seed:System.String:None:)
+Ripple.LibraryClasses.ValidateAddress.AddressCodec METHOD EncodeAddress PrivateScope, Public, Static, HideBySig System.String (bytes:System.Byte[]:None:)
+Ripple.LibraryClasses.ValidateAddress.AddressCodec METHOD EncodeEdSeed PrivateScope, Public, Static, HideBySig System.String (bytes:System.Byte[]:None:)
+Ripple.LibraryClasses.ValidateAddress.AddressCodec METHOD EncodeK256Seed PrivateScope, Public, Static, HideBySig System.String (bytes:System.Byte[]:None:)
+Ripple.LibraryClasses.ValidateAddress.AddressCodec METHOD EncodeNodePublic PrivateScope, Public, Static, HideBySig System.String (bytes:System.Byte[]:None:)
+Ripple.LibraryClasses.ValidateAddress.AddressCodec METHOD EncodeSeed PrivateScope, Public, Static, HideBySig System.String (bytes:System.Byte[]:None:;type:System.String:None:)
+Ripple.LibraryClasses.ValidateAddress.AddressCodec METHOD IsValidAddress PrivateScope, Public, Static, HideBySig System.Boolean (address:System.String:None:)
+Ripple.LibraryClasses.ValidateAddress.AddressCodec METHOD IsValidEdSeed PrivateScope, Public, Static, HideBySig System.Boolean (edSeed:System.String:None:)
+Ripple.LibraryClasses.ValidateAddress.AddressCodec METHOD IsValidK256Seed PrivateScope, Public, Static, HideBySig System.Boolean (k256Seed:System.String:None:)
+Ripple.LibraryClasses.ValidateAddress.AddressCodec METHOD IsValidNodePublic PrivateScope, Public, Static, HideBySig System.Boolean (nodePublic:System.String:None:)
+Ripple.LibraryClasses.ValidateAddress.AddressCodec METHOD IsValidSeed PrivateScope, Public, Static, HideBySig System.Boolean (seed:System.String:None:)
+Ripple.LibraryClasses.ValidateAddress.AddressCodec+DecodedSeed CTOR PrivateScope, Public, HideBySig, SpecialName, RTSpecialName type:System.String:None:;payload:System.Byte[]:None:
+Ripple.LibraryClasses.ValidateAddress.AddressCodec+DecodedSeed FIELD Bytes Public, InitOnly System.Byte[]
+Ripple.LibraryClasses.ValidateAddress.AddressCodec+DecodedSeed FIELD Type Public, InitOnly System.String
+Ripple.RippleClient CTOR PrivateScope, Public, HideBySig, SpecialName, RTSpecialName 
+Ripple.RippleClient METHOD GenerateAddress PrivateScope, Public, Static, HideBySig Ripple.LibraryClasses.CreateAddress.AddressData ()
+Ripple.RippleClient METHOD SignTransaction PrivateScope, Public, Static, HideBySig System.String (txObject:System.Object:None:)
+Ripple.RippleClient METHOD ValidateAddress PrivateScope, Public, Static, HideBySig System.Boolean (address:System.String:None:)
+TYPE Ripple.LibraryClasses.CreateAddress.AddressData BASE System.Object INTERFACES 
+TYPE Ripple.LibraryClasses.CreateAddress.Seed BASE System.Object INTERFACES 
+TYPE Ripple.LibraryClasses.Signer.AccountId BASE Ripple.LibraryClasses.Signer.Hashes.Hash160 INTERFACES Ripple.LibraryClasses.Signer.Interfaces.ISerializedType;System.IEquatable`1[Ripple.LibraryClasses.Signer.Hashes.Hash]
+TYPE Ripple.LibraryClasses.Signer.Amount BASE System.Object INTERFACES Ripple.LibraryClasses.Signer.Interfaces.ISerializedType
+TYPE Ripple.LibraryClasses.Signer.AmountValue BASE System.Object INTERFACES 
+TYPE Ripple.LibraryClasses.Signer.B16 BASE System.Object INTERFACES 
+TYPE Ripple.LibraryClasses.Signer.B58 BASE System.Object INTERFACES 
+TYPE Ripple.LibraryClasses.Signer.B58+Decoded BASE System.Object INTERFACES 
+TYPE Ripple.LibraryClasses.Signer.B58+Version BASE System.Object INTERFACES 
+TYPE Ripple.LibraryClasses.Signer.B58+Versions BASE System.Object INTERFACES 
+TYPE Ripple.LibraryClasses.Signer.BinaryParser BASE System.Object INTERFACES 
+TYPE Ripple.LibraryClasses.Signer.BinarySerializer BASE System.Object INTERFACES Ripple.LibraryClasses.Signer.Interfaces.IBytesSink
+TYPE Ripple.LibraryClasses.Signer.Bits BASE System.Object INTERFACES 
+TYPE Ripple.LibraryClasses.Signer.Blob BASE System.Object INTERFACES Ripple.LibraryClasses.Signer.Interfaces.ISerializedType
+TYPE Ripple.LibraryClasses.Signer.BufferParser BASE Ripple.LibraryClasses.Signer.BinaryParser INTERFACES 
+TYPE Ripple.LibraryClasses.Signer.BytesList BASE System.Object INTERFACES Ripple.LibraryClasses.Signer.Interfaces.IBytesSink
+TYPE Ripple.LibraryClasses.Signer.Currency BASE Ripple.LibraryClasses.Signer.Hashes.Hash160 INTERFACES Ripple.LibraryClasses.Signer.Interfaces.ISerializedType;System.IEquatable`1[Ripple.LibraryClasses.Signer.Hashes.Hash]
+TYPE Ripple.LibraryClasses.Signer.Currency+Issue BASE System.Object INTERFACES 
+TYPE Ripple.LibraryClasses.Signer.EcdsaSignature BASE System.Object INTERFACES 
+TYPE Ripple.LibraryClasses.Signer.EdKeyPair BASE System.Object INTERFACES Ripple.LibraryClasses.Signer.Interfaces.IKeyPair
+TYPE Ripple.LibraryClasses.Signer.EngineResult BASE Ripple.LibraryClasses.Signer.SerializedEnumItem`1[System.Byte] INTERFACES Ripple.LibraryClasses.Signer.Interfaces.ISerializedType;System.IComparable`1[Ripple.LibraryClasses.Signer.EnumItem]
+TYPE Ripple.LibraryClasses.Signer.EngineResult+EngineResultValues BASE Ripple.LibraryClasses.Signer.SerializedEnumeration`2[Ripple.LibraryClasses.Signer.EngineResult,System.Byte] INTERFACES System.Collections.Generic.IEnumerable`1[Ripple.LibraryClasses.Signer.EngineResult];System.Collections.IEnumerable
+TYPE Ripple.LibraryClasses.Signer.EnumItem BASE System.Object INTERFACES System.IComparable`1[Ripple.LibraryClasses.Signer.EnumItem]
+TYPE Ripple.LibraryClasses.Signer.Enumeration`1 BASE System.Object INTERFACES System.Collections.Generic.IEnumerable`1[T];System.Collections.IEnumerable
+TYPE Ripple.LibraryClasses.Signer.Fields.AccountIdField BASE Ripple.LibraryClasses.Signer.Fields.Field INTERFACES System.IComparable`1[Ripple.LibraryClasses.Signer.EnumItem]
+TYPE Ripple.LibraryClasses.Signer.Fields.AmountField BASE Ripple.LibraryClasses.Signer.Fields.Field INTERFACES System.IComparable`1[Ripple.LibraryClasses.Signer.EnumItem]
+TYPE Ripple.LibraryClasses.Signer.Fields.BlobField BASE Ripple.LibraryClasses.Signer.Fields.Field INTERFACES System.IComparable`1[Ripple.LibraryClasses.Signer.EnumItem]
+TYPE Ripple.LibraryClasses.Signer.Fields.EngineResultField BASE Ripple.LibraryClasses.Signer.Fields.Uint8Field INTERFACES System.IComparable`1[Ripple.LibraryClasses.Signer.EnumItem]
+TYPE Ripple.LibraryClasses.Signer.Fields.Field BASE Ripple.LibraryClasses.Signer.EnumItem INTERFACES System.IComparable`1[Ripple.LibraryClasses.Signer.EnumItem]
+TYPE Ripple.LibraryClasses.Signer.Fields.FieldType BASE Ripple.LibraryClasses.Signer.EnumItem INTERFACES System.IComparable`1[Ripple.LibraryClasses.Signer.EnumItem]
+TYPE Ripple.LibraryClasses.Signer.Fields.Hash128Field BASE Ripple.LibraryClasses.Signer.Fields.Field INTERFACES System.IComparable`1[Ripple.LibraryClasses.Signer.EnumItem]
+TYPE Ripple.LibraryClasses.Signer.Fields.Hash160Field BASE Ripple.LibraryClasses.Signer.Fields.Field INTERFACES System.IComparable`1[Ripple.LibraryClasses.Signer.EnumItem]
+TYPE Ripple.LibraryClasses.Signer.Fields.Hash256Field BASE Ripple.LibraryClasses.Signer.Fields.Field INTERFACES System.IComparable`1[Ripple.LibraryClasses.Signer.EnumItem]
+TYPE Ripple.LibraryClasses.Signer.Fields.LedgerEntryTypeField BASE Ripple.LibraryClasses.Signer.Fields.Uint16Field INTERFACES System.IComparable`1[Ripple.LibraryClasses.Signer.EnumItem]
+TYPE Ripple.LibraryClasses.Signer.Fields.PathSetField BASE Ripple.LibraryClasses.Signer.Fields.Field INTERFACES System.IComparable`1[Ripple.LibraryClasses.Signer.EnumItem]
+TYPE Ripple.LibraryClasses.Signer.Fields.StArrayField BASE Ripple.LibraryClasses.Signer.Fields.Field INTERFACES System.IComparable`1[Ripple.LibraryClasses.Signer.EnumItem]
+TYPE Ripple.LibraryClasses.Signer.Fields.StObjectField BASE Ripple.LibraryClasses.Signer.Fields.Field INTERFACES System.IComparable`1[Ripple.LibraryClasses.Signer.EnumItem]
+TYPE Ripple.LibraryClasses.Signer.Fields.TransactionTypeField BASE Ripple.LibraryClasses.Signer.Fields.Uint16Field INTERFACES System.IComparable`1[Ripple.LibraryClasses.Signer.EnumItem]
+TYPE Ripple.LibraryClasses.Signer.Fields.Uint16Field BASE Ripple.LibraryClasses.Signer.Fields.Field INTERFACES System.IComparable`1[Ripple.LibraryClasses.Signer.EnumItem]
+TYPE Ripple.LibraryClasses.Signer.Fields.Uint32Field BASE Ripple.LibraryClasses.Signer.Fields.Field INTERFACES System.IComparable`1[Ripple.LibraryClasses.Signer.EnumItem]
+TYPE Ripple.LibraryClasses.Signer.Fields.Uint64Field BASE Ripple.LibraryClasses.Signer.Fields.Field INTERFACES System.IComparable`1[Ripple.LibraryClasses.Signer.EnumItem]
+TYPE Ripple.LibraryClasses.Signer.Fields.Uint8Field BASE Ripple.LibraryClasses.Signer.Fields.Field INTERFACES System.IComparable`1[Ripple.LibraryClasses.Signer.EnumItem]
+TYPE Ripple.LibraryClasses.Signer.Fields.Vector256Field BASE Ripple.LibraryClasses.Signer.Fields.Field INTERFACES System.IComparable`1[Ripple.LibraryClasses.Signer.EnumItem]
+TYPE Ripple.LibraryClasses.Signer.FromJson BASE System.MulticastDelegate INTERFACES System.ICloneable;System.Runtime.Serialization.ISerializable
+TYPE Ripple.LibraryClasses.Signer.FromParser BASE System.MulticastDelegate INTERFACES System.ICloneable;System.Runtime.Serialization.ISerializable
+TYPE Ripple.LibraryClasses.Signer.Hashes.Hash BASE System.Object INTERFACES Ripple.LibraryClasses.Signer.Interfaces.ISerializedType;System.IEquatable`1[Ripple.LibraryClasses.Signer.Hashes.Hash]
+TYPE Ripple.LibraryClasses.Signer.Hashes.Hash128 BASE Ripple.LibraryClasses.Signer.Hashes.Hash INTERFACES Ripple.LibraryClasses.Signer.Interfaces.ISerializedType;System.IEquatable`1[Ripple.LibraryClasses.Signer.Hashes.Hash]
+TYPE Ripple.LibraryClasses.Signer.Hashes.Hash160 BASE Ripple.LibraryClasses.Signer.Hashes.Hash INTERFACES Ripple.LibraryClasses.Signer.Interfaces.ISerializedType;System.IEquatable`1[Ripple.LibraryClasses.Signer.Hashes.Hash]
+TYPE Ripple.LibraryClasses.Signer.Hashes.Hash256 BASE Ripple.LibraryClasses.Signer.Hashes.Hash INTERFACES Ripple.LibraryClasses.Signer.Interfaces.ISerializedType;System.IEquatable`1[Ripple.LibraryClasses.Signer.Hashes.Hash]
+TYPE Ripple.LibraryClasses.Signer.Hashes.HashPrefix BASE System.Enum INTERFACES System.IComparable;System.IConvertible;System.IFormattable
+TYPE Ripple.LibraryClasses.Signer.Hashes.HashPrefixExtensions BASE System.Object INTERFACES 
+TYPE Ripple.LibraryClasses.Signer.Hashes.HashUtils BASE System.Object INTERFACES 
+TYPE Ripple.LibraryClasses.Signer.Interfaces.IBytesSink BASE  INTERFACES 
+TYPE Ripple.LibraryClasses.Signer.Interfaces.IKeyPair BASE  INTERFACES 
+TYPE Ripple.LibraryClasses.Signer.Interfaces.ISerializedType BASE  INTERFACES 
+TYPE Ripple.LibraryClasses.Signer.IouValue BASE Ripple.LibraryClasses.Signer.AmountValue INTERFACES 
+TYPE Ripple.LibraryClasses.Signer.KeyPairExtensions BASE System.Object INTERFACES 
+TYPE Ripple.LibraryClasses.Signer.Keys.K256KeyGenerator BASE System.Object INTERFACES 
+TYPE Ripple.LibraryClasses.Signer.Keys.K256KeyPair BASE Ripple.LibraryClasses.Signer.Keys.K256VerifyingKey INTERFACES Ripple.LibraryClasses.Signer.Interfaces.IKeyPair
+TYPE Ripple.LibraryClasses.Signer.Keys.K256VerifyingKey BASE System.Object INTERFACES 
+TYPE Ripple.LibraryClasses.Signer.Keys.Secp256K1 BASE System.Object INTERFACES 
+TYPE Ripple.LibraryClasses.Signer.Keys.Sha512 BASE System.Object INTERFACES Ripple.LibraryClasses.Signer.Interfaces.IBytesSink
+TYPE Ripple.LibraryClasses.Signer.LedgerEntryType BASE Ripple.LibraryClasses.Signer.SerializedEnumItem`1[System.UInt16] INTERFACES Ripple.LibraryClasses.Signer.Interfaces.ISerializedType;System.IComparable`1[Ripple.LibraryClasses.Signer.EnumItem]
+TYPE Ripple.LibraryClasses.Signer.LedgerEntryType+Enumeration BASE Ripple.LibraryClasses.Signer.SerializedEnumeration`2[Ripple.LibraryClasses.Signer.LedgerEntryType,System.UInt16] INTERFACES System.Collections.Generic.IEnumerable`1[Ripple.LibraryClasses.Signer.LedgerEntryType];System.Collections.IEnumerable
+TYPE Ripple.LibraryClasses.Signer.Misc BASE System.Object INTERFACES 
+TYPE Ripple.LibraryClasses.Signer.NativeValue BASE Ripple.LibraryClasses.Signer.AmountValue INTERFACES 
+TYPE Ripple.LibraryClasses.Signer.Path BASE System.Collections.Generic.List`1[Ripple.LibraryClasses.Signer.PathHop] INTERFACES System.Collections.Generic.ICollection`1[Ripple.LibraryClasses.Signer.PathHop];System.Collections.Generic.IEnumerable`1[Ripple.LibraryClasses.Signer.PathHop];System.Collections.Generic.IList`1[Ripple.LibraryClasses.Signer.PathHop];System.Collections.Generic.IReadOnlyCollection`1[Ripple.LibraryClasses.Signer.PathHop];System.Collections.Generic.IReadOnlyList`1[Ripple.LibraryClasses.Signer.PathHop];System.Collections.ICollection;System.Collections.IEnumerable;System.Collections.IList
+TYPE Ripple.LibraryClasses.Signer.PathHop BASE System.Object INTERFACES 
+TYPE Ripple.LibraryClasses.Signer.PathSet BASE System.Collections.Generic.List`1[Ripple.LibraryClasses.Signer.Path] INTERFACES Ripple.LibraryClasses.Signer.Interfaces.ISerializedType;System.Collections.Generic.ICollection`1[Ripple.LibraryClasses.Signer.Path];System.Collections.Generic.IEnumerable`1[Ripple.LibraryClasses.Signer.Path];System.Collections.Generic.IList`1[Ripple.LibraryClasses.Signer.Path];System.Collections.Generic.IReadOnlyCollection`1[Ripple.LibraryClasses.Signer.Path];System.Collections.Generic.IReadOnlyList`1[Ripple.LibraryClasses.Signer.Path];System.Collections.ICollection;System.Collections.IEnumerable;System.Collections.IList
+TYPE Ripple.LibraryClasses.Signer.SerializedEnumItem`1 BASE Ripple.LibraryClasses.Signer.EnumItem INTERFACES Ripple.LibraryClasses.Signer.Interfaces.ISerializedType;System.IComparable`1[Ripple.LibraryClasses.Signer.EnumItem]
+TYPE Ripple.LibraryClasses.Signer.SerializedEnumeration`2 BASE Ripple.LibraryClasses.Signer.Enumeration`1[TEnum] INTERFACES System.Collections.Generic.IEnumerable`1[TEnum];System.Collections.IEnumerable
+TYPE Ripple.LibraryClasses.Signer.SignedTx BASE System.Object INTERFACES 
+TYPE Ripple.LibraryClasses.Signer.StArray BASE System.Collections.Generic.List`1[Ripple.LibraryClasses.Signer.StObject] INTERFACES Ripple.LibraryClasses.Signer.Interfaces.ISerializedType;System.Collections.Generic.ICollection`1[Ripple.LibraryClasses.Signer.StObject];System.Collections.Generic.IEnumerable`1[Ripple.LibraryClasses.Signer.StObject];System.Collections.Generic.IList`1[Ripple.LibraryClasses.Signer.StObject];System.Collections.Generic.IReadOnlyCollection`1[Ripple.LibraryClasses.Signer.StObject];System.Collections.Generic.IReadOnlyList`1[Ripple.LibraryClasses.Signer.StObject];System.Collections.ICollection;System.Collections.IEnumerable;System.Collections.IList
+TYPE Ripple.LibraryClasses.Signer.StExtensions BASE System.Object INTERFACES 
+TYPE Ripple.LibraryClasses.Signer.StObject BASE System.Object INTERFACES Ripple.LibraryClasses.Signer.Interfaces.ISerializedType
+TYPE Ripple.LibraryClasses.Signer.TransactionType BASE Ripple.LibraryClasses.Signer.SerializedEnumItem`1[System.UInt16] INTERFACES Ripple.LibraryClasses.Signer.Interfaces.ISerializedType;System.IComparable`1[Ripple.LibraryClasses.Signer.EnumItem]
+TYPE Ripple.LibraryClasses.Signer.TransactionType+Enumeration BASE Ripple.LibraryClasses.Signer.SerializedEnumeration`2[Ripple.LibraryClasses.Signer.TransactionType,System.UInt16] INTERFACES System.Collections.Generic.IEnumerable`1[Ripple.LibraryClasses.Signer.TransactionType];System.Collections.IEnumerable
+TYPE Ripple.LibraryClasses.Signer.TxFormat BASE System.Collections.Generic.Dictionary`2[Ripple.LibraryClasses.Signer.Fields.Field,Ripple.LibraryClasses.Signer.TxFormat+Requirement] INTERFACES System.Collections.Generic.ICollection`1[System.Collections.Generic.KeyValuePair`2[Ripple.LibraryClasses.Signer.Fields.Field,Ripple.LibraryClasses.Signer.TxFormat+Requirement]];System.Collections.Generic.IDictionary`2[Ripple.LibraryClasses.Signer.Fields.Field,Ripple.LibraryClasses.Signer.TxFormat+Requirement];System.Collections.Generic.IEnumerable`1[System.Collections.Generic.KeyValuePair`2[Ripple.LibraryClasses.Signer.Fields.Field,Ripple.LibraryClasses.Signer.TxFormat+Requirement]];System.Collections.Generic.IReadOnlyCollection`1[System.Collections.Generic.KeyValuePair`2[Ripple.LibraryClasses.Signer.Fields.Field,Ripple.LibraryClasses.Signer.TxFormat+Requirement]];System.Collections.Generic.IReadOnlyDictionary`2[Ripple.LibraryClasses.Signer.Fields.Field,Ripple.LibraryClasses.Signer.TxFormat+Requirement];System.Collections.ICollection;System.Collections.IDictionary;System.Collections.IEnumerable;System.Runtime.Serialization.IDeserializationCallback;System.Runtime.Serialization.ISerializable
+TYPE Ripple.LibraryClasses.Signer.TxFormat+Requirement BASE System.Enum INTERFACES System.IComparable;System.IConvertible;System.IFormattable
+TYPE Ripple.LibraryClasses.Signer.TxSigner BASE System.Object INTERFACES 
+TYPE Ripple.LibraryClasses.Signer.Uints.Uint16 BASE Ripple.LibraryClasses.Signer.Uints.Uint`1[System.UInt16] INTERFACES Ripple.LibraryClasses.Signer.Interfaces.ISerializedType
+TYPE Ripple.LibraryClasses.Signer.Uints.Uint32 BASE Ripple.LibraryClasses.Signer.Uints.Uint`1[System.UInt32] INTERFACES Ripple.LibraryClasses.Signer.Interfaces.ISerializedType
+TYPE Ripple.LibraryClasses.Signer.Uints.Uint64 BASE Ripple.LibraryClasses.Signer.Uints.Uint`1[System.UInt64] INTERFACES Ripple.LibraryClasses.Signer.Interfaces.ISerializedType
+TYPE Ripple.LibraryClasses.Signer.Uints.Uint8 BASE Ripple.LibraryClasses.Signer.Uints.Uint`1[System.Byte] INTERFACES Ripple.LibraryClasses.Signer.Interfaces.ISerializedType
+TYPE Ripple.LibraryClasses.Signer.Uints.Uint`1 BASE System.Object INTERFACES Ripple.LibraryClasses.Signer.Interfaces.ISerializedType
+TYPE Ripple.LibraryClasses.Signer.UnissuedAmount BASE System.Object INTERFACES 
+TYPE Ripple.LibraryClasses.Signer.Utils BASE System.Object INTERFACES 
+TYPE Ripple.LibraryClasses.Signer.Vector256 BASE System.Collections.Generic.List`1[Ripple.LibraryClasses.Signer.Hashes.Hash256] INTERFACES Ripple.LibraryClasses.Signer.Interfaces.ISerializedType;System.Collections.Generic.ICollection`1[Ripple.LibraryClasses.Signer.Hashes.Hash256];System.Collections.Generic.IEnumerable`1[Ripple.LibraryClasses.Signer.Hashes.Hash256];System.Collections.Generic.IList`1[Ripple.LibraryClasses.Signer.Hashes.Hash256];System.Collections.Generic.IReadOnlyCollection`1[Ripple.LibraryClasses.Signer.Hashes.Hash256];System.Collections.Generic.IReadOnlyList`1[Ripple.LibraryClasses.Signer.Hashes.Hash256];System.Collections.ICollection;System.Collections.IEnumerable;System.Collections.IList
+TYPE Ripple.LibraryClasses.ValidateAddress.AddressCodec BASE System.Object INTERFACES 
+TYPE Ripple.LibraryClasses.ValidateAddress.AddressCodec+DecodedSeed BASE System.Object INTERFACES 
+TYPE Ripple.RippleClient BASE System.Object INTERFACES 

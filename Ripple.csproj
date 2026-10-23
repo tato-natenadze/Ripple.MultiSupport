@@ -1,0 +1,50 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+		<PropertyGroup>
+			<TargetFrameworks>netstandard2.0;net8.0</TargetFrameworks>
+			<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+
+			<!-- NuGet identity -->
+			<PackageId>Ripple.MultiSupport</PackageId>
+			<Version>1.0.1</Version>
+			<Authors>Tato</Authors>
+			<Company></Company>
+			<Product>Ripple.MultiSupport</Product>
+			<Description>Ripple library for creating wallet, validate address and sign transaction.
+These are needed to add Ripple chain in your system.
+			</Description>
+			<PackageTags>xrp;ripple;signing;crypto</PackageTags>
+
+			<!-- Licensing & docs -->
+			<PackageLicenseFile>LICENSE</PackageLicenseFile>
+			<PackageReadmeFile>README.md</PackageReadmeFile>
+			<PackageIcon>icon.png</PackageIcon>
+
+			<!-- Optional assembly metadata -->
+			<AssemblyVersion>1.0.0.0</AssemblyVersion>
+			<FileVersion>1.0.0.0</FileVersion>
+			<NeutralLanguage></NeutralLanguage>
+		</PropertyGroup>
+
+		<ItemGroup>
+			<Compile Remove="tests\**\*.cs" />
+			<None Include="README.md" Pack="true" PackagePath="\" />
+			<None Include="icon.png" Pack="true" PackagePath="\" />
+			<None Include="LICENSE" Pack="true" PackagePath="\" />
+		</ItemGroup>
+
+		<ItemGroup>
+		  <PackageReference Include="Chaos.NaCl.Standard" Version="1.0.0" />
+		  <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+		  <PackageReference Include="Portable.BouncyCastle" Version="1.9.0" />
+		  <PackageReference Include="RIPEMD" Version="4.3.0" />
+		  <PackageReference Include="System.Security.Cryptography.Algorithms" Version="4.3.1" />
+		  <PackageReference Include="System.Security.Cryptography.Cng" Version="5.0.0" />
+		</ItemGroup>
+
+		<!-- Override vulnerable transitive versions without replacing the public crypto dependencies. -->
+		<ItemGroup Condition="'$(TargetFramework)' == 'net8.0'">
+		  <PackageReference Include="System.Formats.Asn1" Version="6.0.1" />
+		  <PackageReference Include="System.Net.Http" Version="4.3.4" />
+		  <PackageReference Include="System.Text.RegularExpressions" Version="4.3.1" />
+		</ItemGroup>
+	</Project>

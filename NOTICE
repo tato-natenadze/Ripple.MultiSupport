@@ -1,0 +1,14 @@
+Ripple.MultiSupport
+
+This product includes software developed by the XRP Ledger community
+and derived from the xrpl.c project.
+
+Original Work:
+    xrpl.c — https://github.com/Transia-RnD/XrplCSharp
+    Copyright (c) 2021-2025, XRP Ledger Foundation
+    Licensed under the Apache License, Version 2.0.
+
+Modifications:
+    - Ported to C# targeting .NET Standard 2.0 and .NET 8.0
+    - Added multi-platform support
+    - Refactored for NuGet packaging and distribution
