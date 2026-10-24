@@ -89,8 +89,7 @@ namespace Ripple
                             throw new InvalidOperationException("Destination has not authorized this sender.");
                     }
                     var feeResult = await RpcAsync("fee", null, operation.Token).ConfigureAwait(false);
-                    var fees = feeResult["drops"] as JObject ?? throw new InvalidDataException("Missing fee data.");
-                    decimal fee = Math.Max(DropsToXrp(fees["open_ledger_fee"]), DropsToXrp(fees["base_fee"]));
+                    decimal fee = ReadPaymentFee(feeResult);
                     if (fee <= 0 || fee > _options.MaxFeeXrp) throw new InvalidOperationException("Network fee exceeds the configured limit or is invalid.");
                     if (amount + fee > source.EstimatedSpendableXrp) throw new InvalidOperationException("Insufficient spendable XRP after reserve and fee.");
                     // Refuse to guess around payments submitted by another client/process.

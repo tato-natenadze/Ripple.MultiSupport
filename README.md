@@ -22,6 +22,7 @@ dotnet add package Ripple.MultiSupport
 | | `ValidateAddress(address)` | Check classic-address encoding and checksum |
 | | `SignTransaction(transaction)` | Sign locally; return a hexadecimal `tx_blob` |
 | `XrplClient` | `GetAccountAsync(address)` | Read validated balance, sequence and reserve estimates |
+| | `GetFeeAsync()` | Read the current fee estimate for a normal single-signed XRP payment, in XRP |
 | | `SendXrpAsync(seed, request)` | Sign and submit a direct XRP payment; wait for its result |
 | | `GetTransactionAsync(hash)` / `GetTransactionAsync(receipt)` | Query status; a saved receipt also allows proven expiry checks |
 | | `GetPaymentsAsync(address, request)` | Read validated incoming/outgoing XRP payment history |
@@ -62,6 +63,8 @@ multiple processes/workers need host-side coordination for the same sender.
 
 ## Payment handling
 
+- `GetFeeAsync()` reads a current estimate without submitting anything. It can
+  exceed `MaxFeeXrp`; `SendXrpAsync` reads the fee again and enforces that limit.
 - Keep seeds secret. `SignTransaction` takes an object containing `Seed` and signs
   locally. Its `Amount`/`Fee` fields use integer strings in drops
   (**1 XRP = 1,000,000 drops**). `AmountXrp`/`MaxFeeXrp` use decimal XRP, with at most
