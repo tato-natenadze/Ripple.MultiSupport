@@ -84,3 +84,7 @@ not a claim that every possible runtime condition has been tested.
    caught a numeric-format issue during implementation; it was corrected without
    changing the accepted expectation. Signed receipt comparison covers API v2's
    DeliverMax alias and v1/v2 metadata; malformed post-submit data retains receipt.
+4. Error diagnostics: nine initial cases failed without structured diagnostics;
+   all twelve new error cases now pass. Full suite 171 per runtime (342 total),
+   including HTTP 400/429/503 on Framework, request/confirmation deadlines,
+   actual RPC method attribution, seed redaction and existing API compatibility.

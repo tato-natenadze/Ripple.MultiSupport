@@ -106,6 +106,7 @@ namespace Ripple
                         if (_pendingPayments.TryGetValue(sender, out previous)) throw new PendingPaymentException(previous);
                     }
                     var result = new PaymentResult { Receipt = receipt, Transaction = Unknown(receipt.Hash) };
+                    string activeMethod = "submit";
                     using (var wait = CancellationTokenSource.CreateLinkedTokenSource(operation.Token))
                     {
                     wait.CancelAfter(_options.ConfirmationTimeout);
@@ -118,6 +119,7 @@ namespace Ripple
                         while (timer.Elapsed < _options.ConfirmationTimeout)
                         {
                             wait.Token.ThrowIfCancellationRequested();
+                            activeMethod = "tx";
                             result.Transaction = await GetTransactionAsync(receipt, wait.Token).ConfigureAwait(false);
                             if (IsFinal(result.Status)) return result;
                             var remaining = _options.ConfirmationTimeout - timer.Elapsed;
@@ -125,11 +127,13 @@ namespace Ripple
                             await Task.Delay(remaining < _options.PollInterval ? remaining : _options.PollInterval, wait.Token).ConfigureAwait(false);
                         }
                         result.Diagnostic = "Confirmation wait expired. Check the receipt before creating any replacement payment.";
+                        result.Error = PaymentFailure(new OperationCanceledException(), activeMethod, seed, operation.IsCancellationRequested);
                     }
                     catch (Exception ex) when (ex is HttpRequestException || ex is OperationCanceledException || ex is IOException || ex is InvalidDataException ||
                         ex is XrplRpcException || ex is ArgumentException || ex is FormatException || ex is OverflowException)
                     {
                         result.Diagnostic = "Submission/confirmation is indeterminate (" + ex.GetType().Name + "). Query the saved receipt; do not create a replacement payment.";
+                        result.Error = PaymentFailure(ex, activeMethod, seed, operation.IsCancellationRequested);
                     }
                     return result;
                     }

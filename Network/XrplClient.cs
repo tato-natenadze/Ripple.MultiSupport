@@ -38,24 +38,34 @@ namespace Ripple
                 var args = parameters == null ? new JObject() : (JObject)parameters.DeepClone();
                 args["api_version"] = 2;
                 var body = new JObject { ["method"] = method, ["params"] = new JArray(args) };
-                using (var request = new HttpRequestMessage(HttpMethod.Post, _options.RpcEndpoint))
+                try
                 {
-                    request.Content = new StringContent(body.ToString(Formatting.None), Encoding.UTF8, "application/json");
-                    using (HttpResponseMessage response = await _http.SendAsync(request,
-                        HttpCompletionOption.ResponseHeadersRead, timeout.Token).ConfigureAwait(false))
+                    using (var request = new HttpRequestMessage(HttpMethod.Post, _options.RpcEndpoint))
                     {
-                        response.EnsureSuccessStatusCode();
-                        string json = await ReadBodyAsync(response, timeout.Token).ConfigureAwait(false);
-                        JObject envelope;
-                        try { envelope = JObject.Parse(json); }
-                        catch (JsonException ex) { throw new InvalidDataException("XRPL returned invalid JSON.", ex); }
-                        var result = envelope["result"] as JObject;
-                        if (result == null) throw new InvalidDataException("XRPL response has no result object.");
-                        string error = (string)result["error"];
-                        if (error != null || (string)result["status"] == "error")
-                            throw new XrplRpcException(method, error ?? "unknown", (string)result["error_message"] ?? "Request rejected.", result);
-                        return result;
+                        request.Content = new StringContent(body.ToString(Formatting.None), Encoding.UTF8, "application/json");
+                        using (HttpResponseMessage response = await _http.SendAsync(request,
+                            HttpCompletionOption.ResponseHeadersRead, timeout.Token).ConfigureAwait(false))
+                        {
+                            try { response.EnsureSuccessStatusCode(); }
+                            catch (HttpRequestException ex) { ex.Data[HttpStatusDataKey] = (int)response.StatusCode; throw; }
+                            string json = await ReadBodyAsync(response, timeout.Token).ConfigureAwait(false);
+                            JObject envelope;
+                            try { envelope = JObject.Parse(json); }
+                            catch (JsonException ex) { throw new InvalidDataException("XRPL returned invalid JSON.", ex); }
+                            var result = envelope["result"] as JObject;
+                            if (result == null) throw new InvalidDataException("XRPL response has no result object.");
+                            string error = (string)result["error"];
+                            if (error != null || (string)result["status"] == "error")
+                                throw new XrplRpcException(method, error ?? "unknown", (string)result["error_message"] ?? "Request rejected.", result);
+                            return result;
+                        }
                     }
+                }
+                catch (Exception ex) when (ex is HttpRequestException || ex is IOException || ex is InvalidDataException ||
+                    ex is OperationCanceledException || ex is XrplRpcException || ex is ArgumentException || ex is FormatException || ex is OverflowException)
+                {
+                    ex.Data[RpcMethodDataKey] = method;
+                    throw;
                 }
             }
         }

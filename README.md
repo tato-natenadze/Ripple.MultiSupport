@@ -149,6 +149,13 @@ Inspect `PaymentResult.Status`:
 Once submission begins, cancellation/network failures return a result with the
 receipt and a diagnostic. Cancellation before submission throws normally.
 
+`PaymentResult.Error` adds structured diagnostics when submission/confirmation is
+indeterminate: `Kind` distinguishes RPC, HTTP, transport, timeout, cancellation
+and invalid response errors; `Method`, `RpcCode` and nullable integer
+`HttpStatusCode` provide the available details. `Message` is a safe library
+description, without raw server messages, request bodies or signing secrets.
+Inspect the receipt's final status before retrying, regardless of the error kind.
+
 After a timeout or application restart, load the saved receipt and call:
 
 ```csharp

@@ -50,6 +50,7 @@ namespace Ripple
         public string SubmissionResultCode { get; internal set; }
         /// <summary>Explains an indeterminate submission/wait without claiming the payment failed.</summary>
         public string Diagnostic { get; internal set; }
+        public PaymentError Error { get; internal set; }
     }
 
     public sealed class PendingPaymentException : InvalidOperationException
