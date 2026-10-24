@@ -56,6 +56,14 @@ not. Do not regenerate expected values to accept a regression.
    Malformed base64/JSON, incorrect field types, missing fields, wrong binding,
    unsupported version and invalid ranges produce ArgumentException consistently.
    Valid current and previously issued tokens/checkpoints continue to work.
+9. **URI dependency advisory (discovered in final online audit).** Override the
+   transitive System.Private.Uri 4.3.0 with Microsoft's patched 4.3.2. Acceptance:
+   restore/build and the complete suite pass on both targets; a fresh package-only
+   consumer audit with NuGetAuditMode=all includes runtime-specific graphs and
+   returns no advisories or audit-fetch warnings. Package-only queries, precompiled
+   legacy consumers and Web Forms must pass with the final dependency set. The
+   original warnings were on the consumer's net8.0/win-x86 dependency graph; they
+   do not demonstrate an exploit on the installed .NET 8/.NET Framework runtime.
 
 ## Final integration gate
 
@@ -104,3 +112,18 @@ not a claim that every possible runtime condition has been tested.
    additional invalid-UTF-8 response case also failed before its correction.
    Full suite 244 per runtime (488 total). Existing checkpoint/restart and old
    version-1 token tests remain unchanged and pass.
+9. URI advisory: the fresh online consumer restore initially reported three
+   advisories for 4.3.0 in its win-x86 graph. After the 4.3.2 override, both fresh
+   package-only consumers build with zero warnings/errors and online audit has no
+   entries. Full suite remains 244 per runtime (488 total); patched IIS and
+   unchanged precompiled consumers also pass.
+
+Final integration gate passed with the limits in
+`Ripple.Integration/quality-verification.json`. Saved Testnet history was pruned
+on the original endpoint; both runtime paths passed read-only recovery and actual
+WebSocket replay on an explicitly configured official history server. Original
+receipts and endpoint binding were preserved. The historical consumer-hash file
+predated the existing binaries and was left intact; the same current precompiled
+consumer hashes were checked before/after running both published 1.0.1 and the new
+DLL. No user deployment/database acceptance or actual Framework 4.7.2 runtime
+verification is claimed.

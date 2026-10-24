@@ -48,13 +48,25 @@ protected void Page_Load(object sender, EventArgs e)
         compatibility.ExistingPublicTypesAndMembersRemainAvailable();
         compatibility.ExistingTransactionsKeepTheirExactSignedBytes();
         compatibility.GeneratedAddressesRemainValidAndMatchTheirSeeds();
+        compatibility.PreReviewPublicApiRemainsAvailable();
         await new Ripple.Tests.AccountAndHistoryTests().AccountUsesPinnedValidatedLedgerAndDynamicReserve();
         await new Ripple.Tests.AccountAndHistoryTests().HistoryContinuationPinsRangeAndIsBoundToAccount();
         await new Ripple.Tests.PaymentTests().SendSignsLocallyAndWaitsForValidatedResult(
             "sp5fghtJtpUorTwvof1NpDXAzNwf5", "rLUEXYuLiQptky37CqLcm9USQpPiz5rkpD");
         await new Ripple.Tests.PaymentWatchTests().WatchReplaysConfirmedIncomingOnlyAndCheckpointsAfterAcknowledgement();
+        await new Ripple.Tests.PaymentWatchOrderingTests().ShuffledPagesAreReplayedInLedgerOrderWithoutDuplicateCallbacks();
+        await new Ripple.Tests.PaymentStateTests().FinalizedPaymentIsNotQueriedAgainBeforeTheNextSend("tesSUCCESS");
+        await new Ripple.Tests.NetworkResponseValidationTests().MissingPaymentFieldsAreInvalidResponses("Account");
+        await new Ripple.Tests.NetworkResponseValidationTests().AReceiptCannotBeFinalizedByAMismatchingTransaction("Amount");
+        await new Ripple.Tests.PaymentErrorTests().RpcErrorsPreserveTheirCodeAndMethodWithoutServerMessages("tooBusy");
+        await new Ripple.Tests.PaymentErrorTests().HttpStatusIsAvailableOnBothFrameworks(503);
+        await new Ripple.Tests.PaymentWatchCancellationTests().RestartReplaysTheUnfinishedRangeAndAllowsHashDeduplication();
+        new Ripple.Tests.AddressValidationTests().OversizedBase58InputIsRejectedPromptly();
+        await new Ripple.Tests.HistoryRangeTests().DefaultRangePinsTheFirstAvailableLedgerAndExposesLaterPruning();
+        await new Ripple.Tests.ContinuationValidationTests().InvalidCheckpointIsAnArgumentErrorBeforeIO("range-string");
+        await new Ripple.Tests.ContinuationValidationTests().DateLikeServerMarkerRoundTripsWithoutReformatting();
         Response.ContentType = "application/json";
-        Response.Write("{\"webforms\":\"passed\",\"runtime\":\"" + Environment.Version + "\",\"apis\":\"legacy and all five new APIs\"}");
+        Response.Write("{\"webforms\":\"passed\",\"runtime\":\"" + Environment.Version + "\",\"apis\":\"legacy and all five new APIs\",\"quality_regressions\":\"all eight fixes\"}");
     }));
 }
 </script>

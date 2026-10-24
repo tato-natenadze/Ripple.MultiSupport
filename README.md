@@ -288,7 +288,7 @@ conversions. Invalid inputs that previously produced malformed or changed data
 are now rejected. Supported valid legacy transactions are checked against the
 exact signed bytes captured before these fixes.
 
-Both target paths pin patched HTTP/regex transitive package versions. The .NET 8
+Both target paths pin patched HTTP/regex/URI transitive package versions. The .NET 8
 path also pins the patched ASN.1 dependency, retaining the existing public crypto dependencies.
 
 ## Tests
