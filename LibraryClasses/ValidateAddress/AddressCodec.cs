@@ -106,6 +106,7 @@ namespace Ripple.LibraryClasses.ValidateAddress
 
         public static bool IsValidAddress(string address)
         {
+            if (address == null || address.Length < 25 || address.Length > 35 || address[0] != 'r') return false;
             return B58.IsValid(address, AccountId);
         }
 

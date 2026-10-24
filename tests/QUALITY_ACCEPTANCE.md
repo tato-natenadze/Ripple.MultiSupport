@@ -91,3 +91,7 @@ not a claim that every possible runtime condition has been tested.
 5. Watch cancellation: four of five new cases failed before the fix. All now pass,
    including disposal, already-cancelled startup, restart/hash deduplication and
    checkpoint failure. Full suite 176 per runtime (352 total).
+6. Address bounds: the oversized Base58 timing case failed on both runtimes before
+   the guard. All fifteen new cases pass, including 256 deterministic valid
+   payloads, special addresses, large Unicode/surrogates, checksums and no-I/O
+   rejection. Full suite 191 per runtime (382 total).
