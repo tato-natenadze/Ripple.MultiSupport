@@ -26,5 +26,24 @@ namespace Ripple.Tests
             RpcEndpoint = new Uri("https://xrpl.example/"), PollInterval = TimeSpan.FromMilliseconds(1)
         };
         internal static Task<JObject> Json(string value) => Task.FromResult(JObject.Parse(value));
+        internal static JObject Ledger(uint index = 100) => new JObject { ["info"] = new JObject {
+            ["validated_ledger"] = new JObject { ["seq"] = index, ["reserve_base_xrp"] = 1m, ["reserve_inc_xrp"] = 0.2m, ["age"] = 1 } } };
+        internal static JObject Account(string address, uint ledger = 100, uint sequence = 1, uint flags = 0, string balance = "100000000") => new JObject
+        {
+            ["validated"] = true, ["ledger_index"] = ledger, ["account_data"] = new JObject {
+                ["Account"] = address, ["Balance"] = balance, ["Flags"] = flags, ["OwnerCount"] = 2, ["Sequence"] = sequence }
+        };
+        internal static JObject Payment(string hash = null, uint ledger = 100, string code = "tesSUCCESS", bool validated = true) => new JObject
+        {
+            ["hash"] = hash ?? new string('A', 64), ["validated"] = validated, ["ledger_index"] = ledger,
+            ["tx_json"] = new JObject { ["TransactionType"] = "Payment", ["Account"] = TestTransactions.Account,
+                ["Destination"] = TestTransactions.Destination, ["DestinationTag"] = 0, ["DeliverMax"] = "1000000", ["Fee"] = "12" },
+            ["meta"] = new JObject { ["TransactionResult"] = code, ["TransactionIndex"] = 0, ["delivered_amount"] = "1000000" }
+        };
+        internal static JObject History(string address, uint from, uint to, params JObject[] transactions) => new JObject
+        {
+            ["account"] = address, ["validated"] = true, ["ledger_index_min"] = from, ["ledger_index_max"] = to,
+            ["transactions"] = new JArray(transactions)
+        };
     }
 }

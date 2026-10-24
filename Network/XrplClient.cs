@@ -51,7 +51,7 @@ namespace Ripple
                         if (result == null) throw new InvalidDataException("XRPL response has no result object.");
                         string error = (string)result["error"];
                         if (error != null || (string)result["status"] == "error")
-                            throw new XrplRpcException(method, error ?? "unknown", (string)result["error_message"] ?? "Request rejected.");
+                            throw new XrplRpcException(method, error ?? "unknown", (string)result["error_message"] ?? "Request rejected.", result);
                         return result;
                     }
                 }

@@ -1,4 +1,5 @@
 using System;
+using Newtonsoft.Json.Linq;
 
 namespace Ripple
 {
@@ -7,11 +8,13 @@ namespace Ripple
     {
         public string Code { get; }
         public string Method { get; }
-        internal XrplRpcException(string method, string code, string message)
+        internal JObject Response { get; }
+        internal XrplRpcException(string method, string code, string message, JObject response = null)
             : base("XRPL " + method + " failed (" + code + "): " + message)
         {
             Method = method;
             Code = code;
+            Response = response;
         }
     }
 }
