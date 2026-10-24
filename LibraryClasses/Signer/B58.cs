@@ -96,6 +96,7 @@ namespace Ripple.LibraryClasses.Signer
 
         public byte[] Decode(string input, Version version)
         {
+            CheckEncodedLength(input, MaximumEncodedLength(version));
             byte[] buffer = DecodeAndCheck(input);
             return ExtractPayload(version, buffer);
         }
@@ -122,6 +123,8 @@ namespace Ripple.LibraryClasses.Signer
 
         public Decoded Decode(string input, Versions versions)
         {
+            if (versions.VersionsArray.Length != 0)
+                CheckEncodedLength(input, versions.VersionsArray.Max(MaximumEncodedLength));
             byte[] array = DecodeAndCheck(input);
             for (int i = 0; i < versions.VersionsArray.Length; i++)
             {
@@ -143,6 +146,18 @@ namespace Ripple.LibraryClasses.Signer
             }
 
             throw new ArgumentException("No version matched amongst " + string.Join(", ", versions.NamesArray));
+        }
+
+        private static long MaximumEncodedLength(Version version)
+        {
+            // Even with leading zero bytes, Base58 needs at most two characters per byte.
+            return 2L * ((long)version.ExpectedLength + version.VersionBytes.Length + 4);
+        }
+
+        private static void CheckEncodedLength(string input, long maximum)
+        {
+            if (input != null && input.Length > maximum)
+                throw new ArgumentException("Encoded value exceeds its version's maximum length.", nameof(input));
         }
 
         public byte[] Decode(string input)
