@@ -116,6 +116,9 @@ namespace Ripple.Integration
                 RequestTimeout = TimeSpan.FromSeconds(30) }))
             {
                 var tx = await client.GetTransactionAsync(receipt, token).ConfigureAwait(false);
+                if (tx.Status != TransactionStatus.Succeeded || !tx.Validated)
+                    throw new InvalidOperationException("Saved payment has no validated successful result on this Testnet endpoint: " +
+                        tx.Status + ". The server may no longer retain the required ledger history.");
                 var byHash = await client.GetTransactionAsync(receipt.Hash, token).ConfigureAwait(false);
                 var account = await client.GetAccountAsync(tx.Destination, token).ConfigureAwait(false);
                 var page = await client.GetPaymentsAsync(tx.Destination, new PaymentHistoryRequest {

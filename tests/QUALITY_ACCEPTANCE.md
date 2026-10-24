@@ -64,6 +64,11 @@ not. Do not regenerate expected values to accept a regression.
    legacy consumers and Web Forms must pass with the final dependency set. The
    original warnings were on the consumer's net8.0/win-x86 dependency graph; they
    do not demonstrate an exploit on the installed .NET 8/.NET Framework runtime.
+10. **Verification-runner diagnostic.** The saved-receipt runner must stop when
+    recovery has no validated success, before using transaction-dependent fields.
+    Acceptance: a real pruned Testnet receipt reports Unknown/history availability
+    instead of a null-address validation error on both runtimes; the existing
+    successful verification path and all library regression tests still pass.
 
 ## Final integration gate
 
@@ -117,6 +122,11 @@ not a claim that every possible runtime condition has been tested.
    package-only consumers build with zero warnings/errors and online audit has no
    entries. Full suite remains 244 per runtime (488 total); patched IIS and
    unchanged precompiled consumers also pass.
+10. Verification-runner diagnostic: the pruned receipt previously produced an
+    unrelated null-address error. Both runtimes now produce the expected explicit
+    Unknown/history diagnostic. The same runner's success path also passed on
+    both runtimes using a receipt reconstructed from an already validated recent
+    public Testnet payment (no seed or submission). Full suite remains 488/488.
 
 Final integration gate passed with the limits in
 `Ripple.Integration/quality-verification.json`. Saved Testnet history was pruned
