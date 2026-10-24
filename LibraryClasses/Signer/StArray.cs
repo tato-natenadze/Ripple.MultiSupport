@@ -50,6 +50,14 @@ namespace Ripple.LibraryClasses.Signer
 
         public static StArray FromParser(BinaryParser parser, int? hint = null)
         {
+            int depth = parser.NestingDepth;
+            parser.NestingDepth = depth + 1;
+            try { return ReadArray(parser); }
+            finally { parser.NestingDepth = depth; }
+        }
+
+        private static StArray ReadArray(BinaryParser parser)
+        {
             StArray stArray = new StArray();
             while (!parser.End())
             {

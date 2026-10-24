@@ -271,6 +271,16 @@ namespace Ripple.LibraryClasses.Signer
 
         public static StObject FromParser(BinaryParser parser, int? hint = null)
         {
+            int depth = parser.NestingDepth;
+            // Match rippled: the root is depth 0 and STObject depth must not exceed 10.
+            if (depth > 10) throw new FormatException("Maximum serialized object nesting depth exceeded.");
+            parser.NestingDepth = depth + 1;
+            try { return ReadObject(parser, hint); }
+            finally { parser.NestingDepth = depth; }
+        }
+
+        private static StObject ReadObject(BinaryParser parser, int? hint)
+        {
             StObject stObject = new StObject();
             if (hint.HasValue)
             {
@@ -284,6 +294,8 @@ namespace Ripple.LibraryClasses.Signer
                 {
                     break;
                 }
+
+                if (stObject.Fields.ContainsKey(field)) throw new FormatException("Duplicate serialized field.");
 
                 int? hint2 = field.IsVlEncoded ? new int?(parser.ReadVlLength()) : null;
                 ISerializedType serializedType = field.FromParser(parser, hint2);

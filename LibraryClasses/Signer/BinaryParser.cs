@@ -9,6 +9,8 @@ namespace Ripple.LibraryClasses.Signer
 
         protected internal int Cursor;
 
+        internal int NestingDepth;
+
         public bool End()
         {
             return Cursor >= Size;
