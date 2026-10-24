@@ -15,9 +15,9 @@ namespace Ripple.Tests
         internal bool Disposed;
         protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
-            var body = JObject.Parse(await request.Content.ReadAsStringAsync());
+            var body = JObject.Parse(await request.Content.ReadAsStringAsync().ConfigureAwait(false));
             lock (Requests) Requests.Add(body);
-            JObject result = await Respond((string)body["method"], (JObject)body["params"][0], cancellationToken);
+            JObject result = await Respond((string)body["method"], (JObject)body["params"][0], cancellationToken).ConfigureAwait(false);
             return new HttpResponseMessage(HttpStatusCode.OK) { Content = new StringContent(new JObject { ["result"] = result }.ToString()) };
         }
         protected override void Dispose(bool disposing) { Disposed = true; base.Dispose(disposing); }

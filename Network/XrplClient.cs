@@ -19,6 +19,8 @@ namespace Ripple
         private int _disposed;
         private const int MaximumResponseBytes = 16 * 1024 * 1024;
 
+        public XrplClient(XrplClientOptions options) : this(options, null) { }
+
         /// <param name="httpClient">Optional caller-owned HTTP client; it is never disposed by this class.</param>
         public XrplClient(XrplClientOptions options, HttpClient httpClient = null)
         {

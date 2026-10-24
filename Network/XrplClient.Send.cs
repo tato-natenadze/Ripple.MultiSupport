@@ -76,7 +76,9 @@ namespace Ripple
                     if (currentData == null || (string)currentData["Account"] != sender)
                         throw new InvalidDataException("Server returned different current account data.");
                     if (RequiredUInt(currentData, "Sequence") != source.Sequence || (uint?)current["queue_data"]?["txn_count"] > 0)
-                        throw new InvalidOperationException("Sender has pending/external transactions; wait for validation before sending.");
+                        throw new InvalidOperationException("Sender has pending/external transactions (validated Sequence=" + source.Sequence +
+                            ", current Sequence=" + RequiredUInt(currentData, "Sequence") + ", queued=" + ((uint?)current["queue_data"]?["txn_count"] ?? 0) +
+                            "). Wait for validation before sending.");
                     uint lastLedger = checked(ledger.Index + _options.LastLedgerOffset);
                     var tx = new JObject { ["TransactionType"] = "Payment", ["Account"] = sender,
                         ["Destination"] = destination, ["Amount"] = amountDrops, ["Fee"] = XrpToDrops(fee, "fee"),

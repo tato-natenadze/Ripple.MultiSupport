@@ -136,6 +136,8 @@ namespace Ripple
             if ((string)response["account"] != address) throw new InvalidDataException("Server returned a different account history.");
             uint actualFrom = RequiredUInt(response, "ledger_index_min");
             uint actualTo = RequiredUInt(response, "ledger_index_max");
+            if (actualFrom > actualTo || actualTo > to || (from >= 0 && actualFrom < from))
+                throw new InvalidDataException("Server returned an invalid history range.");
             var entries = response["transactions"] as JArray ?? throw new InvalidDataException("Missing transaction history.");
             var payments = new List<TransactionInfo>();
             var hashes = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
@@ -205,7 +207,7 @@ namespace Ripple
         private static decimal RequiredDecimal(JObject obj, string name)
         {
             decimal value;
-            if (obj[name] == null || !decimal.TryParse((string)obj[name], NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out value) || value < 0)
+            if (obj[name] == null || !decimal.TryParse((string)obj[name], NumberStyles.Float, CultureInfo.InvariantCulture, out value) || value < 0)
                 throw new InvalidDataException("Missing or invalid " + name + ".");
             return value;
         }
