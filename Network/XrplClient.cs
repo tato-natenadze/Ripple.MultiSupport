@@ -50,7 +50,7 @@ namespace Ripple
                             catch (HttpRequestException ex) { ex.Data[HttpStatusDataKey] = (int)response.StatusCode; throw; }
                             string json = await ReadBodyAsync(response, timeout.Token).ConfigureAwait(false);
                             JObject envelope;
-                            try { envelope = JObject.Parse(json); }
+                            try { envelope = ReadJsonObject(json); }
                             catch (JsonException ex) { throw new InvalidDataException("XRPL returned invalid JSON.", ex); }
                             var result = envelope["result"] as JObject;
                             if (result == null) throw new InvalidDataException("XRPL response has no result object.");
@@ -82,7 +82,8 @@ namespace Ripple
                     if (data.Length + count > MaximumResponseBytes) throw new InvalidDataException("XRPL response is too large.");
                     data.Write(buffer, 0, count);
                 }
-                return Encoding.UTF8.GetString(data.ToArray());
+                try { return new UTF8Encoding(false, true).GetString(data.ToArray()); }
+                catch (DecoderFallbackException ex) { throw new InvalidDataException("XRPL response is not valid UTF-8.", ex); }
             }
         }
 

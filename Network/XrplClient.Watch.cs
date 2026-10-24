@@ -158,15 +158,9 @@ namespace Ripple
 
         private uint DecodeCheckpoint(string address, string value)
         {
-            JObject checkpoint;
-            try { checkpoint = JObject.Parse(Encoding.UTF8.GetString(Convert.FromBase64String(value))); }
-            catch (Exception ex) when (ex is FormatException || ex is JsonException)
-            { throw new ArgumentException("Invalid payment checkpoint.", nameof(value), ex); }
-            if ((int?)checkpoint["version"] != 1 || (string)checkpoint["account"] != address || (string)checkpoint["endpoint"] != _options.RpcEndpoint.AbsoluteUri)
-                throw new ArgumentException("Checkpoint belongs to a different account/server.", nameof(value));
-            uint ledger = RequiredUInt(checkpoint, "next_ledger");
-            if (ledger == 0) throw new ArgumentException("Invalid checkpoint ledger.", nameof(value));
-            return ledger;
+            var checkpoint = DecodeStateToken(value, nameof(value));
+            ValidateStateBinding(checkpoint, address, nameof(value));
+            return (uint)StateInteger(checkpoint, "next_ledger", 1, uint.MaxValue, nameof(value));
         }
     }
 }

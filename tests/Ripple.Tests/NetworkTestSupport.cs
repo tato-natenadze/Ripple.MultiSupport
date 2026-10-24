@@ -15,7 +15,8 @@ namespace Ripple.Tests
         internal bool Disposed;
         protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
-            var body = JObject.Parse(await request.Content.ReadAsStringAsync().ConfigureAwait(false));
+            var body = Newtonsoft.Json.JsonConvert.DeserializeObject<JObject>(await request.Content.ReadAsStringAsync().ConfigureAwait(false),
+                new Newtonsoft.Json.JsonSerializerSettings { DateParseHandling = Newtonsoft.Json.DateParseHandling.None });
             lock (Requests) Requests.Add(body);
             JObject result = await Respond((string)body["method"], (JObject)body["params"][0], cancellationToken).ConfigureAwait(false);
             return new HttpResponseMessage(HttpStatusCode.OK) { Content = new StringContent(new JObject { ["result"] = result }.ToString()) };

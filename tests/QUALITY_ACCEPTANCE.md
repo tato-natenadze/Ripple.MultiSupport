@@ -98,3 +98,9 @@ not a claim that every possible runtime condition has been tested.
 7. History range: default-range pruning and legacy-token upgrade cases failed
    before the fix. All five new cases now pass, with original explicit bounds and
    binding checks intact. Full suite 196 per runtime (392 total).
+8. Continuation/checkpoint validation: 25 of 46 initial cases failed before the
+   fix. All 48 new cases now pass, including strict field types, duplicate keys,
+   UTF-8, opaque marker types/date-like strings and request snapshotting. The
+   additional invalid-UTF-8 response case also failed before its correction.
+   Full suite 244 per runtime (488 total). Existing checkpoint/restart and old
+   version-1 token tests remain unchanged and pass.

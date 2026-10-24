@@ -116,30 +116,29 @@ namespace Ripple
         {
             ValidateClassicAddress(address, nameof(address));
             request = request ?? new PaymentHistoryRequest();
-            if (request.Limit < 1 || request.Limit > 400) throw new ArgumentOutOfRangeException(nameof(request.Limit));
-            long from = request.FromLedger.HasValue ? (long)request.FromLedger.Value : -1L;
+            int limit = request.Limit;
+            uint? requestedFrom = request.FromLedger, requestedTo = request.ToLedger;
+            string continuation = request.ContinuationToken;
+            if (limit < 1 || limit > 400) throw new ArgumentOutOfRangeException(nameof(request.Limit));
+            long from = requestedFrom.HasValue ? (long)requestedFrom.Value : -1L;
             uint to;
             JToken marker = null;
-            if (request.ContinuationToken != null)
+            if (continuation != null)
             {
-                JObject cursor;
-                try { cursor = JObject.Parse(Encoding.UTF8.GetString(Convert.FromBase64String(request.ContinuationToken))); }
-                catch (Exception ex) when (ex is FormatException || ex is JsonException)
-                { throw new ArgumentException("Invalid history continuation token.", nameof(request), ex); }
-                if ((string)cursor["account"] != address || (string)cursor["endpoint"] != _options.RpcEndpoint.AbsoluteUri || (int?)cursor["version"] != 1)
-                    throw new ArgumentException("History token belongs to a different account/server.", nameof(request));
-                from = (long?)cursor["from"] ?? throw new ArgumentException("Missing history range.", nameof(request));
-                to = RequiredUInt(cursor, "to");
+                var cursor = DecodeStateToken(continuation, nameof(request));
+                ValidateStateBinding(cursor, address, nameof(request));
+                from = StateInteger(cursor, "from", -1, uint.MaxValue, nameof(request));
+                to = (uint)StateInteger(cursor, "to", 0, uint.MaxValue, nameof(request));
                 marker = cursor["marker"];
                 if (marker == null || marker.Type == JTokenType.Null || from < -1 || from > to)
                     throw new ArgumentException("Invalid history token range/marker.", nameof(request));
-                if ((request.FromLedger.HasValue && request.FromLedger.Value != from) || (request.ToLedger.HasValue && request.ToLedger.Value != to))
+                if ((requestedFrom.HasValue && requestedFrom.Value != from) || (requestedTo.HasValue && requestedTo.Value != to))
                     throw new ArgumentException("Cannot change the range while continuing history.", nameof(request));
             }
-            else to = request.ToLedger ?? (await GetLedgerAsync(cancellationToken).ConfigureAwait(false)).Index;
+            else to = requestedTo ?? (await GetLedgerAsync(cancellationToken).ConfigureAwait(false)).Index;
             if (from > to) throw new ArgumentException("FromLedger must not exceed ToLedger.", nameof(request));
             var args = new JObject { ["account"] = address, ["ledger_index_min"] = from, ["ledger_index_max"] = to,
-                ["forward"] = true, ["binary"] = false, ["limit"] = request.Limit };
+                ["forward"] = true, ["binary"] = false, ["limit"] = limit };
             if (marker != null) args["marker"] = marker.DeepClone();
             var response = await RpcAsync("account_tx", args, cancellationToken).ConfigureAwait(false);
             RequireValidated(response);
