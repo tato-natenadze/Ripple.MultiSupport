@@ -23,6 +23,7 @@ dotnet add package Ripple.MultiSupport
 | | `SignTransaction(transaction)` | Sign locally; return a hexadecimal `tx_blob` |
 | `XrplClient` | `GetAccountAsync(address)` | Read validated balance, sequence and reserve estimates |
 | | `GetFeeAsync()` | Read the current fee estimate for a normal single-signed XRP payment, in XRP |
+| | `GetNetworkInfoAsync()` | Read network ID (when reported), validated ledger and XRP reserve requirements |
 | | `SendXrpAsync(seed, request)` | Sign and submit a direct XRP payment; wait for its result |
 | | `GetTransactionAsync(hash)` / `GetTransactionAsync(receipt)` | Query status; a saved receipt also allows proven expiry checks |
 | | `GetPaymentsAsync(address, request)` | Read validated incoming/outgoing XRP payment history |

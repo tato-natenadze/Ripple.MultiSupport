@@ -23,6 +23,11 @@ namespace Ripple
         private async Task<LedgerSnapshot> GetLedgerAsync(CancellationToken token)
         {
             var result = await RpcAsync("server_info", null, token).ConfigureAwait(false);
+            return ReadValidatedLedger(result);
+        }
+
+        private static LedgerSnapshot ReadValidatedLedger(JObject result)
+        {
             var info = result["info"] as JObject;
             var ledger = info?["validated_ledger"] as JObject;
             if (ledger == null || ledger["seq"] == null || ledger["reserve_base_xrp"] == null || ledger["reserve_inc_xrp"] == null)
