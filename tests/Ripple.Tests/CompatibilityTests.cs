@@ -42,6 +42,19 @@ namespace Ripple.Tests
             Assert.AreEqual(0, missing.Length, string.Join(Environment.NewLine, missing.Take(15)));
         }
 
+        [TestMethod]
+        public void PreReviewPublicApiRemainsAvailable()
+        {
+#if NET472
+            const string baseline = "v1.1.0-public-api-net472.txt";
+#else
+            const string baseline = "v1.1.0-public-api-net8.txt";
+#endif
+            var current = new HashSet<string>(DescribeApi(typeof(RippleClient).Assembly, stableFlags: true), StringComparer.Ordinal);
+            string[] missing = File.ReadAllLines(Fixture(baseline)).Where(line => !current.Contains(line)).ToArray();
+            Assert.AreEqual(0, missing.Length, string.Join(Environment.NewLine, missing.Take(15)));
+        }
+
         [DataTestMethod]
         [DataRow(TestTransactions.SecpSeed, TestTransactions.Account,
             "030D58EB48B4420B1F7B9DF55087E0E29FEF0E8468F9A6825B01CA2C361042D435",
@@ -88,7 +101,7 @@ namespace Ripple.Tests
             return string.Join(";", parameters.Select(p => p.Name + ":" + TypeName(p.ParameterType) + ":" + p.Attributes + ":" + p.DefaultValue));
         }
 
-        private static IEnumerable<string> DescribeApi(Assembly assembly)
+        private static IEnumerable<string> DescribeApi(Assembly assembly, bool stableFlags = false)
         {
             const BindingFlags flags = BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static | BindingFlags.DeclaredOnly;
             foreach (Type type in assembly.GetExportedTypes())
@@ -96,11 +109,11 @@ namespace Ripple.Tests
                 yield return "TYPE " + type.FullName + " BASE " + (type.BaseType == null ? "" : TypeName(type.BaseType)) + " INTERFACES " +
                     string.Join(";", type.GetInterfaces().Select(TypeName).OrderBy(x => x, StringComparer.Ordinal));
                 foreach (ConstructorInfo ctor in type.GetConstructors(flags))
-                    yield return type.FullName + " CTOR " + ctor.Attributes + " " + Parameters(ctor.GetParameters());
+                    yield return type.FullName + " CTOR " + (stableFlags ? ((int)ctor.Attributes).ToString() : ctor.Attributes.ToString()) + " " + Parameters(ctor.GetParameters());
                 foreach (MethodInfo method in type.GetMethods(flags))
-                    yield return type.FullName + " METHOD " + method.Name + " " + method.Attributes + " " + TypeName(method.ReturnType) + " (" + Parameters(method.GetParameters()) + ")";
+                    yield return type.FullName + " METHOD " + method.Name + " " + (stableFlags ? ((int)method.Attributes).ToString() : method.Attributes.ToString()) + " " + TypeName(method.ReturnType) + " (" + Parameters(method.GetParameters()) + ")";
                 foreach (FieldInfo field in type.GetFields(flags))
-                    yield return type.FullName + " FIELD " + field.Name + " " + field.Attributes + " " + TypeName(field.FieldType);
+                    yield return type.FullName + " FIELD " + field.Name + " " + (stableFlags ? ((int)field.Attributes).ToString() : field.Attributes.ToString()) + " " + TypeName(field.FieldType);
             }
         }
     }

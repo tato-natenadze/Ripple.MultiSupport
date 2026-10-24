@@ -1,0 +1,1047 @@
+TYPE Ripple.AccountInfo BASE System.Object INTERFACES 
+Ripple.AccountInfo CTOR 6278 
+Ripple.AccountInfo METHOD get_Address 2182 System.String ()
+Ripple.AccountInfo METHOD get_Exists 2182 System.Boolean ()
+Ripple.AccountInfo METHOD get_LedgerIndex 2182 System.UInt32 ()
+Ripple.AccountInfo METHOD get_BalanceXrp 2182 System.Decimal ()
+Ripple.AccountInfo METHOD get_EstimatedReserveXrp 2182 System.Decimal ()
+Ripple.AccountInfo METHOD get_EstimatedSpendableXrp 2182 System.Decimal ()
+Ripple.AccountInfo METHOD get_Sequence 2182 System.UInt32 ()
+Ripple.AccountInfo METHOD get_OwnerCount 2182 System.UInt32 ()
+Ripple.AccountInfo METHOD get_RequiresDestinationTag 2182 System.Boolean ()
+Ripple.AccountInfo METHOD get_DepositAuthorization 2182 System.Boolean ()
+Ripple.AccountInfo METHOD get_MasterKeyDisabled 2182 System.Boolean ()
+Ripple.AccountInfo METHOD get_RegularKey 2182 System.String ()
+TYPE Ripple.PaymentHistoryRequest BASE System.Object INTERFACES 
+Ripple.PaymentHistoryRequest CTOR 6278 
+Ripple.PaymentHistoryRequest METHOD get_FromLedger 2182 System.Nullable`1[System.UInt32] ()
+Ripple.PaymentHistoryRequest METHOD set_FromLedger 2182 System.Void (value:System.Nullable`1[System.UInt32]:None:)
+Ripple.PaymentHistoryRequest METHOD get_ToLedger 2182 System.Nullable`1[System.UInt32] ()
+Ripple.PaymentHistoryRequest METHOD set_ToLedger 2182 System.Void (value:System.Nullable`1[System.UInt32]:None:)
+Ripple.PaymentHistoryRequest METHOD get_Limit 2182 System.Int32 ()
+Ripple.PaymentHistoryRequest METHOD set_Limit 2182 System.Void (value:System.Int32:None:)
+Ripple.PaymentHistoryRequest METHOD get_ContinuationToken 2182 System.String ()
+Ripple.PaymentHistoryRequest METHOD set_ContinuationToken 2182 System.Void (value:System.String:None:)
+TYPE Ripple.PaymentHistoryPage BASE System.Object INTERFACES 
+Ripple.PaymentHistoryPage CTOR 6278 
+Ripple.PaymentHistoryPage METHOD get_Payments 2182 System.Collections.Generic.IReadOnlyList`1[Ripple.TransactionInfo] ()
+Ripple.PaymentHistoryPage METHOD get_ContinuationToken 2182 System.String ()
+Ripple.PaymentHistoryPage METHOD get_FromLedger 2182 System.UInt32 ()
+Ripple.PaymentHistoryPage METHOD get_ToLedger 2182 System.UInt32 ()
+Ripple.PaymentHistoryPage METHOD get_RequestedRangeAvailable 2182 System.Boolean ()
+TYPE Ripple.PaymentReceipt BASE System.Object INTERFACES 
+Ripple.PaymentReceipt CTOR 6278 hash:System.String:None:;sender:System.String:None:;sequence:System.UInt32:None:;firstLedger:System.UInt32:None:;lastLedger:System.UInt32:None:;txBlob:System.String:None:;rpcEndpoint:System.Uri:None:
+Ripple.PaymentReceipt METHOD get_Hash 2182 System.String ()
+Ripple.PaymentReceipt METHOD get_Sender 2182 System.String ()
+Ripple.PaymentReceipt METHOD get_Sequence 2182 System.UInt32 ()
+Ripple.PaymentReceipt METHOD get_FirstLedger 2182 System.UInt32 ()
+Ripple.PaymentReceipt METHOD get_LastLedger 2182 System.UInt32 ()
+Ripple.PaymentReceipt METHOD get_TxBlob 2182 System.String ()
+Ripple.PaymentReceipt METHOD get_RpcEndpoint 2182 System.Uri ()
+TYPE Ripple.PaymentResult BASE System.Object INTERFACES 
+Ripple.PaymentResult CTOR 6278 
+Ripple.PaymentResult METHOD get_Receipt 2182 Ripple.PaymentReceipt ()
+Ripple.PaymentResult METHOD get_Transaction 2182 Ripple.TransactionInfo ()
+Ripple.PaymentResult METHOD get_Status 2182 Ripple.TransactionStatus ()
+Ripple.PaymentResult METHOD get_SubmissionResultCode 2182 System.String ()
+Ripple.PaymentResult METHOD get_Diagnostic 2182 System.String ()
+TYPE Ripple.PendingPaymentException BASE System.InvalidOperationException INTERFACES System.Runtime.InteropServices._Exception;System.Runtime.Serialization.ISerializable
+Ripple.PendingPaymentException METHOD get_Receipt 2182 Ripple.PaymentReceipt ()
+TYPE Ripple.PaymentWatchOptions BASE System.Object INTERFACES 
+Ripple.PaymentWatchOptions CTOR 6278 
+Ripple.PaymentWatchOptions METHOD get_FromLedger 2182 System.Nullable`1[System.UInt32] ()
+Ripple.PaymentWatchOptions METHOD set_FromLedger 2182 System.Void (value:System.Nullable`1[System.UInt32]:None:)
+Ripple.PaymentWatchOptions METHOD get_Checkpoint 2182 System.String ()
+Ripple.PaymentWatchOptions METHOD set_Checkpoint 2182 System.Void (value:System.String:None:)
+Ripple.PaymentWatchOptions METHOD get_SaveCheckpointAsync 2182 System.Func`3[System.String,System.Threading.CancellationToken,System.Threading.Tasks.Task] ()
+Ripple.PaymentWatchOptions METHOD set_SaveCheckpointAsync 2182 System.Void (value:System.Func`3[System.String,System.Threading.CancellationToken,System.Threading.Tasks.Task]:None:)
+TYPE Ripple.TransactionStatus BASE System.Enum INTERFACES System.IComparable;System.IConvertible;System.IFormattable
+Ripple.TransactionStatus FIELD value__ 1542 System.Int32
+Ripple.TransactionStatus FIELD Unknown 32854 Ripple.TransactionStatus
+Ripple.TransactionStatus FIELD Pending 32854 Ripple.TransactionStatus
+Ripple.TransactionStatus FIELD Succeeded 32854 Ripple.TransactionStatus
+Ripple.TransactionStatus FIELD Failed 32854 Ripple.TransactionStatus
+Ripple.TransactionStatus FIELD Expired 32854 Ripple.TransactionStatus
+Ripple.TransactionStatus FIELD Rejected 32854 Ripple.TransactionStatus
+TYPE Ripple.TransactionInfo BASE System.Object INTERFACES 
+Ripple.TransactionInfo CTOR 6278 
+Ripple.TransactionInfo METHOD get_Hash 2182 System.String ()
+Ripple.TransactionInfo METHOD get_Found 2182 System.Boolean ()
+Ripple.TransactionInfo METHOD get_Validated 2182 System.Boolean ()
+Ripple.TransactionInfo METHOD get_Status 2182 Ripple.TransactionStatus ()
+Ripple.TransactionInfo METHOD get_ResultCode 2182 System.String ()
+Ripple.TransactionInfo METHOD get_TransactionType 2182 System.String ()
+Ripple.TransactionInfo METHOD get_Sender 2182 System.String ()
+Ripple.TransactionInfo METHOD get_Destination 2182 System.String ()
+Ripple.TransactionInfo METHOD get_DestinationTag 2182 System.Nullable`1[System.UInt32] ()
+Ripple.TransactionInfo METHOD get_LedgerIndex 2182 System.Nullable`1[System.UInt32] ()
+Ripple.TransactionInfo METHOD get_TransactionIndex 2182 System.Nullable`1[System.UInt32] ()
+Ripple.TransactionInfo METHOD get_AmountXrp 2182 System.Nullable`1[System.Decimal] ()
+Ripple.TransactionInfo METHOD get_DeliveredAmountXrp 2182 System.Nullable`1[System.Decimal] ()
+Ripple.TransactionInfo METHOD get_FeeXrp 2182 System.Nullable`1[System.Decimal] ()
+Ripple.TransactionInfo METHOD get_IsXrpPayment 2182 System.Boolean ()
+TYPE Ripple.XrpPaymentRequest BASE System.Object INTERFACES 
+Ripple.XrpPaymentRequest CTOR 6278 
+Ripple.XrpPaymentRequest METHOD get_Destination 2182 System.String ()
+Ripple.XrpPaymentRequest METHOD set_Destination 2182 System.Void (value:System.String:None:)
+Ripple.XrpPaymentRequest METHOD get_AmountXrp 2182 System.Decimal ()
+Ripple.XrpPaymentRequest METHOD set_AmountXrp 2182 System.Void (value:System.Decimal:None:)
+Ripple.XrpPaymentRequest METHOD get_DestinationTag 2182 System.Nullable`1[System.UInt32] ()
+Ripple.XrpPaymentRequest METHOD set_DestinationTag 2182 System.Void (value:System.Nullable`1[System.UInt32]:None:)
+Ripple.XrpPaymentRequest METHOD get_Memo 2182 System.String ()
+Ripple.XrpPaymentRequest METHOD set_Memo 2182 System.Void (value:System.String:None:)
+Ripple.XrpPaymentRequest METHOD get_OnPreparedAsync 2182 System.Func`3[Ripple.PaymentReceipt,System.Threading.CancellationToken,System.Threading.Tasks.Task] ()
+Ripple.XrpPaymentRequest METHOD set_OnPreparedAsync 2182 System.Void (value:System.Func`3[Ripple.PaymentReceipt,System.Threading.CancellationToken,System.Threading.Tasks.Task]:None:)
+TYPE Ripple.XrplClient BASE System.Object INTERFACES System.IDisposable
+Ripple.XrplClient CTOR 6278 options:Ripple.XrplClientOptions:None:
+Ripple.XrplClient CTOR 6278 options:Ripple.XrplClientOptions:None:;httpClient:System.Net.Http.HttpClient:Optional, HasDefault:
+Ripple.XrplClient METHOD Dispose 486 System.Void ()
+Ripple.XrplClient METHOD GetAccountAsync 134 System.Threading.Tasks.Task`1[Ripple.AccountInfo] (address:System.String:None:;cancellationToken:System.Threading.CancellationToken:Optional, HasDefault:)
+Ripple.XrplClient METHOD GetTransactionAsync 134 System.Threading.Tasks.Task`1[Ripple.TransactionInfo] (hash:System.String:None:;cancellationToken:System.Threading.CancellationToken:Optional, HasDefault:)
+Ripple.XrplClient METHOD GetPaymentsAsync 134 System.Threading.Tasks.Task`1[Ripple.PaymentHistoryPage] (address:System.String:None:;request:Ripple.PaymentHistoryRequest:Optional, HasDefault:;cancellationToken:System.Threading.CancellationToken:Optional, HasDefault:)
+Ripple.XrplClient METHOD SendXrpAsync 134 System.Threading.Tasks.Task`1[Ripple.PaymentResult] (seed:System.String:None:;payment:Ripple.XrpPaymentRequest:None:;cancellationToken:System.Threading.CancellationToken:Optional, HasDefault:)
+Ripple.XrplClient METHOD GetTransactionAsync 134 System.Threading.Tasks.Task`1[Ripple.TransactionInfo] (receipt:Ripple.PaymentReceipt:None:;cancellationToken:System.Threading.CancellationToken:Optional, HasDefault:)
+Ripple.XrplClient METHOD WatchIncomingPaymentsAsync 134 System.Threading.Tasks.Task (address:System.String:None:;onPayment:System.Func`3[Ripple.TransactionInfo,System.Threading.CancellationToken,System.Threading.Tasks.Task]:None:;options:Ripple.PaymentWatchOptions:Optional, HasDefault:;cancellationToken:System.Threading.CancellationToken:Optional, HasDefault:)
+TYPE Ripple.XrplClientOptions BASE System.Object INTERFACES 
+Ripple.XrplClientOptions CTOR 6278 
+Ripple.XrplClientOptions METHOD get_RpcEndpoint 2182 System.Uri ()
+Ripple.XrplClientOptions METHOD set_RpcEndpoint 2182 System.Void (value:System.Uri:None:)
+Ripple.XrplClientOptions METHOD get_WebSocketEndpoint 2182 System.Uri ()
+Ripple.XrplClientOptions METHOD set_WebSocketEndpoint 2182 System.Void (value:System.Uri:None:)
+Ripple.XrplClientOptions METHOD get_MaxFeeXrp 2182 System.Decimal ()
+Ripple.XrplClientOptions METHOD set_MaxFeeXrp 2182 System.Void (value:System.Decimal:None:)
+Ripple.XrplClientOptions METHOD get_RequestTimeout 2182 System.TimeSpan ()
+Ripple.XrplClientOptions METHOD set_RequestTimeout 2182 System.Void (value:System.TimeSpan:None:)
+Ripple.XrplClientOptions METHOD get_ConfirmationTimeout 2182 System.TimeSpan ()
+Ripple.XrplClientOptions METHOD set_ConfirmationTimeout 2182 System.Void (value:System.TimeSpan:None:)
+Ripple.XrplClientOptions METHOD get_PollInterval 2182 System.TimeSpan ()
+Ripple.XrplClientOptions METHOD set_PollInterval 2182 System.Void (value:System.TimeSpan:None:)
+Ripple.XrplClientOptions METHOD get_LastLedgerOffset 2182 System.UInt32 ()
+Ripple.XrplClientOptions METHOD set_LastLedgerOffset 2182 System.Void (value:System.UInt32:None:)
+TYPE Ripple.XrplRpcException BASE System.Exception INTERFACES System.Runtime.InteropServices._Exception;System.Runtime.Serialization.ISerializable
+Ripple.XrplRpcException METHOD get_Code 2182 System.String ()
+Ripple.XrplRpcException METHOD get_Method 2182 System.String ()
+TYPE Ripple.RippleClient BASE System.Object INTERFACES 
+Ripple.RippleClient CTOR 6278 
+Ripple.RippleClient METHOD GenerateAddress 150 Ripple.LibraryClasses.CreateAddress.AddressData ()
+Ripple.RippleClient METHOD ValidateAddress 150 System.Boolean (address:System.String:None:)
+Ripple.RippleClient METHOD SignTransaction 150 System.String (txObject:System.Object:None:)
+TYPE Ripple.LibraryClasses.ValidateAddress.AddressCodec BASE System.Object INTERFACES 
+Ripple.LibraryClasses.ValidateAddress.AddressCodec CTOR 6278 
+Ripple.LibraryClasses.ValidateAddress.AddressCodec METHOD DecodeSeed 150 Ripple.LibraryClasses.ValidateAddress.AddressCodec+DecodedSeed (seed:System.String:None:)
+Ripple.LibraryClasses.ValidateAddress.AddressCodec METHOD EncodeSeed 150 System.String (bytes:System.Byte[]:None:;type:System.String:None:)
+Ripple.LibraryClasses.ValidateAddress.AddressCodec METHOD DecodeK256Seed 150 System.Byte[] (seed:System.String:None:)
+Ripple.LibraryClasses.ValidateAddress.AddressCodec METHOD EncodeK256Seed 150 System.String (bytes:System.Byte[]:None:)
+Ripple.LibraryClasses.ValidateAddress.AddressCodec METHOD DecodeEdSeed 150 System.Byte[] (base58:System.String:None:)
+Ripple.LibraryClasses.ValidateAddress.AddressCodec METHOD EncodeEdSeed 150 System.String (bytes:System.Byte[]:None:)
+Ripple.LibraryClasses.ValidateAddress.AddressCodec METHOD EncodeAddress 150 System.String (bytes:System.Byte[]:None:)
+Ripple.LibraryClasses.ValidateAddress.AddressCodec METHOD EncodeNodePublic 150 System.String (bytes:System.Byte[]:None:)
+Ripple.LibraryClasses.ValidateAddress.AddressCodec METHOD DecodeNodePublic 150 System.Byte[] (publicKey:System.String:None:)
+Ripple.LibraryClasses.ValidateAddress.AddressCodec METHOD DecodeAddress 150 System.Byte[] (address:System.String:None:)
+Ripple.LibraryClasses.ValidateAddress.AddressCodec METHOD IsValidAddress 150 System.Boolean (address:System.String:None:)
+Ripple.LibraryClasses.ValidateAddress.AddressCodec METHOD IsValidNodePublic 150 System.Boolean (nodePublic:System.String:None:)
+Ripple.LibraryClasses.ValidateAddress.AddressCodec METHOD IsValidSeed 150 System.Boolean (seed:System.String:None:)
+Ripple.LibraryClasses.ValidateAddress.AddressCodec METHOD IsValidEdSeed 150 System.Boolean (edSeed:System.String:None:)
+Ripple.LibraryClasses.ValidateAddress.AddressCodec METHOD IsValidK256Seed 150 System.Boolean (k256Seed:System.String:None:)
+Ripple.LibraryClasses.ValidateAddress.AddressCodec FIELD AccountId 22 Ripple.LibraryClasses.Signer.B58+Version
+Ripple.LibraryClasses.ValidateAddress.AddressCodec FIELD NodePublic 22 Ripple.LibraryClasses.Signer.B58+Version
+Ripple.LibraryClasses.ValidateAddress.AddressCodec FIELD NodePrivate 22 Ripple.LibraryClasses.Signer.B58+Version
+Ripple.LibraryClasses.ValidateAddress.AddressCodec FIELD AccountPublic 22 Ripple.LibraryClasses.Signer.B58+Version
+Ripple.LibraryClasses.ValidateAddress.AddressCodec FIELD AccountPrivate 22 Ripple.LibraryClasses.Signer.B58+Version
+Ripple.LibraryClasses.ValidateAddress.AddressCodec FIELD FamilyGenerator 22 Ripple.LibraryClasses.Signer.B58+Version
+Ripple.LibraryClasses.ValidateAddress.AddressCodec FIELD K256Seed 22 Ripple.LibraryClasses.Signer.B58+Version
+Ripple.LibraryClasses.ValidateAddress.AddressCodec FIELD Ed25519Seed 22 Ripple.LibraryClasses.Signer.B58+Version
+Ripple.LibraryClasses.ValidateAddress.AddressCodec FIELD AnySeed 22 Ripple.LibraryClasses.Signer.B58+Versions
+Ripple.LibraryClasses.ValidateAddress.AddressCodec FIELD Alphabet 32854 System.String
+TYPE Ripple.LibraryClasses.Signer.AccountId BASE Ripple.LibraryClasses.Signer.Hashes.Hash160 INTERFACES Ripple.LibraryClasses.Signer.Interfaces.ISerializedType;System.IEquatable`1[Ripple.LibraryClasses.Signer.Hashes.Hash]
+Ripple.LibraryClasses.Signer.AccountId CTOR 6278 hash:System.Byte[]:None:;encoded:System.String:None:
+Ripple.LibraryClasses.Signer.AccountId CTOR 6278 v:System.String:None:
+Ripple.LibraryClasses.Signer.AccountId CTOR 6278 hash:System.Byte[]:None:
+Ripple.LibraryClasses.Signer.AccountId METHOD op_Implicit 2198 Ripple.LibraryClasses.Signer.AccountId (value:System.String:None:)
+Ripple.LibraryClasses.Signer.AccountId METHOD op_Implicit 2198 Ripple.LibraryClasses.Signer.AccountId (value:System.UInt32:None:)
+Ripple.LibraryClasses.Signer.AccountId METHOD op_Implicit 2198 Ripple.LibraryClasses.Signer.AccountId (json:Newtonsoft.Json.Linq.JToken:None:)
+Ripple.LibraryClasses.Signer.AccountId METHOD op_Implicit 2198 Newtonsoft.Json.Linq.JToken (v:Ripple.LibraryClasses.Signer.AccountId:None:)
+Ripple.LibraryClasses.Signer.AccountId METHOD ToString 198 System.String ()
+Ripple.LibraryClasses.Signer.AccountId METHOD FromJson 150 Ripple.LibraryClasses.Signer.AccountId (json:Newtonsoft.Json.Linq.JToken:None:)
+Ripple.LibraryClasses.Signer.AccountId METHOD FromParser 150 Ripple.LibraryClasses.Signer.AccountId (parser:Ripple.LibraryClasses.Signer.BinaryParser:None:;hint:System.Nullable`1[System.Int32]:Optional, HasDefault:)
+Ripple.LibraryClasses.Signer.AccountId FIELD Zero 54 Ripple.LibraryClasses.Signer.AccountId
+Ripple.LibraryClasses.Signer.AccountId FIELD Neutral 54 Ripple.LibraryClasses.Signer.AccountId
+TYPE Ripple.LibraryClasses.Signer.Amount BASE System.Object INTERFACES Ripple.LibraryClasses.Signer.Interfaces.ISerializedType
+Ripple.LibraryClasses.Signer.Amount CTOR 6278 value:Ripple.LibraryClasses.Signer.AmountValue:None:;currency:Ripple.LibraryClasses.Signer.Currency:Optional, HasDefault:;issuer:Ripple.LibraryClasses.Signer.AccountId:Optional, HasDefault:
+Ripple.LibraryClasses.Signer.Amount CTOR 6278 v:System.String:Optional, HasDefault:0;c:Ripple.LibraryClasses.Signer.Currency:Optional, HasDefault:;i:Ripple.LibraryClasses.Signer.AccountId:Optional, HasDefault:
+Ripple.LibraryClasses.Signer.Amount CTOR 6278 value:System.Decimal:None:;currency:Ripple.LibraryClasses.Signer.Currency:None:;issuer:Ripple.LibraryClasses.Signer.AccountId:Optional, HasDefault:
+Ripple.LibraryClasses.Signer.Amount METHOD get_IsNative 2182 System.Boolean ()
+Ripple.LibraryClasses.Signer.Amount METHOD ToBytes 486 System.Void (sink:Ripple.LibraryClasses.Signer.Interfaces.IBytesSink:None:)
+Ripple.LibraryClasses.Signer.Amount METHOD ToJson 486 Newtonsoft.Json.Linq.JToken ()
+Ripple.LibraryClasses.Signer.Amount METHOD FromJson 150 Ripple.LibraryClasses.Signer.Amount (token:Newtonsoft.Json.Linq.JToken:None:)
+Ripple.LibraryClasses.Signer.Amount METHOD op_Implicit 2198 Ripple.LibraryClasses.Signer.Amount (a:System.UInt64:None:)
+Ripple.LibraryClasses.Signer.Amount METHOD op_Implicit 2198 Ripple.LibraryClasses.Signer.Amount (v:System.String:None:)
+Ripple.LibraryClasses.Signer.Amount METHOD FromParser 150 Ripple.LibraryClasses.Signer.Amount (parser:Ripple.LibraryClasses.Signer.BinaryParser:None:;hint:System.Nullable`1[System.Int32]:Optional, HasDefault:)
+Ripple.LibraryClasses.Signer.Amount METHOD DecimalValue 134 System.Decimal ()
+Ripple.LibraryClasses.Signer.Amount METHOD op_Multiply 2198 Ripple.LibraryClasses.Signer.Amount (a:Ripple.LibraryClasses.Signer.Amount:None:;b:System.Decimal:None:)
+Ripple.LibraryClasses.Signer.Amount METHOD op_LessThan 2198 System.Boolean (a:System.Decimal:None:;b:Ripple.LibraryClasses.Signer.Amount:None:)
+Ripple.LibraryClasses.Signer.Amount METHOD op_GreaterThan 2198 System.Boolean (a:System.Decimal:None:;b:Ripple.LibraryClasses.Signer.Amount:None:)
+Ripple.LibraryClasses.Signer.Amount METHOD NewValue 134 Ripple.LibraryClasses.Signer.Amount (decimal:System.Decimal:None:)
+Ripple.LibraryClasses.Signer.Amount FIELD Issuer 38 Ripple.LibraryClasses.Signer.AccountId
+Ripple.LibraryClasses.Signer.Amount FIELD Currency 38 Ripple.LibraryClasses.Signer.Currency
+Ripple.LibraryClasses.Signer.Amount FIELD Value 6 Ripple.LibraryClasses.Signer.AmountValue
+Ripple.LibraryClasses.Signer.Amount FIELD MaximumIouPrecision 32854 System.Int32
+TYPE Ripple.LibraryClasses.Signer.AmountValue BASE System.Object INTERFACES 
+Ripple.LibraryClasses.Signer.AmountValue METHOD get_IsIou 3526 System.Boolean ()
+Ripple.LibraryClasses.Signer.AmountValue METHOD ToString 1478 System.String ()
+Ripple.LibraryClasses.Signer.AmountValue METHOD ToBytes 1478 System.Byte[] ()
+Ripple.LibraryClasses.Signer.AmountValue METHOD FromString 150 Ripple.LibraryClasses.Signer.AmountValue (value:System.String:None:;native:System.Boolean:Optional, HasDefault:False)
+Ripple.LibraryClasses.Signer.AmountValue METHOD FromParser 150 Ripple.LibraryClasses.Signer.AmountValue (parser:Ripple.LibraryClasses.Signer.BinaryParser:None:)
+TYPE Ripple.LibraryClasses.Signer.B16 BASE System.Object INTERFACES 
+Ripple.LibraryClasses.Signer.B16 CTOR 6278 
+Ripple.LibraryClasses.Signer.B16 METHOD Encode 150 System.String (data:System.Byte[]:None:)
+Ripple.LibraryClasses.Signer.B16 METHOD Decode 150 System.Byte[] (hexString:System.String:None:)
+TYPE Ripple.LibraryClasses.Signer.B58 BASE System.Object INTERFACES 
+Ripple.LibraryClasses.Signer.B58 CTOR 6278 alphabet:System.String:None:
+Ripple.LibraryClasses.Signer.B58 METHOD Decode 134 System.Byte[] (input:System.String:None:;version:Ripple.LibraryClasses.Signer.B58+Version:None:)
+Ripple.LibraryClasses.Signer.B58 METHOD Decode 134 Ripple.LibraryClasses.Signer.B58+Decoded (input:System.String:None:;versions:Ripple.LibraryClasses.Signer.B58+Versions:None:)
+Ripple.LibraryClasses.Signer.B58 METHOD Decode 134 System.Byte[] (input:System.String:None:)
+Ripple.LibraryClasses.Signer.B58 METHOD Encode 134 System.String (buffer:System.Byte[]:None:;version:Ripple.LibraryClasses.Signer.B58+Version:None:)
+Ripple.LibraryClasses.Signer.B58 METHOD Encode 134 System.String (buffer:System.Byte[]:None:;versionName:System.String:None:;versions:Ripple.LibraryClasses.Signer.B58+Versions:None:)
+Ripple.LibraryClasses.Signer.B58 METHOD EncodeToBytes 134 System.Byte[] (input:System.Byte[]:None:)
+Ripple.LibraryClasses.Signer.B58 METHOD EncodeToBytesChecked 134 System.Byte[] (input:System.Byte[]:None:;version:System.Int32:None:)
+Ripple.LibraryClasses.Signer.B58 METHOD EncodeToBytesChecked 134 System.Byte[] (input:System.Byte[]:None:;version:System.Byte[]:None:)
+Ripple.LibraryClasses.Signer.B58 METHOD EncodeToString 134 System.String (input:System.Byte[]:None:)
+Ripple.LibraryClasses.Signer.B58 METHOD EncodeToStringChecked 134 System.String (input:System.Byte[]:None:;version:System.Int32:None:)
+Ripple.LibraryClasses.Signer.B58 METHOD EncodeToStringChecked 134 System.String (input:System.Byte[]:None:;version:System.Byte[]:None:)
+Ripple.LibraryClasses.Signer.B58 METHOD FindPrefix 134 System.Byte[] (payLoadLength:System.Int32:None:;desiredPrefix:System.String:None:)
+Ripple.LibraryClasses.Signer.B58 METHOD IsValid 134 System.Boolean (input:System.String:None:;version:Ripple.LibraryClasses.Signer.B58+Version:None:)
+Ripple.LibraryClasses.Signer.B58 METHOD IsValid 134 System.Boolean (input:System.String:None:;version:Ripple.LibraryClasses.Signer.B58+Versions:None:)
+TYPE Ripple.LibraryClasses.Signer.BinaryParser BASE System.Object INTERFACES 
+Ripple.LibraryClasses.Signer.BinaryParser METHOD End 134 System.Boolean ()
+Ripple.LibraryClasses.Signer.BinaryParser METHOD Pos 134 System.Int32 ()
+Ripple.LibraryClasses.Signer.BinaryParser METHOD ReadOneInt 134 System.Int32 ()
+Ripple.LibraryClasses.Signer.BinaryParser METHOD Skip 1478 System.Void (n:System.Int32:None:)
+Ripple.LibraryClasses.Signer.BinaryParser METHOD ReadOne 1478 System.Byte ()
+Ripple.LibraryClasses.Signer.BinaryParser METHOD Read 1478 System.Byte[] (n:System.Int32:None:)
+Ripple.LibraryClasses.Signer.BinaryParser METHOD ReadField 134 Ripple.LibraryClasses.Signer.Fields.Field ()
+Ripple.LibraryClasses.Signer.BinaryParser METHOD ReadFieldCode 134 System.Int32 ()
+Ripple.LibraryClasses.Signer.BinaryParser METHOD ReadVlLength 134 System.Int32 ()
+Ripple.LibraryClasses.Signer.BinaryParser METHOD End 134 System.Boolean (customEnd:System.Nullable`1[System.Int32]:None:)
+TYPE Ripple.LibraryClasses.Signer.BinarySerializer BASE System.Object INTERFACES Ripple.LibraryClasses.Signer.Interfaces.IBytesSink
+Ripple.LibraryClasses.Signer.BinarySerializer CTOR 6278 sink:Ripple.LibraryClasses.Signer.Interfaces.IBytesSink:None:
+Ripple.LibraryClasses.Signer.BinarySerializer METHOD Put 486 System.Void (n:System.Byte[]:None:)
+Ripple.LibraryClasses.Signer.BinarySerializer METHOD AddLengthEncoded 134 System.Void (n:System.Byte[]:None:)
+Ripple.LibraryClasses.Signer.BinarySerializer METHOD EncodeVl 150 System.Byte[] (length:System.Int32:None:)
+Ripple.LibraryClasses.Signer.BinarySerializer METHOD Add 134 System.Void (bl:Ripple.LibraryClasses.Signer.BytesList:None:)
+Ripple.LibraryClasses.Signer.BinarySerializer METHOD AddFieldHeader 134 System.Int32 (f:Ripple.LibraryClasses.Signer.Fields.Field:None:)
+Ripple.LibraryClasses.Signer.BinarySerializer METHOD Put 486 System.Void (type:System.Byte:None:)
+Ripple.LibraryClasses.Signer.BinarySerializer METHOD AddLengthEncoded 134 System.Void (bytes:Ripple.LibraryClasses.Signer.BytesList:None:)
+Ripple.LibraryClasses.Signer.BinarySerializer METHOD Add 134 System.Void (field:Ripple.LibraryClasses.Signer.Fields.Field:None:;value:Ripple.LibraryClasses.Signer.Interfaces.ISerializedType:None:)
+Ripple.LibraryClasses.Signer.BinarySerializer METHOD AddLengthEncoded 134 System.Void (value:Ripple.LibraryClasses.Signer.Interfaces.ISerializedType:None:)
+TYPE Ripple.LibraryClasses.Signer.Bits BASE System.Object INTERFACES 
+Ripple.LibraryClasses.Signer.Bits METHOD get_IsLittleEndian 2198 System.Boolean ()
+Ripple.LibraryClasses.Signer.Bits METHOD set_IsLittleEndian 2198 System.Void (value:System.Boolean:None:)
+Ripple.LibraryClasses.Signer.Bits METHOD DoubleToInt64Bits 150 System.Int64 (value:System.Double:None:)
+Ripple.LibraryClasses.Signer.Bits METHOD GetBytes 150 System.Byte[] (value:System.Boolean:None:)
+Ripple.LibraryClasses.Signer.Bits METHOD GetBytes 150 System.Byte[] (value:System.Byte:None:)
+Ripple.LibraryClasses.Signer.Bits METHOD GetBytes 150 System.Byte[] (value:System.Char:None:)
+Ripple.LibraryClasses.Signer.Bits METHOD GetBytes 150 System.Byte[] (value:System.Double:None:)
+Ripple.LibraryClasses.Signer.Bits METHOD GetBytes 150 System.Byte[] (value:System.Single:None:)
+Ripple.LibraryClasses.Signer.Bits METHOD GetBytes 150 System.Byte[] (value:System.Int32:None:)
+Ripple.LibraryClasses.Signer.Bits METHOD GetBytes 150 System.Byte[] (value:System.Int64:None:)
+Ripple.LibraryClasses.Signer.Bits METHOD GetBytes 150 System.Byte[] (value:System.Int16:None:)
+Ripple.LibraryClasses.Signer.Bits METHOD GetBytes 150 System.Byte[] (value:System.UInt32:None:)
+Ripple.LibraryClasses.Signer.Bits METHOD GetBytes 150 System.Byte[] (value:System.UInt64:None:)
+Ripple.LibraryClasses.Signer.Bits METHOD GetBytes 150 System.Byte[] (value:System.UInt16:None:)
+Ripple.LibraryClasses.Signer.Bits METHOD Int64BitsToDouble 150 System.Double (value:System.Int64:None:)
+Ripple.LibraryClasses.Signer.Bits METHOD ToBoolean 150 System.Boolean (value:System.Byte[]:None:;startIndex:System.Int32:None:)
+Ripple.LibraryClasses.Signer.Bits METHOD ToChar 150 System.Char (value:System.Byte[]:None:;startIndex:System.Int32:None:)
+Ripple.LibraryClasses.Signer.Bits METHOD ToDouble 150 System.Double (value:System.Byte[]:None:;startIndex:System.Int32:None:)
+Ripple.LibraryClasses.Signer.Bits METHOD ToInt16 150 System.Int16 (value:System.Byte[]:None:;startIndex:System.Int32:None:)
+Ripple.LibraryClasses.Signer.Bits METHOD ToInt32 150 System.Int32 (value:System.Byte[]:None:;startIndex:System.Int32:None:)
+Ripple.LibraryClasses.Signer.Bits METHOD ToInt64 150 System.Int64 (value:System.Byte[]:None:;startIndex:System.Int32:None:)
+Ripple.LibraryClasses.Signer.Bits METHOD ToSingle 150 System.Single (value:System.Byte[]:None:;startIndex:System.Int32:None:)
+Ripple.LibraryClasses.Signer.Bits METHOD ToString 150 System.String (value:System.Byte[]:None:)
+Ripple.LibraryClasses.Signer.Bits METHOD ToString 150 System.String (value:System.Byte[]:None:;startIndex:System.Int32:None:)
+Ripple.LibraryClasses.Signer.Bits METHOD ToString 150 System.String (value:System.Byte[]:None:;startIndex:System.Int32:None:;length:System.Int32:None:)
+Ripple.LibraryClasses.Signer.Bits METHOD ToUInt16 150 System.UInt16 (value:System.Byte[]:None:;startIndex:System.Int32:None:)
+Ripple.LibraryClasses.Signer.Bits METHOD ToUInt32 150 System.UInt32 (value:System.Byte[]:None:;startIndex:System.Int32:None:)
+Ripple.LibraryClasses.Signer.Bits METHOD ToUInt64 150 System.UInt64 (value:System.Byte[]:None:;startIndex:System.Int32:None:)
+TYPE Ripple.LibraryClasses.Signer.Blob BASE System.Object INTERFACES Ripple.LibraryClasses.Signer.Interfaces.ISerializedType
+Ripple.LibraryClasses.Signer.Blob METHOD FromHex 150 Ripple.LibraryClasses.Signer.Blob (value:System.String:None:)
+Ripple.LibraryClasses.Signer.Blob METHOD op_Implicit 2198 Ripple.LibraryClasses.Signer.Blob (value:System.Byte[]:None:)
+Ripple.LibraryClasses.Signer.Blob METHOD op_Implicit 2198 Ripple.LibraryClasses.Signer.Blob (token:Newtonsoft.Json.Linq.JToken:None:)
+Ripple.LibraryClasses.Signer.Blob METHOD FromJson 150 Ripple.LibraryClasses.Signer.Blob (token:Newtonsoft.Json.Linq.JToken:None:)
+Ripple.LibraryClasses.Signer.Blob METHOD ToBytes 486 System.Void (sink:Ripple.LibraryClasses.Signer.Interfaces.IBytesSink:None:)
+Ripple.LibraryClasses.Signer.Blob METHOD ToJson 486 Newtonsoft.Json.Linq.JToken ()
+Ripple.LibraryClasses.Signer.Blob METHOD ToString 198 System.String ()
+Ripple.LibraryClasses.Signer.Blob METHOD FromParser 150 Ripple.LibraryClasses.Signer.Blob (parser:Ripple.LibraryClasses.Signer.BinaryParser:None:;hint:System.Nullable`1[System.Int32]:Optional, HasDefault:)
+Ripple.LibraryClasses.Signer.Blob METHOD FromString 150 Ripple.LibraryClasses.Signer.Blob (blob:System.String:None:;encoding:System.Text.Encoding:None:)
+Ripple.LibraryClasses.Signer.Blob METHOD FromAscii 150 Ripple.LibraryClasses.Signer.Blob (blob:System.String:None:)
+Ripple.LibraryClasses.Signer.Blob FIELD Buffer 38 System.Byte[]
+TYPE Ripple.LibraryClasses.Signer.BufferParser BASE Ripple.LibraryClasses.Signer.BinaryParser INTERFACES 
+Ripple.LibraryClasses.Signer.BufferParser CTOR 6278 bytes:System.Byte[]:None:
+Ripple.LibraryClasses.Signer.BufferParser CTOR 6278 hex:System.String:None:
+Ripple.LibraryClasses.Signer.BufferParser METHOD Skip 198 System.Void (n:System.Int32:None:)
+Ripple.LibraryClasses.Signer.BufferParser METHOD ReadOne 198 System.Byte ()
+Ripple.LibraryClasses.Signer.BufferParser METHOD Read 198 System.Byte[] (n:System.Int32:None:)
+TYPE Ripple.LibraryClasses.Signer.BytesList BASE System.Object INTERFACES Ripple.LibraryClasses.Signer.Interfaces.IBytesSink
+Ripple.LibraryClasses.Signer.BytesList CTOR 6278 
+Ripple.LibraryClasses.Signer.BytesList METHOD Add 134 System.Void (bl:Ripple.LibraryClasses.Signer.BytesList:None:)
+Ripple.LibraryClasses.Signer.BytesList METHOD Put 486 System.Void (aByte:System.Byte:None:)
+Ripple.LibraryClasses.Signer.BytesList METHOD Put 486 System.Void (bytes:System.Byte[]:None:)
+Ripple.LibraryClasses.Signer.BytesList METHOD Bytes 134 System.Byte[] ()
+Ripple.LibraryClasses.Signer.BytesList METHOD BytesHex 134 System.String ()
+Ripple.LibraryClasses.Signer.BytesList METHOD BytesLength 134 System.Int32 ()
+Ripple.LibraryClasses.Signer.BytesList METHOD RawList 134 System.Collections.Generic.List`1[System.Byte[]] ()
+Ripple.LibraryClasses.Signer.BytesList FIELD HexLookup 22 System.String[]
+TYPE Ripple.LibraryClasses.Signer.Currency BASE Ripple.LibraryClasses.Signer.Hashes.Hash160 INTERFACES Ripple.LibraryClasses.Signer.Interfaces.ISerializedType;System.IEquatable`1[Ripple.LibraryClasses.Signer.Hashes.Hash]
+Ripple.LibraryClasses.Signer.Currency CTOR 6278 buffer:System.Byte[]:None:
+Ripple.LibraryClasses.Signer.Currency METHOD GetCurrencyCodeFromTlcBytes 150 System.String (bytes:System.Byte[]:None:;isNative:System.Boolean&:Out:)
+Ripple.LibraryClasses.Signer.Currency METHOD FromJson 150 Ripple.LibraryClasses.Signer.Currency (token:Newtonsoft.Json.Linq.JToken:None:)
+Ripple.LibraryClasses.Signer.Currency METHOD FromString 150 Ripple.LibraryClasses.Signer.Currency (str:System.String:None:)
+Ripple.LibraryClasses.Signer.Currency METHOD EncodeCurrency 150 System.Byte[] (currencyCode:System.String:None:)
+Ripple.LibraryClasses.Signer.Currency METHOD op_Implicit 2198 Ripple.LibraryClasses.Signer.Currency (v:System.String:None:)
+Ripple.LibraryClasses.Signer.Currency METHOD op_Implicit 2198 Ripple.LibraryClasses.Signer.Currency (v:Newtonsoft.Json.Linq.JToken:None:)
+Ripple.LibraryClasses.Signer.Currency METHOD op_Implicit 2198 Newtonsoft.Json.Linq.JToken (v:Ripple.LibraryClasses.Signer.Currency:None:)
+Ripple.LibraryClasses.Signer.Currency METHOD ToString 198 System.String ()
+Ripple.LibraryClasses.Signer.Currency METHOD FromParser 150 Ripple.LibraryClasses.Signer.Currency (parser:Ripple.LibraryClasses.Signer.BinaryParser:None:;hint:System.Nullable`1[System.Int32]:Optional, HasDefault:)
+Ripple.LibraryClasses.Signer.Currency METHOD op_Division 2198 Ripple.LibraryClasses.Signer.UnissuedAmount (v:System.Decimal:None:;c:Ripple.LibraryClasses.Signer.Currency:None:)
+Ripple.LibraryClasses.Signer.Currency METHOD op_Division 2198 Ripple.LibraryClasses.Signer.Currency+Issue (c:Ripple.LibraryClasses.Signer.Currency:None:;ac:Ripple.LibraryClasses.Signer.AccountId:None:)
+Ripple.LibraryClasses.Signer.Currency FIELD IsoCode 38 System.String
+Ripple.LibraryClasses.Signer.Currency FIELD IsNative 38 System.Boolean
+Ripple.LibraryClasses.Signer.Currency FIELD Xrp 54 Ripple.LibraryClasses.Signer.Currency
+TYPE Ripple.LibraryClasses.Signer.EcdsaSignature BASE System.Object INTERFACES 
+Ripple.LibraryClasses.Signer.EcdsaSignature CTOR 6278 r:Org.BouncyCastle.Math.BigInteger [BouncyCastle.Crypto]:None:;s:Org.BouncyCastle.Math.BigInteger [BouncyCastle.Crypto]:None:
+Ripple.LibraryClasses.Signer.EcdsaSignature METHOD IsStrictlyCanonical 150 System.Boolean (sig:System.Byte[]:None:)
+Ripple.LibraryClasses.Signer.EcdsaSignature METHOD CheckIsCanonical 150 System.Boolean (sig:System.Byte[]:None:;strict:System.Boolean:None:)
+Ripple.LibraryClasses.Signer.EcdsaSignature METHOD EncodeToDer 134 System.Byte[] ()
+Ripple.LibraryClasses.Signer.EcdsaSignature METHOD DecodeFromDer 150 Ripple.LibraryClasses.Signer.EcdsaSignature (bytes:System.Byte[]:None:)
+Ripple.LibraryClasses.Signer.EcdsaSignature FIELD R 6 Org.BouncyCastle.Math.BigInteger [BouncyCastle.Crypto]
+Ripple.LibraryClasses.Signer.EcdsaSignature FIELD S 6 Org.BouncyCastle.Math.BigInteger [BouncyCastle.Crypto]
+TYPE Ripple.LibraryClasses.Signer.EdKeyPair BASE System.Object INTERFACES Ripple.LibraryClasses.Signer.Interfaces.IKeyPair
+Ripple.LibraryClasses.Signer.EdKeyPair METHOD CanonicalPubBytes 486 System.Byte[] ()
+Ripple.LibraryClasses.Signer.EdKeyPair METHOD Sign 486 System.Byte[] (message:System.Byte[]:None:)
+Ripple.LibraryClasses.Signer.EdKeyPair METHOD Verify 486 System.Boolean (message:System.Byte[]:None:;signature:System.Byte[]:None:)
+Ripple.LibraryClasses.Signer.EdKeyPair METHOD Id 486 System.String ()
+TYPE Ripple.LibraryClasses.Signer.EngineResult BASE Ripple.LibraryClasses.Signer.SerializedEnumItem`1[System.Byte] INTERFACES Ripple.LibraryClasses.Signer.Interfaces.ISerializedType;System.IComparable`1[Ripple.LibraryClasses.Signer.EnumItem]
+Ripple.LibraryClasses.Signer.EngineResult CTOR 6278 name:System.String:None:;ordinal:System.Int32:None:;description:System.String:None:
+Ripple.LibraryClasses.Signer.EngineResult METHOD ShouldClaimFee 134 System.Boolean ()
+Ripple.LibraryClasses.Signer.EngineResult FIELD Values 22 Ripple.LibraryClasses.Signer.EngineResult+EngineResultValues
+Ripple.LibraryClasses.Signer.EngineResult FIELD telLOCAL_ERROR 54 Ripple.LibraryClasses.Signer.EngineResult
+Ripple.LibraryClasses.Signer.EngineResult FIELD telBAD_DOMAIN 54 Ripple.LibraryClasses.Signer.EngineResult
+Ripple.LibraryClasses.Signer.EngineResult FIELD telBAD_PATH_COUNT 54 Ripple.LibraryClasses.Signer.EngineResult
+Ripple.LibraryClasses.Signer.EngineResult FIELD telBAD_PUBLIC_KEY 54 Ripple.LibraryClasses.Signer.EngineResult
+Ripple.LibraryClasses.Signer.EngineResult FIELD telFAILED_PROCESSING 54 Ripple.LibraryClasses.Signer.EngineResult
+Ripple.LibraryClasses.Signer.EngineResult FIELD telINSUF_FEE_P 54 Ripple.LibraryClasses.Signer.EngineResult
+Ripple.LibraryClasses.Signer.EngineResult FIELD telNO_DST_PARTIAL 54 Ripple.LibraryClasses.Signer.EngineResult
+Ripple.LibraryClasses.Signer.EngineResult FIELD temMALFORMED 54 Ripple.LibraryClasses.Signer.EngineResult
+Ripple.LibraryClasses.Signer.EngineResult FIELD temBAD_AMOUNT 54 Ripple.LibraryClasses.Signer.EngineResult
+Ripple.LibraryClasses.Signer.EngineResult FIELD temBAD_AUTH_MASTER 54 Ripple.LibraryClasses.Signer.EngineResult
+Ripple.LibraryClasses.Signer.EngineResult FIELD temBAD_CURRENCY 54 Ripple.LibraryClasses.Signer.EngineResult
+Ripple.LibraryClasses.Signer.EngineResult FIELD temBAD_EXPIRATION 54 Ripple.LibraryClasses.Signer.EngineResult
+Ripple.LibraryClasses.Signer.EngineResult FIELD temBAD_FEE 54 Ripple.LibraryClasses.Signer.EngineResult
+Ripple.LibraryClasses.Signer.EngineResult FIELD temBAD_ISSUER 54 Ripple.LibraryClasses.Signer.EngineResult
+Ripple.LibraryClasses.Signer.EngineResult FIELD temBAD_LIMIT 54 Ripple.LibraryClasses.Signer.EngineResult
+Ripple.LibraryClasses.Signer.EngineResult FIELD temBAD_OFFER 54 Ripple.LibraryClasses.Signer.EngineResult
+Ripple.LibraryClasses.Signer.EngineResult FIELD temBAD_PATH 54 Ripple.LibraryClasses.Signer.EngineResult
+Ripple.LibraryClasses.Signer.EngineResult FIELD temBAD_PATH_LOOP 54 Ripple.LibraryClasses.Signer.EngineResult
+Ripple.LibraryClasses.Signer.EngineResult FIELD temBAD_SEND_XRP_LIMIT 54 Ripple.LibraryClasses.Signer.EngineResult
+Ripple.LibraryClasses.Signer.EngineResult FIELD temBAD_SEND_XRP_MAX 54 Ripple.LibraryClasses.Signer.EngineResult
+Ripple.LibraryClasses.Signer.EngineResult FIELD temBAD_SEND_XRP_NO_DIRECT 54 Ripple.LibraryClasses.Signer.EngineResult
+Ripple.LibraryClasses.Signer.EngineResult FIELD temBAD_SEND_XRP_PARTIAL 54 Ripple.LibraryClasses.Signer.EngineResult
+Ripple.LibraryClasses.Signer.EngineResult FIELD temBAD_SEND_XRP_PATHS 54 Ripple.LibraryClasses.Signer.EngineResult
+Ripple.LibraryClasses.Signer.EngineResult FIELD temBAD_SEQUENCE 54 Ripple.LibraryClasses.Signer.EngineResult
+Ripple.LibraryClasses.Signer.EngineResult FIELD temBAD_SIGNATURE 54 Ripple.LibraryClasses.Signer.EngineResult
+Ripple.LibraryClasses.Signer.EngineResult FIELD temBAD_SRC_ACCOUNT 54 Ripple.LibraryClasses.Signer.EngineResult
+Ripple.LibraryClasses.Signer.EngineResult FIELD temBAD_TRANSFER_RATE 54 Ripple.LibraryClasses.Signer.EngineResult
+Ripple.LibraryClasses.Signer.EngineResult FIELD temDST_IS_SRC 54 Ripple.LibraryClasses.Signer.EngineResult
+Ripple.LibraryClasses.Signer.EngineResult FIELD temDST_NEEDED 54 Ripple.LibraryClasses.Signer.EngineResult
+Ripple.LibraryClasses.Signer.EngineResult FIELD temINVALID 54 Ripple.LibraryClasses.Signer.EngineResult
+Ripple.LibraryClasses.Signer.EngineResult FIELD temINVALID_FLAG 54 Ripple.LibraryClasses.Signer.EngineResult
+Ripple.LibraryClasses.Signer.EngineResult FIELD temREDUNDANT 54 Ripple.LibraryClasses.Signer.EngineResult
+Ripple.LibraryClasses.Signer.EngineResult FIELD temREDUNDANT_SEND_MAX 54 Ripple.LibraryClasses.Signer.EngineResult
+Ripple.LibraryClasses.Signer.EngineResult FIELD temRIPPLE_EMPTY 54 Ripple.LibraryClasses.Signer.EngineResult
+Ripple.LibraryClasses.Signer.EngineResult FIELD temUNCERTAIN 54 Ripple.LibraryClasses.Signer.EngineResult
+Ripple.LibraryClasses.Signer.EngineResult FIELD temUNKNOWN 54 Ripple.LibraryClasses.Signer.EngineResult
+Ripple.LibraryClasses.Signer.EngineResult FIELD tefFAILURE 54 Ripple.LibraryClasses.Signer.EngineResult
+Ripple.LibraryClasses.Signer.EngineResult FIELD tefALREADY 54 Ripple.LibraryClasses.Signer.EngineResult
+Ripple.LibraryClasses.Signer.EngineResult FIELD tefBAD_ADD_AUTH 54 Ripple.LibraryClasses.Signer.EngineResult
+Ripple.LibraryClasses.Signer.EngineResult FIELD tefBAD_AUTH 54 Ripple.LibraryClasses.Signer.EngineResult
+Ripple.LibraryClasses.Signer.EngineResult FIELD tefBAD_LEDGER 54 Ripple.LibraryClasses.Signer.EngineResult
+Ripple.LibraryClasses.Signer.EngineResult FIELD tefCREATED 54 Ripple.LibraryClasses.Signer.EngineResult
+Ripple.LibraryClasses.Signer.EngineResult FIELD tefDST_TAG_NEEDED 54 Ripple.LibraryClasses.Signer.EngineResult
+Ripple.LibraryClasses.Signer.EngineResult FIELD tefEXCEPTION 54 Ripple.LibraryClasses.Signer.EngineResult
+Ripple.LibraryClasses.Signer.EngineResult FIELD tefINTERNAL 54 Ripple.LibraryClasses.Signer.EngineResult
+Ripple.LibraryClasses.Signer.EngineResult FIELD tefNO_AUTH_REQUIRED 54 Ripple.LibraryClasses.Signer.EngineResult
+Ripple.LibraryClasses.Signer.EngineResult FIELD tefPAST_SEQ 54 Ripple.LibraryClasses.Signer.EngineResult
+Ripple.LibraryClasses.Signer.EngineResult FIELD tefWRONG_PRIOR 54 Ripple.LibraryClasses.Signer.EngineResult
+Ripple.LibraryClasses.Signer.EngineResult FIELD tefMASTER_DISABLED 54 Ripple.LibraryClasses.Signer.EngineResult
+Ripple.LibraryClasses.Signer.EngineResult FIELD tefMAX_LEDGER 54 Ripple.LibraryClasses.Signer.EngineResult
+Ripple.LibraryClasses.Signer.EngineResult FIELD terRETRY 54 Ripple.LibraryClasses.Signer.EngineResult
+Ripple.LibraryClasses.Signer.EngineResult FIELD terFUNDS_SPENT 54 Ripple.LibraryClasses.Signer.EngineResult
+Ripple.LibraryClasses.Signer.EngineResult FIELD terINSUF_FEE_B 54 Ripple.LibraryClasses.Signer.EngineResult
+Ripple.LibraryClasses.Signer.EngineResult FIELD terNO_ACCOUNT 54 Ripple.LibraryClasses.Signer.EngineResult
+Ripple.LibraryClasses.Signer.EngineResult FIELD terNO_AUTH 54 Ripple.LibraryClasses.Signer.EngineResult
+Ripple.LibraryClasses.Signer.EngineResult FIELD terNO_LINE 54 Ripple.LibraryClasses.Signer.EngineResult
+Ripple.LibraryClasses.Signer.EngineResult FIELD terOWNERS 54 Ripple.LibraryClasses.Signer.EngineResult
+Ripple.LibraryClasses.Signer.EngineResult FIELD terPRE_SEQ 54 Ripple.LibraryClasses.Signer.EngineResult
+Ripple.LibraryClasses.Signer.EngineResult FIELD terLAST 54 Ripple.LibraryClasses.Signer.EngineResult
+Ripple.LibraryClasses.Signer.EngineResult FIELD terNO_RIPPLE 54 Ripple.LibraryClasses.Signer.EngineResult
+Ripple.LibraryClasses.Signer.EngineResult FIELD tesSUCCESS 54 Ripple.LibraryClasses.Signer.EngineResult
+Ripple.LibraryClasses.Signer.EngineResult FIELD tecCLAIM 54 Ripple.LibraryClasses.Signer.EngineResult
+Ripple.LibraryClasses.Signer.EngineResult FIELD tecPATH_PARTIAL 54 Ripple.LibraryClasses.Signer.EngineResult
+Ripple.LibraryClasses.Signer.EngineResult FIELD tecUNFUNDED_ADD 54 Ripple.LibraryClasses.Signer.EngineResult
+Ripple.LibraryClasses.Signer.EngineResult FIELD tecUNFUNDED_OFFER 54 Ripple.LibraryClasses.Signer.EngineResult
+Ripple.LibraryClasses.Signer.EngineResult FIELD tecUNFUNDED_PAYMENT 54 Ripple.LibraryClasses.Signer.EngineResult
+Ripple.LibraryClasses.Signer.EngineResult FIELD tecFAILED_PROCESSING 54 Ripple.LibraryClasses.Signer.EngineResult
+Ripple.LibraryClasses.Signer.EngineResult FIELD tecDIR_FULL 54 Ripple.LibraryClasses.Signer.EngineResult
+Ripple.LibraryClasses.Signer.EngineResult FIELD tecINSUF_RESERVE_LINE 54 Ripple.LibraryClasses.Signer.EngineResult
+Ripple.LibraryClasses.Signer.EngineResult FIELD tecINSUF_RESERVE_OFFER 54 Ripple.LibraryClasses.Signer.EngineResult
+Ripple.LibraryClasses.Signer.EngineResult FIELD tecNO_DST 54 Ripple.LibraryClasses.Signer.EngineResult
+Ripple.LibraryClasses.Signer.EngineResult FIELD tecNO_DST_INSUF_XRP 54 Ripple.LibraryClasses.Signer.EngineResult
+Ripple.LibraryClasses.Signer.EngineResult FIELD tecNO_LINE_INSUF_RESERVE 54 Ripple.LibraryClasses.Signer.EngineResult
+Ripple.LibraryClasses.Signer.EngineResult FIELD tecNO_LINE_REDUNDANT 54 Ripple.LibraryClasses.Signer.EngineResult
+Ripple.LibraryClasses.Signer.EngineResult FIELD tecPATH_DRY 54 Ripple.LibraryClasses.Signer.EngineResult
+Ripple.LibraryClasses.Signer.EngineResult FIELD tecUNFUNDED 54 Ripple.LibraryClasses.Signer.EngineResult
+Ripple.LibraryClasses.Signer.EngineResult FIELD tecNO_ALTERNATIVE_KEY 54 Ripple.LibraryClasses.Signer.EngineResult
+Ripple.LibraryClasses.Signer.EngineResult FIELD tecNO_REGULAR_KEY 54 Ripple.LibraryClasses.Signer.EngineResult
+Ripple.LibraryClasses.Signer.EngineResult FIELD tecOWNERS 54 Ripple.LibraryClasses.Signer.EngineResult
+Ripple.LibraryClasses.Signer.EngineResult FIELD tecNO_ISSUER 54 Ripple.LibraryClasses.Signer.EngineResult
+Ripple.LibraryClasses.Signer.EngineResult FIELD tecNO_AUTH 54 Ripple.LibraryClasses.Signer.EngineResult
+Ripple.LibraryClasses.Signer.EngineResult FIELD tecNO_LINE 54 Ripple.LibraryClasses.Signer.EngineResult
+Ripple.LibraryClasses.Signer.EngineResult FIELD tecINSUFF_FEE 54 Ripple.LibraryClasses.Signer.EngineResult
+Ripple.LibraryClasses.Signer.EngineResult FIELD tecFROZEN 54 Ripple.LibraryClasses.Signer.EngineResult
+Ripple.LibraryClasses.Signer.EngineResult FIELD tecNO_TARGET 54 Ripple.LibraryClasses.Signer.EngineResult
+Ripple.LibraryClasses.Signer.EngineResult FIELD tecNO_PERMISSION 54 Ripple.LibraryClasses.Signer.EngineResult
+Ripple.LibraryClasses.Signer.EngineResult FIELD tecNO_ENTRY 54 Ripple.LibraryClasses.Signer.EngineResult
+Ripple.LibraryClasses.Signer.EngineResult FIELD tecINSUFFICIENT_RESERVE 54 Ripple.LibraryClasses.Signer.EngineResult
+Ripple.LibraryClasses.Signer.EngineResult FIELD tecNEED_MASTER_KEY 54 Ripple.LibraryClasses.Signer.EngineResult
+Ripple.LibraryClasses.Signer.EngineResult FIELD tecDST_TAG_NEEDED 54 Ripple.LibraryClasses.Signer.EngineResult
+Ripple.LibraryClasses.Signer.EngineResult FIELD tecINTERNAL 54 Ripple.LibraryClasses.Signer.EngineResult
+Ripple.LibraryClasses.Signer.EngineResult FIELD tecOVERSIZE 54 Ripple.LibraryClasses.Signer.EngineResult
+TYPE Ripple.LibraryClasses.Signer.Enumeration`1 BASE System.Object INTERFACES System.Collections.Generic.IEnumerable`1[T];System.Collections.IEnumerable
+Ripple.LibraryClasses.Signer.Enumeration`1 CTOR 6278 
+Ripple.LibraryClasses.Signer.Enumeration`1 METHOD get_Item 2182 T (name:System.String:None:)
+Ripple.LibraryClasses.Signer.Enumeration`1 METHOD set_Item 2182 System.Void (name:System.String:None:;value:T:None:)
+Ripple.LibraryClasses.Signer.Enumeration`1 METHOD get_Item 2182 T (name:System.Int32:None:)
+Ripple.LibraryClasses.Signer.Enumeration`1 METHOD set_Item 2182 System.Void (name:System.Int32:None:;value:T:None:)
+Ripple.LibraryClasses.Signer.Enumeration`1 METHOD AddEnum 454 T (T:T:None:)
+Ripple.LibraryClasses.Signer.Enumeration`1 METHOD GetEnumerator 486 System.Collections.Generic.IEnumerator`1[T] ()
+Ripple.LibraryClasses.Signer.Enumeration`1 METHOD Has 134 System.Boolean (key:System.String:None:)
+TYPE Ripple.LibraryClasses.Signer.EnumItem BASE System.Object INTERFACES System.IComparable`1[Ripple.LibraryClasses.Signer.EnumItem]
+Ripple.LibraryClasses.Signer.EnumItem CTOR 6278 name:System.String:None:;ordinal:System.Int32:None:
+Ripple.LibraryClasses.Signer.EnumItem METHOD CompareTo 486 System.Int32 (other:Ripple.LibraryClasses.Signer.EnumItem:None:)
+Ripple.LibraryClasses.Signer.EnumItem METHOD ToString 198 System.String ()
+Ripple.LibraryClasses.Signer.EnumItem METHOD op_Implicit 2198 System.Int32 (item:Ripple.LibraryClasses.Signer.EnumItem:None:)
+Ripple.LibraryClasses.Signer.EnumItem METHOD op_Implicit 2198 System.String (item:Ripple.LibraryClasses.Signer.EnumItem:None:)
+Ripple.LibraryClasses.Signer.EnumItem METHOD GetHashCode 198 System.Int32 ()
+Ripple.LibraryClasses.Signer.EnumItem FIELD Ordinal 38 System.Int32
+Ripple.LibraryClasses.Signer.EnumItem FIELD Name 38 System.String
+TYPE Ripple.LibraryClasses.Signer.FromJson BASE System.MulticastDelegate INTERFACES System.ICloneable;System.Runtime.Serialization.ISerializable
+Ripple.LibraryClasses.Signer.FromJson CTOR 6278 object:System.Object:None:;method:System.IntPtr:None:
+Ripple.LibraryClasses.Signer.FromJson METHOD Invoke 454 Ripple.LibraryClasses.Signer.Interfaces.ISerializedType (token:Newtonsoft.Json.Linq.JToken:None:)
+Ripple.LibraryClasses.Signer.FromJson METHOD BeginInvoke 454 System.IAsyncResult (token:Newtonsoft.Json.Linq.JToken:None:;callback:System.AsyncCallback:None:;object:System.Object:None:)
+Ripple.LibraryClasses.Signer.FromJson METHOD EndInvoke 454 Ripple.LibraryClasses.Signer.Interfaces.ISerializedType (result:System.IAsyncResult:None:)
+TYPE Ripple.LibraryClasses.Signer.FromParser BASE System.MulticastDelegate INTERFACES System.ICloneable;System.Runtime.Serialization.ISerializable
+Ripple.LibraryClasses.Signer.FromParser CTOR 6278 object:System.Object:None:;method:System.IntPtr:None:
+Ripple.LibraryClasses.Signer.FromParser METHOD Invoke 454 Ripple.LibraryClasses.Signer.Interfaces.ISerializedType (parser:Ripple.LibraryClasses.Signer.BinaryParser:None:;hint:System.Nullable`1[System.Int32]:Optional, HasDefault:)
+Ripple.LibraryClasses.Signer.FromParser METHOD BeginInvoke 454 System.IAsyncResult (parser:Ripple.LibraryClasses.Signer.BinaryParser:None:;hint:System.Nullable`1[System.Int32]:None:;callback:System.AsyncCallback:None:;object:System.Object:None:)
+Ripple.LibraryClasses.Signer.FromParser METHOD EndInvoke 454 Ripple.LibraryClasses.Signer.Interfaces.ISerializedType (result:System.IAsyncResult:None:)
+TYPE Ripple.LibraryClasses.Signer.IouValue BASE Ripple.LibraryClasses.Signer.AmountValue INTERFACES 
+Ripple.LibraryClasses.Signer.IouValue CTOR 6278 mantissa:System.UInt64:None:;exponent:System.Int32:None:;isNegative:System.Boolean:None:;precision:System.Nullable`1[System.Int32]:Optional, HasDefault:;normalise:System.Boolean:Optional, HasDefault:True
+Ripple.LibraryClasses.Signer.IouValue CTOR 6278 mantissa:System.Byte[]:None:;sign:System.Int32:None:;exponent:System.Int32:Optional, HasDefault:0
+Ripple.LibraryClasses.Signer.IouValue METHOD get_IsZero 2182 System.Boolean ()
+Ripple.LibraryClasses.Signer.IouValue METHOD get_IsIou 2246 System.Boolean ()
+Ripple.LibraryClasses.Signer.IouValue METHOD FromString 150 Ripple.LibraryClasses.Signer.IouValue (value:System.String:None:)
+Ripple.LibraryClasses.Signer.IouValue METHOD ToString 198 System.String ()
+Ripple.LibraryClasses.Signer.IouValue METHOD ToBytes 198 System.Byte[] ()
+Ripple.LibraryClasses.Signer.IouValue METHOD MantissaBytes 134 System.Byte[] ()
+Ripple.LibraryClasses.Signer.IouValue FIELD Mantissa 38 System.UInt64
+Ripple.LibraryClasses.Signer.IouValue FIELD IsNegative 38 System.Boolean
+Ripple.LibraryClasses.Signer.IouValue FIELD Exponent 38 System.Int32
+Ripple.LibraryClasses.Signer.IouValue FIELD Precision 38 System.Int32
+Ripple.LibraryClasses.Signer.IouValue FIELD MinMantissa 54 System.UInt64
+Ripple.LibraryClasses.Signer.IouValue FIELD MaxMantissa 54 System.UInt64
+Ripple.LibraryClasses.Signer.IouValue FIELD IllegalOffer 54 Ripple.LibraryClasses.Signer.IouValue
+Ripple.LibraryClasses.Signer.IouValue FIELD MinExponent 32854 System.Int32
+Ripple.LibraryClasses.Signer.IouValue FIELD MaxExponent 32854 System.Int32
+Ripple.LibraryClasses.Signer.IouValue FIELD MaxPrecision 32854 System.Int32
+Ripple.LibraryClasses.Signer.IouValue FIELD ValueRegex 32854 System.String
+Ripple.LibraryClasses.Signer.IouValue FIELD IllegalOfferMantissaString 32854 System.String
+TYPE Ripple.LibraryClasses.Signer.KeyPairExtensions BASE System.Object INTERFACES 
+Ripple.LibraryClasses.Signer.KeyPairExtensions METHOD PubKeyHash 150 System.Byte[] (pair:Ripple.LibraryClasses.Signer.Interfaces.IKeyPair:None:)
+TYPE Ripple.LibraryClasses.Signer.LedgerEntryType BASE Ripple.LibraryClasses.Signer.SerializedEnumItem`1[System.UInt16] INTERFACES Ripple.LibraryClasses.Signer.Interfaces.ISerializedType;System.IComparable`1[Ripple.LibraryClasses.Signer.EnumItem]
+Ripple.LibraryClasses.Signer.LedgerEntryType METHOD FromJson 150 Ripple.LibraryClasses.Signer.LedgerEntryType (jToken:Newtonsoft.Json.Linq.JToken:None:)
+Ripple.LibraryClasses.Signer.LedgerEntryType FIELD Values 22 Ripple.LibraryClasses.Signer.LedgerEntryType+Enumeration
+Ripple.LibraryClasses.Signer.LedgerEntryType FIELD Invalid 54 Ripple.LibraryClasses.Signer.LedgerEntryType
+Ripple.LibraryClasses.Signer.LedgerEntryType FIELD AccountRoot 54 Ripple.LibraryClasses.Signer.LedgerEntryType
+Ripple.LibraryClasses.Signer.LedgerEntryType FIELD DirectoryNode 54 Ripple.LibraryClasses.Signer.LedgerEntryType
+Ripple.LibraryClasses.Signer.LedgerEntryType FIELD GeneratorMap 54 Ripple.LibraryClasses.Signer.LedgerEntryType
+Ripple.LibraryClasses.Signer.LedgerEntryType FIELD RippleState 54 Ripple.LibraryClasses.Signer.LedgerEntryType
+Ripple.LibraryClasses.Signer.LedgerEntryType FIELD Offer 54 Ripple.LibraryClasses.Signer.LedgerEntryType
+Ripple.LibraryClasses.Signer.LedgerEntryType FIELD Contract 54 Ripple.LibraryClasses.Signer.LedgerEntryType
+Ripple.LibraryClasses.Signer.LedgerEntryType FIELD LedgerHashes 54 Ripple.LibraryClasses.Signer.LedgerEntryType
+Ripple.LibraryClasses.Signer.LedgerEntryType FIELD EnabledAmendments 54 Ripple.LibraryClasses.Signer.LedgerEntryType
+Ripple.LibraryClasses.Signer.LedgerEntryType FIELD FeeSettings 54 Ripple.LibraryClasses.Signer.LedgerEntryType
+Ripple.LibraryClasses.Signer.LedgerEntryType FIELD Ticket 54 Ripple.LibraryClasses.Signer.LedgerEntryType
+Ripple.LibraryClasses.Signer.LedgerEntryType FIELD SignerList 54 Ripple.LibraryClasses.Signer.LedgerEntryType
+TYPE Ripple.LibraryClasses.Signer.Misc BASE System.Object INTERFACES 
+Ripple.LibraryClasses.Signer.Misc CTOR 6278 
+Ripple.LibraryClasses.Signer.Misc METHOD UBigInt 150 Org.BouncyCastle.Math.BigInteger [BouncyCastle.Crypto] (bytes:System.Byte[]:None:)
+Ripple.LibraryClasses.Signer.Misc METHOD BigHex 150 System.String (pub:Org.BouncyCastle.Math.BigInteger [BouncyCastle.Crypto]:None:)
+Ripple.LibraryClasses.Signer.Misc METHOD ToHex 150 System.String (bytes:System.Byte[]:None:)
+TYPE Ripple.LibraryClasses.Signer.NativeValue BASE Ripple.LibraryClasses.Signer.AmountValue INTERFACES 
+Ripple.LibraryClasses.Signer.NativeValue CTOR 6278 value:System.String:None:
+Ripple.LibraryClasses.Signer.NativeValue CTOR 6278 mantissa:System.Byte[]:None:;sign:System.Int32:None:
+Ripple.LibraryClasses.Signer.NativeValue METHOD get_IsIou 2246 System.Boolean ()
+Ripple.LibraryClasses.Signer.NativeValue METHOD ToString 198 System.String ()
+Ripple.LibraryClasses.Signer.NativeValue METHOD ToBytes 198 System.Byte[] ()
+Ripple.LibraryClasses.Signer.NativeValue FIELD IsNegative 6 System.Boolean
+Ripple.LibraryClasses.Signer.NativeValue FIELD Mantissa 6 System.UInt64
+Ripple.LibraryClasses.Signer.NativeValue FIELD MaximumDrops 32854 System.UInt64
+TYPE Ripple.LibraryClasses.Signer.Path BASE System.Collections.Generic.List`1[Ripple.LibraryClasses.Signer.PathHop] INTERFACES System.Collections.Generic.ICollection`1[Ripple.LibraryClasses.Signer.PathHop];System.Collections.Generic.IEnumerable`1[Ripple.LibraryClasses.Signer.PathHop];System.Collections.Generic.IList`1[Ripple.LibraryClasses.Signer.PathHop];System.Collections.Generic.IReadOnlyCollection`1[Ripple.LibraryClasses.Signer.PathHop];System.Collections.Generic.IReadOnlyList`1[Ripple.LibraryClasses.Signer.PathHop];System.Collections.ICollection;System.Collections.IEnumerable;System.Collections.IList
+Ripple.LibraryClasses.Signer.Path CTOR 6278 
+Ripple.LibraryClasses.Signer.Path CTOR 6278 enumerable:System.Collections.Generic.IEnumerable`1[Ripple.LibraryClasses.Signer.PathHop]:None:
+Ripple.LibraryClasses.Signer.Path METHOD FromJson 150 Ripple.LibraryClasses.Signer.Path (json:Newtonsoft.Json.Linq.JToken:None:)
+Ripple.LibraryClasses.Signer.Path METHOD ToJson 134 Newtonsoft.Json.Linq.JArray ()
+TYPE Ripple.LibraryClasses.Signer.PathHop BASE System.Object INTERFACES 
+Ripple.LibraryClasses.Signer.PathHop CTOR 6278 account:Ripple.LibraryClasses.Signer.AccountId:None:;issuer:Ripple.LibraryClasses.Signer.AccountId:None:;currency:Ripple.LibraryClasses.Signer.Currency:None:
+Ripple.LibraryClasses.Signer.PathHop METHOD FromJson 150 Ripple.LibraryClasses.Signer.PathHop (json:Newtonsoft.Json.Linq.JToken:None:)
+Ripple.LibraryClasses.Signer.PathHop METHOD HasIssuer 134 System.Boolean ()
+Ripple.LibraryClasses.Signer.PathHop METHOD HasCurrency 134 System.Boolean ()
+Ripple.LibraryClasses.Signer.PathHop METHOD HasAccount 134 System.Boolean ()
+Ripple.LibraryClasses.Signer.PathHop METHOD SynthesizeType 134 System.Int32 ()
+Ripple.LibraryClasses.Signer.PathHop METHOD ToJson 134 Newtonsoft.Json.Linq.JObject ()
+Ripple.LibraryClasses.Signer.PathHop FIELD Account 38 Ripple.LibraryClasses.Signer.AccountId
+Ripple.LibraryClasses.Signer.PathHop FIELD Issuer 38 Ripple.LibraryClasses.Signer.AccountId
+Ripple.LibraryClasses.Signer.PathHop FIELD Currency 38 Ripple.LibraryClasses.Signer.Currency
+Ripple.LibraryClasses.Signer.PathHop FIELD Type 38 System.Int32
+Ripple.LibraryClasses.Signer.PathHop FIELD TypeAccount 22 System.Byte
+Ripple.LibraryClasses.Signer.PathHop FIELD TypeCurrency 22 System.Byte
+Ripple.LibraryClasses.Signer.PathHop FIELD TypeIssuer 22 System.Byte
+TYPE Ripple.LibraryClasses.Signer.PathSet BASE System.Collections.Generic.List`1[Ripple.LibraryClasses.Signer.Path] INTERFACES Ripple.LibraryClasses.Signer.Interfaces.ISerializedType;System.Collections.Generic.ICollection`1[Ripple.LibraryClasses.Signer.Path];System.Collections.Generic.IEnumerable`1[Ripple.LibraryClasses.Signer.Path];System.Collections.Generic.IList`1[Ripple.LibraryClasses.Signer.Path];System.Collections.Generic.IReadOnlyCollection`1[Ripple.LibraryClasses.Signer.Path];System.Collections.Generic.IReadOnlyList`1[Ripple.LibraryClasses.Signer.Path];System.Collections.ICollection;System.Collections.IEnumerable;System.Collections.IList
+Ripple.LibraryClasses.Signer.PathSet CTOR 6278 collection:System.Collections.Generic.IEnumerable`1[Ripple.LibraryClasses.Signer.Path]:None:
+Ripple.LibraryClasses.Signer.PathSet METHOD ToBytes 486 System.Void (buffer:Ripple.LibraryClasses.Signer.Interfaces.IBytesSink:None:)
+Ripple.LibraryClasses.Signer.PathSet METHOD ToJson 486 Newtonsoft.Json.Linq.JToken ()
+Ripple.LibraryClasses.Signer.PathSet METHOD FromJson 150 Ripple.LibraryClasses.Signer.PathSet (token:Newtonsoft.Json.Linq.JToken:None:)
+Ripple.LibraryClasses.Signer.PathSet METHOD FromParser 150 Ripple.LibraryClasses.Signer.PathSet (parser:Ripple.LibraryClasses.Signer.BinaryParser:None:;hint:System.Nullable`1[System.Int32]:Optional, HasDefault:)
+Ripple.LibraryClasses.Signer.PathSet FIELD PathSeparatorByte 22 System.Byte
+Ripple.LibraryClasses.Signer.PathSet FIELD PathsetEndByte 22 System.Byte
+TYPE Ripple.LibraryClasses.Signer.SerializedEnumeration`2 BASE Ripple.LibraryClasses.Signer.Enumeration`1[TEnum] INTERFACES System.Collections.Generic.IEnumerable`1[TEnum];System.Collections.IEnumerable
+Ripple.LibraryClasses.Signer.SerializedEnumeration`2 METHOD get_Width 2182 System.Int32 ()
+Ripple.LibraryClasses.Signer.SerializedEnumeration`2 METHOD FromParser 134 TEnum (parser:Ripple.LibraryClasses.Signer.BinaryParser:None:;hint:System.Nullable`1[System.Int32]:Optional, HasDefault:)
+Ripple.LibraryClasses.Signer.SerializedEnumeration`2 METHOD FromJson 134 TEnum (value:Newtonsoft.Json.Linq.JToken:None:)
+Ripple.LibraryClasses.Signer.SerializedEnumeration`2 METHOD ReadOrdinal 134 System.Int32 (parser:Ripple.LibraryClasses.Signer.BinaryParser:None:)
+TYPE Ripple.LibraryClasses.Signer.SerializedEnumItem`1 BASE Ripple.LibraryClasses.Signer.EnumItem INTERFACES Ripple.LibraryClasses.Signer.Interfaces.ISerializedType;System.IComparable`1[Ripple.LibraryClasses.Signer.EnumItem]
+Ripple.LibraryClasses.Signer.SerializedEnumItem`1 METHOD ToBytes 486 System.Void (sink:Ripple.LibraryClasses.Signer.Interfaces.IBytesSink:None:)
+Ripple.LibraryClasses.Signer.SerializedEnumItem`1 METHOD ToJson 486 Newtonsoft.Json.Linq.JToken ()
+TYPE Ripple.LibraryClasses.Signer.SignedTx BASE System.Object INTERFACES 
+Ripple.LibraryClasses.Signer.SignedTx CTOR 6278 hash:System.String:None:;txBlob:System.String:None:;txJson:Newtonsoft.Json.Linq.JObject:None:
+Ripple.LibraryClasses.Signer.SignedTx FIELD Hash 38 System.String
+Ripple.LibraryClasses.Signer.SignedTx FIELD TxBlob 38 System.String
+Ripple.LibraryClasses.Signer.SignedTx FIELD TxJson 38 Newtonsoft.Json.Linq.JObject
+TYPE Ripple.LibraryClasses.Signer.StArray BASE System.Collections.Generic.List`1[Ripple.LibraryClasses.Signer.StObject] INTERFACES Ripple.LibraryClasses.Signer.Interfaces.ISerializedType;System.Collections.Generic.ICollection`1[Ripple.LibraryClasses.Signer.StObject];System.Collections.Generic.IEnumerable`1[Ripple.LibraryClasses.Signer.StObject];System.Collections.Generic.IList`1[Ripple.LibraryClasses.Signer.StObject];System.Collections.Generic.IReadOnlyCollection`1[Ripple.LibraryClasses.Signer.StObject];System.Collections.Generic.IReadOnlyList`1[Ripple.LibraryClasses.Signer.StObject];System.Collections.ICollection;System.Collections.IEnumerable;System.Collections.IList
+Ripple.LibraryClasses.Signer.StArray CTOR 6278 collection:System.Collections.Generic.IEnumerable`1[Ripple.LibraryClasses.Signer.StObject]:None:
+Ripple.LibraryClasses.Signer.StArray CTOR 6278 
+Ripple.LibraryClasses.Signer.StArray METHOD ToBytes 486 System.Void (sink:Ripple.LibraryClasses.Signer.Interfaces.IBytesSink:None:)
+Ripple.LibraryClasses.Signer.StArray METHOD ToJson 486 Newtonsoft.Json.Linq.JToken ()
+Ripple.LibraryClasses.Signer.StArray METHOD FromJson 150 Ripple.LibraryClasses.Signer.StArray (token:Newtonsoft.Json.Linq.JToken:None:)
+Ripple.LibraryClasses.Signer.StArray METHOD FromParser 150 Ripple.LibraryClasses.Signer.StArray (parser:Ripple.LibraryClasses.Signer.BinaryParser:None:;hint:System.Nullable`1[System.Int32]:Optional, HasDefault:)
+TYPE Ripple.LibraryClasses.Signer.StExtensions BASE System.Object INTERFACES 
+Ripple.LibraryClasses.Signer.StExtensions METHOD ToHex 150 System.String (st:Ripple.LibraryClasses.Signer.Interfaces.ISerializedType:None:)
+Ripple.LibraryClasses.Signer.StExtensions METHOD ToDebuggedHex 150 System.String (st:Ripple.LibraryClasses.Signer.Interfaces.ISerializedType:None:)
+TYPE Ripple.LibraryClasses.Signer.StObject BASE System.Object INTERFACES Ripple.LibraryClasses.Signer.Interfaces.ISerializedType
+Ripple.LibraryClasses.Signer.StObject CTOR 6278 
+Ripple.LibraryClasses.Signer.StObject METHOD get_Item 2182 Ripple.LibraryClasses.Signer.AccountId (f:Ripple.LibraryClasses.Signer.Fields.AccountIdField:None:)
+Ripple.LibraryClasses.Signer.StObject METHOD set_Item 2182 System.Void (f:Ripple.LibraryClasses.Signer.Fields.AccountIdField:None:;value:Ripple.LibraryClasses.Signer.AccountId:None:)
+Ripple.LibraryClasses.Signer.StObject METHOD get_Item 2182 Ripple.LibraryClasses.Signer.Amount (f:Ripple.LibraryClasses.Signer.Fields.AmountField:None:)
+Ripple.LibraryClasses.Signer.StObject METHOD set_Item 2182 System.Void (f:Ripple.LibraryClasses.Signer.Fields.AmountField:None:;value:Ripple.LibraryClasses.Signer.Amount:None:)
+Ripple.LibraryClasses.Signer.StObject METHOD get_Item 2182 Ripple.LibraryClasses.Signer.Blob (f:Ripple.LibraryClasses.Signer.Fields.BlobField:None:)
+Ripple.LibraryClasses.Signer.StObject METHOD set_Item 2182 System.Void (f:Ripple.LibraryClasses.Signer.Fields.BlobField:None:;value:Ripple.LibraryClasses.Signer.Blob:None:)
+Ripple.LibraryClasses.Signer.StObject METHOD get_Item 2182 Ripple.LibraryClasses.Signer.Hashes.Hash128 (f:Ripple.LibraryClasses.Signer.Fields.Hash128Field:None:)
+Ripple.LibraryClasses.Signer.StObject METHOD set_Item 2182 System.Void (f:Ripple.LibraryClasses.Signer.Fields.Hash128Field:None:;value:Ripple.LibraryClasses.Signer.Hashes.Hash128:None:)
+Ripple.LibraryClasses.Signer.StObject METHOD get_Item 2182 Ripple.LibraryClasses.Signer.Hashes.Hash160 (f:Ripple.LibraryClasses.Signer.Fields.Hash160Field:None:)
+Ripple.LibraryClasses.Signer.StObject METHOD set_Item 2182 System.Void (f:Ripple.LibraryClasses.Signer.Fields.Hash160Field:None:;value:Ripple.LibraryClasses.Signer.Hashes.Hash160:None:)
+Ripple.LibraryClasses.Signer.StObject METHOD get_Item 2182 Ripple.LibraryClasses.Signer.Hashes.Hash256 (f:Ripple.LibraryClasses.Signer.Fields.Hash256Field:None:)
+Ripple.LibraryClasses.Signer.StObject METHOD set_Item 2182 System.Void (f:Ripple.LibraryClasses.Signer.Fields.Hash256Field:None:;value:Ripple.LibraryClasses.Signer.Hashes.Hash256:None:)
+Ripple.LibraryClasses.Signer.StObject METHOD get_Item 2182 Ripple.LibraryClasses.Signer.PathSet (f:Ripple.LibraryClasses.Signer.Fields.PathSetField:None:)
+Ripple.LibraryClasses.Signer.StObject METHOD set_Item 2182 System.Void (f:Ripple.LibraryClasses.Signer.Fields.PathSetField:None:;value:Ripple.LibraryClasses.Signer.PathSet:None:)
+Ripple.LibraryClasses.Signer.StObject METHOD get_Item 2182 Ripple.LibraryClasses.Signer.StArray (f:Ripple.LibraryClasses.Signer.Fields.StArrayField:None:)
+Ripple.LibraryClasses.Signer.StObject METHOD set_Item 2182 System.Void (f:Ripple.LibraryClasses.Signer.Fields.StArrayField:None:;value:Ripple.LibraryClasses.Signer.StArray:None:)
+Ripple.LibraryClasses.Signer.StObject METHOD get_Item 2182 Ripple.LibraryClasses.Signer.StObject (f:Ripple.LibraryClasses.Signer.Fields.StObjectField:None:)
+Ripple.LibraryClasses.Signer.StObject METHOD set_Item 2182 System.Void (f:Ripple.LibraryClasses.Signer.Fields.StObjectField:None:;value:Ripple.LibraryClasses.Signer.StObject:None:)
+Ripple.LibraryClasses.Signer.StObject METHOD get_Item 2182 Ripple.LibraryClasses.Signer.Uints.Uint16 (f:Ripple.LibraryClasses.Signer.Fields.Uint16Field:None:)
+Ripple.LibraryClasses.Signer.StObject METHOD set_Item 2182 System.Void (f:Ripple.LibraryClasses.Signer.Fields.Uint16Field:None:;value:Ripple.LibraryClasses.Signer.Uints.Uint16:None:)
+Ripple.LibraryClasses.Signer.StObject METHOD get_Item 2182 Ripple.LibraryClasses.Signer.LedgerEntryType (f:Ripple.LibraryClasses.Signer.Fields.LedgerEntryTypeField:None:)
+Ripple.LibraryClasses.Signer.StObject METHOD set_Item 2182 System.Void (f:Ripple.LibraryClasses.Signer.Fields.LedgerEntryTypeField:None:;value:Ripple.LibraryClasses.Signer.LedgerEntryType:None:)
+Ripple.LibraryClasses.Signer.StObject METHOD get_Item 2182 Ripple.LibraryClasses.Signer.TransactionType (f:Ripple.LibraryClasses.Signer.Fields.TransactionTypeField:None:)
+Ripple.LibraryClasses.Signer.StObject METHOD set_Item 2182 System.Void (f:Ripple.LibraryClasses.Signer.Fields.TransactionTypeField:None:;value:Ripple.LibraryClasses.Signer.TransactionType:None:)
+Ripple.LibraryClasses.Signer.StObject METHOD get_Item 2182 Ripple.LibraryClasses.Signer.Uints.Uint32 (f:Ripple.LibraryClasses.Signer.Fields.Uint32Field:None:)
+Ripple.LibraryClasses.Signer.StObject METHOD set_Item 2182 System.Void (f:Ripple.LibraryClasses.Signer.Fields.Uint32Field:None:;value:Ripple.LibraryClasses.Signer.Uints.Uint32:None:)
+Ripple.LibraryClasses.Signer.StObject METHOD get_Item 2182 Ripple.LibraryClasses.Signer.Uints.Uint64 (f:Ripple.LibraryClasses.Signer.Fields.Uint64Field:None:)
+Ripple.LibraryClasses.Signer.StObject METHOD set_Item 2182 System.Void (f:Ripple.LibraryClasses.Signer.Fields.Uint64Field:None:;value:Ripple.LibraryClasses.Signer.Uints.Uint64:None:)
+Ripple.LibraryClasses.Signer.StObject METHOD get_Item 2182 Ripple.LibraryClasses.Signer.Uints.Uint8 (f:Ripple.LibraryClasses.Signer.Fields.Uint8Field:None:)
+Ripple.LibraryClasses.Signer.StObject METHOD set_Item 2182 System.Void (f:Ripple.LibraryClasses.Signer.Fields.Uint8Field:None:;value:Ripple.LibraryClasses.Signer.Uints.Uint8:None:)
+Ripple.LibraryClasses.Signer.StObject METHOD get_Item 2182 Ripple.LibraryClasses.Signer.EngineResult (f:Ripple.LibraryClasses.Signer.Fields.EngineResultField:None:)
+Ripple.LibraryClasses.Signer.StObject METHOD set_Item 2182 System.Void (f:Ripple.LibraryClasses.Signer.Fields.EngineResultField:None:;value:Ripple.LibraryClasses.Signer.EngineResult:None:)
+Ripple.LibraryClasses.Signer.StObject METHOD get_Item 2182 Ripple.LibraryClasses.Signer.Vector256 (f:Ripple.LibraryClasses.Signer.Fields.Vector256Field:None:)
+Ripple.LibraryClasses.Signer.StObject METHOD set_Item 2182 System.Void (f:Ripple.LibraryClasses.Signer.Fields.Vector256Field:None:;value:Ripple.LibraryClasses.Signer.Vector256:None:)
+Ripple.LibraryClasses.Signer.StObject METHOD FromParser 150 Ripple.LibraryClasses.Signer.StObject (parser:Ripple.LibraryClasses.Signer.BinaryParser:None:;hint:System.Nullable`1[System.Int32]:Optional, HasDefault:)
+Ripple.LibraryClasses.Signer.StObject METHOD FromJson 150 Ripple.LibraryClasses.Signer.StObject (token:Newtonsoft.Json.Linq.JToken:None:)
+Ripple.LibraryClasses.Signer.StObject METHOD FromJson 150 Ripple.LibraryClasses.Signer.StObject (token:Newtonsoft.Json.Linq.JToken:None:;strict:System.Boolean:None:)
+Ripple.LibraryClasses.Signer.StObject METHOD ToBytes 486 System.Void (to:Ripple.LibraryClasses.Signer.Interfaces.IBytesSink:None:)
+Ripple.LibraryClasses.Signer.StObject METHOD ToJson 486 Newtonsoft.Json.Linq.JToken ()
+Ripple.LibraryClasses.Signer.StObject METHOD ToJsonObject 134 Newtonsoft.Json.Linq.JObject ()
+Ripple.LibraryClasses.Signer.StObject METHOD ToBytes 134 System.Void (to:Ripple.LibraryClasses.Signer.Interfaces.IBytesSink:None:;p:System.Func`2[Ripple.LibraryClasses.Signer.Fields.Field,System.Boolean]:None:)
+Ripple.LibraryClasses.Signer.StObject METHOD op_Implicit 2198 Ripple.LibraryClasses.Signer.StObject (v:Newtonsoft.Json.Linq.JToken:None:)
+Ripple.LibraryClasses.Signer.StObject METHOD FromHex 150 Ripple.LibraryClasses.Signer.StObject (s:System.String:None:)
+Ripple.LibraryClasses.Signer.StObject METHOD Has 134 System.Boolean (field:Ripple.LibraryClasses.Signer.Fields.Field:None:)
+Ripple.LibraryClasses.Signer.StObject METHOD SigningData 134 System.Byte[] ()
+Ripple.LibraryClasses.Signer.StObject METHOD ToBytes 134 System.Byte[] ()
+Ripple.LibraryClasses.Signer.StObject METHOD SetFlag 134 Ripple.LibraryClasses.Signer.StObject (flags:System.UInt32:None:)
+TYPE Ripple.LibraryClasses.Signer.TransactionType BASE Ripple.LibraryClasses.Signer.SerializedEnumItem`1[System.UInt16] INTERFACES Ripple.LibraryClasses.Signer.Interfaces.ISerializedType;System.IComparable`1[Ripple.LibraryClasses.Signer.EnumItem]
+Ripple.LibraryClasses.Signer.TransactionType FIELD Values 22 Ripple.LibraryClasses.Signer.TransactionType+Enumeration
+Ripple.LibraryClasses.Signer.TransactionType FIELD Invalid 54 Ripple.LibraryClasses.Signer.TransactionType
+Ripple.LibraryClasses.Signer.TransactionType FIELD Payment 54 Ripple.LibraryClasses.Signer.TransactionType
+Ripple.LibraryClasses.Signer.TransactionType FIELD EscrowCreate 54 Ripple.LibraryClasses.Signer.TransactionType
+Ripple.LibraryClasses.Signer.TransactionType FIELD EscrowFinish 54 Ripple.LibraryClasses.Signer.TransactionType
+Ripple.LibraryClasses.Signer.TransactionType FIELD AccountSet 54 Ripple.LibraryClasses.Signer.TransactionType
+Ripple.LibraryClasses.Signer.TransactionType FIELD EscrowCancel 54 Ripple.LibraryClasses.Signer.TransactionType
+Ripple.LibraryClasses.Signer.TransactionType FIELD SetRegularKey 54 Ripple.LibraryClasses.Signer.TransactionType
+Ripple.LibraryClasses.Signer.TransactionType FIELD OfferCreate 54 Ripple.LibraryClasses.Signer.TransactionType
+Ripple.LibraryClasses.Signer.TransactionType FIELD OfferCancel 54 Ripple.LibraryClasses.Signer.TransactionType
+Ripple.LibraryClasses.Signer.TransactionType FIELD TicketCreate 54 Ripple.LibraryClasses.Signer.TransactionType
+Ripple.LibraryClasses.Signer.TransactionType FIELD TicketCancel 54 Ripple.LibraryClasses.Signer.TransactionType
+Ripple.LibraryClasses.Signer.TransactionType FIELD SignerListSet 54 Ripple.LibraryClasses.Signer.TransactionType
+Ripple.LibraryClasses.Signer.TransactionType FIELD PaymentChannelCreate 54 Ripple.LibraryClasses.Signer.TransactionType
+Ripple.LibraryClasses.Signer.TransactionType FIELD PaymentChannelFund 54 Ripple.LibraryClasses.Signer.TransactionType
+Ripple.LibraryClasses.Signer.TransactionType FIELD PaymentChannelClaim 54 Ripple.LibraryClasses.Signer.TransactionType
+Ripple.LibraryClasses.Signer.TransactionType FIELD TrustSet 54 Ripple.LibraryClasses.Signer.TransactionType
+Ripple.LibraryClasses.Signer.TransactionType FIELD NFTokenMint 54 Ripple.LibraryClasses.Signer.TransactionType
+Ripple.LibraryClasses.Signer.TransactionType FIELD NFTokenBurn 54 Ripple.LibraryClasses.Signer.TransactionType
+Ripple.LibraryClasses.Signer.TransactionType FIELD NFTokenCreateOffer 54 Ripple.LibraryClasses.Signer.TransactionType
+Ripple.LibraryClasses.Signer.TransactionType FIELD NFTokenCancelOffer 54 Ripple.LibraryClasses.Signer.TransactionType
+Ripple.LibraryClasses.Signer.TransactionType FIELD NFTokenAcceptOffer 54 Ripple.LibraryClasses.Signer.TransactionType
+Ripple.LibraryClasses.Signer.TransactionType FIELD EnableAmendment 54 Ripple.LibraryClasses.Signer.TransactionType
+Ripple.LibraryClasses.Signer.TransactionType FIELD SetFee 54 Ripple.LibraryClasses.Signer.TransactionType
+TYPE Ripple.LibraryClasses.Signer.TxFormat BASE System.Collections.Generic.Dictionary`2[Ripple.LibraryClasses.Signer.Fields.Field,Ripple.LibraryClasses.Signer.TxFormat+Requirement] INTERFACES System.Collections.Generic.ICollection`1[System.Collections.Generic.KeyValuePair`2[Ripple.LibraryClasses.Signer.Fields.Field,Ripple.LibraryClasses.Signer.TxFormat+Requirement]];System.Collections.Generic.IDictionary`2[Ripple.LibraryClasses.Signer.Fields.Field,Ripple.LibraryClasses.Signer.TxFormat+Requirement];System.Collections.Generic.IEnumerable`1[System.Collections.Generic.KeyValuePair`2[Ripple.LibraryClasses.Signer.Fields.Field,Ripple.LibraryClasses.Signer.TxFormat+Requirement]];System.Collections.Generic.IReadOnlyCollection`1[System.Collections.Generic.KeyValuePair`2[Ripple.LibraryClasses.Signer.Fields.Field,Ripple.LibraryClasses.Signer.TxFormat+Requirement]];System.Collections.Generic.IReadOnlyDictionary`2[Ripple.LibraryClasses.Signer.Fields.Field,Ripple.LibraryClasses.Signer.TxFormat+Requirement];System.Collections.ICollection;System.Collections.IDictionary;System.Collections.IEnumerable;System.Runtime.Serialization.IDeserializationCallback;System.Runtime.Serialization.ISerializable
+Ripple.LibraryClasses.Signer.TxFormat CTOR 6278 
+Ripple.LibraryClasses.Signer.TxFormat METHOD Validate 150 System.Void (obj:Ripple.LibraryClasses.Signer.StObject:None:)
+Ripple.LibraryClasses.Signer.TxFormat FIELD Formats 22 System.Collections.Generic.Dictionary`2[Ripple.LibraryClasses.Signer.TransactionType,Ripple.LibraryClasses.Signer.TxFormat]
+TYPE Ripple.LibraryClasses.Signer.TxSigner BASE System.Object INTERFACES 
+Ripple.LibraryClasses.Signer.TxSigner METHOD SignJson 134 Ripple.LibraryClasses.Signer.SignedTx (tx:Newtonsoft.Json.Linq.JObject:None:)
+Ripple.LibraryClasses.Signer.TxSigner METHOD FromKeyPair 150 Ripple.LibraryClasses.Signer.TxSigner (keyPair:Ripple.LibraryClasses.Signer.Interfaces.IKeyPair:None:)
+Ripple.LibraryClasses.Signer.TxSigner METHOD FromSecret 150 Ripple.LibraryClasses.Signer.TxSigner (secret:System.String:None:)
+Ripple.LibraryClasses.Signer.TxSigner METHOD SignJson 150 Ripple.LibraryClasses.Signer.SignedTx (tx:Newtonsoft.Json.Linq.JObject:None:;secret:System.String:None:)
+Ripple.LibraryClasses.Signer.TxSigner METHOD SignStObject 134 Ripple.LibraryClasses.Signer.SignedTx (tx:Ripple.LibraryClasses.Signer.StObject:None:)
+Ripple.LibraryClasses.Signer.TxSigner METHOD ValidateAndEncode 150 Ripple.LibraryClasses.Signer.SignedTx (tx:Ripple.LibraryClasses.Signer.StObject:None:)
+Ripple.LibraryClasses.Signer.TxSigner FIELD CanonicalSigFlag 32854 System.UInt32
+TYPE Ripple.LibraryClasses.Signer.UnissuedAmount BASE System.Object INTERFACES 
+Ripple.LibraryClasses.Signer.UnissuedAmount CTOR 6278 value:System.Decimal:None:;currency:Ripple.LibraryClasses.Signer.Currency:None:
+Ripple.LibraryClasses.Signer.UnissuedAmount METHOD op_Division 2198 Ripple.LibraryClasses.Signer.Amount (ui:Ripple.LibraryClasses.Signer.UnissuedAmount:None:;issuer:Ripple.LibraryClasses.Signer.AccountId:None:)
+Ripple.LibraryClasses.Signer.UnissuedAmount METHOD op_Implicit 2198 Ripple.LibraryClasses.Signer.Amount (a:Ripple.LibraryClasses.Signer.UnissuedAmount:None:)
+TYPE Ripple.LibraryClasses.Signer.Utils BASE System.Object INTERFACES 
+Ripple.LibraryClasses.Signer.Utils METHOD TransactionIdBytes 150 System.Byte[] (txBlob:System.Byte[]:None:)
+TYPE Ripple.LibraryClasses.Signer.Vector256 BASE System.Collections.Generic.List`1[Ripple.LibraryClasses.Signer.Hashes.Hash256] INTERFACES Ripple.LibraryClasses.Signer.Interfaces.ISerializedType;System.Collections.Generic.ICollection`1[Ripple.LibraryClasses.Signer.Hashes.Hash256];System.Collections.Generic.IEnumerable`1[Ripple.LibraryClasses.Signer.Hashes.Hash256];System.Collections.Generic.IList`1[Ripple.LibraryClasses.Signer.Hashes.Hash256];System.Collections.Generic.IReadOnlyCollection`1[Ripple.LibraryClasses.Signer.Hashes.Hash256];System.Collections.Generic.IReadOnlyList`1[Ripple.LibraryClasses.Signer.Hashes.Hash256];System.Collections.ICollection;System.Collections.IEnumerable;System.Collections.IList
+Ripple.LibraryClasses.Signer.Vector256 CTOR 6278 
+Ripple.LibraryClasses.Signer.Vector256 METHOD ToBytes 486 System.Void (sink:Ripple.LibraryClasses.Signer.Interfaces.IBytesSink:None:)
+Ripple.LibraryClasses.Signer.Vector256 METHOD ToJson 486 Newtonsoft.Json.Linq.JToken ()
+Ripple.LibraryClasses.Signer.Vector256 METHOD FromJson 150 Ripple.LibraryClasses.Signer.Vector256 (token:Newtonsoft.Json.Linq.JToken:None:)
+Ripple.LibraryClasses.Signer.Vector256 METHOD FromParser 150 Ripple.LibraryClasses.Signer.Vector256 (parser:Ripple.LibraryClasses.Signer.BinaryParser:None:;hint:System.Nullable`1[System.Int32]:Optional, HasDefault:)
+TYPE Ripple.LibraryClasses.Signer.Uints.Uint`1 BASE System.Object INTERFACES Ripple.LibraryClasses.Signer.Interfaces.ISerializedType
+Ripple.LibraryClasses.Signer.Uints.Uint`1 METHOD ToBytes 486 System.Void (sink:Ripple.LibraryClasses.Signer.Interfaces.IBytesSink:None:)
+Ripple.LibraryClasses.Signer.Uints.Uint`1 METHOD ToJson 454 Newtonsoft.Json.Linq.JToken ()
+Ripple.LibraryClasses.Signer.Uints.Uint`1 METHOD ToString 198 System.String ()
+Ripple.LibraryClasses.Signer.Uints.Uint`1 METHOD ToBytes 1478 System.Byte[] ()
+Ripple.LibraryClasses.Signer.Uints.Uint`1 FIELD Value 38 T
+TYPE Ripple.LibraryClasses.Signer.Uints.Uint16 BASE Ripple.LibraryClasses.Signer.Uints.Uint`1[System.UInt16] INTERFACES Ripple.LibraryClasses.Signer.Interfaces.ISerializedType
+Ripple.LibraryClasses.Signer.Uints.Uint16 CTOR 6278 value:System.UInt16:None:
+Ripple.LibraryClasses.Signer.Uints.Uint16 METHOD FromJson 150 Ripple.LibraryClasses.Signer.Uints.Uint16 (token:Newtonsoft.Json.Linq.JToken:None:)
+Ripple.LibraryClasses.Signer.Uints.Uint16 METHOD op_Implicit 2198 Ripple.LibraryClasses.Signer.Uints.Uint16 (v:System.UInt16:None:)
+Ripple.LibraryClasses.Signer.Uints.Uint16 METHOD ToBytes 198 System.Byte[] ()
+Ripple.LibraryClasses.Signer.Uints.Uint16 METHOD FromParser 150 Ripple.LibraryClasses.Signer.Uints.Uint16 (parser:Ripple.LibraryClasses.Signer.BinaryParser:None:;hint:System.Nullable`1[System.Int32]:Optional, HasDefault:)
+TYPE Ripple.LibraryClasses.Signer.Uints.Uint32 BASE Ripple.LibraryClasses.Signer.Uints.Uint`1[System.UInt32] INTERFACES Ripple.LibraryClasses.Signer.Interfaces.ISerializedType
+Ripple.LibraryClasses.Signer.Uints.Uint32 CTOR 6278 value:System.UInt32:None:
+Ripple.LibraryClasses.Signer.Uints.Uint32 METHOD FromJson 150 Ripple.LibraryClasses.Signer.Uints.Uint32 (token:Newtonsoft.Json.Linq.JToken:None:)
+Ripple.LibraryClasses.Signer.Uints.Uint32 METHOD op_Implicit 2198 Ripple.LibraryClasses.Signer.Uints.Uint32 (v:System.UInt32:None:)
+Ripple.LibraryClasses.Signer.Uints.Uint32 METHOD op_Implicit 2198 System.UInt32 (v:Ripple.LibraryClasses.Signer.Uints.Uint32:None:)
+Ripple.LibraryClasses.Signer.Uints.Uint32 METHOD ToBytes 198 System.Byte[] ()
+Ripple.LibraryClasses.Signer.Uints.Uint32 METHOD FromParser 150 Ripple.LibraryClasses.Signer.Uints.Uint32 (parser:Ripple.LibraryClasses.Signer.BinaryParser:None:;hint:System.Nullable`1[System.Int32]:Optional, HasDefault:)
+TYPE Ripple.LibraryClasses.Signer.Uints.Uint64 BASE Ripple.LibraryClasses.Signer.Uints.Uint`1[System.UInt64] INTERFACES Ripple.LibraryClasses.Signer.Interfaces.ISerializedType
+Ripple.LibraryClasses.Signer.Uints.Uint64 CTOR 6278 value:System.UInt64:None:
+Ripple.LibraryClasses.Signer.Uints.Uint64 METHOD ToBytes 198 System.Byte[] ()
+Ripple.LibraryClasses.Signer.Uints.Uint64 METHOD ToString 198 System.String ()
+Ripple.LibraryClasses.Signer.Uints.Uint64 METHOD FromJson 150 Ripple.LibraryClasses.Signer.Uints.Uint64 (token:Newtonsoft.Json.Linq.JToken:None:)
+Ripple.LibraryClasses.Signer.Uints.Uint64 METHOD op_Implicit 2198 Ripple.LibraryClasses.Signer.Uints.Uint64 (v:System.UInt64:None:)
+Ripple.LibraryClasses.Signer.Uints.Uint64 METHOD ToJson 198 Newtonsoft.Json.Linq.JToken ()
+Ripple.LibraryClasses.Signer.Uints.Uint64 METHOD FromParser 150 Ripple.LibraryClasses.Signer.Uints.Uint64 (parser:Ripple.LibraryClasses.Signer.BinaryParser:None:;hint:System.Nullable`1[System.Int32]:Optional, HasDefault:)
+TYPE Ripple.LibraryClasses.Signer.Uints.Uint8 BASE Ripple.LibraryClasses.Signer.Uints.Uint`1[System.Byte] INTERFACES Ripple.LibraryClasses.Signer.Interfaces.ISerializedType
+Ripple.LibraryClasses.Signer.Uints.Uint8 CTOR 6278 value:System.Byte:None:
+Ripple.LibraryClasses.Signer.Uints.Uint8 METHOD ToBytes 198 System.Byte[] ()
+Ripple.LibraryClasses.Signer.Uints.Uint8 METHOD FromJson 150 Ripple.LibraryClasses.Signer.Uints.Uint8 (token:Newtonsoft.Json.Linq.JToken:None:)
+Ripple.LibraryClasses.Signer.Uints.Uint8 METHOD op_Implicit 2198 Ripple.LibraryClasses.Signer.Uints.Uint8 (v:System.Byte:None:)
+Ripple.LibraryClasses.Signer.Uints.Uint8 METHOD FromParser 150 Ripple.LibraryClasses.Signer.Uints.Uint8 (parser:Ripple.LibraryClasses.Signer.BinaryParser:None:;hint:System.Nullable`1[System.Int32]:Optional, HasDefault:)
+TYPE Ripple.LibraryClasses.Signer.Keys.K256KeyGenerator BASE System.Object INTERFACES 
+Ripple.LibraryClasses.Signer.Keys.K256KeyGenerator CTOR 6278 
+Ripple.LibraryClasses.Signer.Keys.K256KeyGenerator METHOD From128Seed 150 Ripple.LibraryClasses.Signer.Keys.K256KeyPair (seedBytes:System.Byte[]:None:;keyIndex:System.Int32:None:)
+Ripple.LibraryClasses.Signer.Keys.K256KeyGenerator METHOD ComputePrivateGen 150 Org.BouncyCastle.Math.BigInteger [BouncyCastle.Crypto] (seedBytes:System.Byte[]:None:)
+Ripple.LibraryClasses.Signer.Keys.K256KeyGenerator METHOD ComputeSecretKey 150 Org.BouncyCastle.Math.BigInteger [BouncyCastle.Crypto] (privateGen:Org.BouncyCastle.Math.BigInteger [BouncyCastle.Crypto]:None:;accountNumber:System.UInt32:None:)
+Ripple.LibraryClasses.Signer.Keys.K256KeyGenerator METHOD ComputePublicGenerator 150 Org.BouncyCastle.Math.EC.ECPoint [BouncyCastle.Crypto] (privateGen:Org.BouncyCastle.Math.BigInteger [BouncyCastle.Crypto]:None:)
+Ripple.LibraryClasses.Signer.Keys.K256KeyGenerator METHOD ComputePublicKey 150 System.Byte[] (publicGenBytes:System.Byte[]:None:;accountNumber:System.UInt32:None:)
+Ripple.LibraryClasses.Signer.Keys.K256KeyGenerator METHOD ComputeScalar 150 Org.BouncyCastle.Math.BigInteger [BouncyCastle.Crypto] (seedBytes:System.Byte[]:None:;discriminator:System.Nullable`1[System.UInt32]:None:)
+Ripple.LibraryClasses.Signer.Keys.K256KeyGenerator METHOD ComputePublicKey 150 Org.BouncyCastle.Math.EC.ECPoint [BouncyCastle.Crypto] (secretKey:Org.BouncyCastle.Math.BigInteger [BouncyCastle.Crypto]:None:)
+TYPE Ripple.LibraryClasses.Signer.Keys.K256KeyPair BASE Ripple.LibraryClasses.Signer.Keys.K256VerifyingKey INTERFACES Ripple.LibraryClasses.Signer.Interfaces.IKeyPair
+Ripple.LibraryClasses.Signer.Keys.K256KeyPair CTOR 6278 priv:Org.BouncyCastle.Math.BigInteger [BouncyCastle.Crypto]:None:
+Ripple.LibraryClasses.Signer.Keys.K256KeyPair METHOD Priv 134 Org.BouncyCastle.Math.BigInteger [BouncyCastle.Crypto] ()
+Ripple.LibraryClasses.Signer.Keys.K256KeyPair METHOD Sign 486 System.Byte[] (message:System.Byte[]:None:)
+Ripple.LibraryClasses.Signer.Keys.K256KeyPair METHOD Id 486 System.String ()
+TYPE Ripple.LibraryClasses.Signer.Keys.K256VerifyingKey BASE System.Object INTERFACES 
+Ripple.LibraryClasses.Signer.Keys.K256VerifyingKey CTOR 6278 pub:Org.BouncyCastle.Math.EC.ECPoint [BouncyCastle.Crypto]:None:
+Ripple.LibraryClasses.Signer.Keys.K256VerifyingKey METHOD CanonicalPubBytes 486 System.Byte[] ()
+Ripple.LibraryClasses.Signer.Keys.K256VerifyingKey METHOD Verify 486 System.Boolean (message:System.Byte[]:None:;signature:System.Byte[]:None:)
+TYPE Ripple.LibraryClasses.Signer.Keys.Secp256K1 BASE System.Object INTERFACES 
+Ripple.LibraryClasses.Signer.Keys.Secp256K1 CTOR 6278 
+Ripple.LibraryClasses.Signer.Keys.Secp256K1 METHOD Parameters 150 Org.BouncyCastle.Crypto.Parameters.ECDomainParameters [BouncyCastle.Crypto] ()
+Ripple.LibraryClasses.Signer.Keys.Secp256K1 METHOD Order 150 Org.BouncyCastle.Math.BigInteger [BouncyCastle.Crypto] ()
+Ripple.LibraryClasses.Signer.Keys.Secp256K1 METHOD Curve 150 Org.BouncyCastle.Math.EC.ECCurve [BouncyCastle.Crypto] ()
+Ripple.LibraryClasses.Signer.Keys.Secp256K1 METHOD BasePoint 150 Org.BouncyCastle.Math.EC.ECPoint [BouncyCastle.Crypto] ()
+TYPE Ripple.LibraryClasses.Signer.Keys.Sha512 BASE System.Object INTERFACES Ripple.LibraryClasses.Signer.Interfaces.IBytesSink
+Ripple.LibraryClasses.Signer.Keys.Sha512 CTOR 6278 
+Ripple.LibraryClasses.Signer.Keys.Sha512 CTOR 6278 start:System.Byte[]:None:
+Ripple.LibraryClasses.Signer.Keys.Sha512 CTOR 6278 prefix:System.UInt32:None:
+Ripple.LibraryClasses.Signer.Keys.Sha512 METHOD Add 134 Ripple.LibraryClasses.Signer.Keys.Sha512 (bytes:System.Byte[]:None:)
+Ripple.LibraryClasses.Signer.Keys.Sha512 METHOD Add 134 Ripple.LibraryClasses.Signer.Keys.Sha512 (one:System.Byte:None:)
+Ripple.LibraryClasses.Signer.Keys.Sha512 METHOD AddU32 134 Ripple.LibraryClasses.Signer.Keys.Sha512 (i:System.UInt32:None:)
+Ripple.LibraryClasses.Signer.Keys.Sha512 METHOD Finish 134 System.Byte[] ()
+Ripple.LibraryClasses.Signer.Keys.Sha512 METHOD Finish128 134 System.Byte[] ()
+Ripple.LibraryClasses.Signer.Keys.Sha512 METHOD Finish256 134 System.Byte[] ()
+Ripple.LibraryClasses.Signer.Keys.Sha512 METHOD Half 150 System.Byte[] (input:System.Byte[]:None:;prefix:System.Nullable`1[System.UInt32]:Optional, HasDefault:)
+Ripple.LibraryClasses.Signer.Keys.Sha512 METHOD Quarter 150 System.Byte[] (input:System.Byte[]:None:)
+Ripple.LibraryClasses.Signer.Keys.Sha512 METHOD Put 486 System.Void (aByte:System.Byte:None:)
+Ripple.LibraryClasses.Signer.Keys.Sha512 METHOD Put 486 System.Void (bytes:System.Byte[]:None:)
+TYPE Ripple.LibraryClasses.Signer.Interfaces.IBytesSink BASE  INTERFACES 
+Ripple.LibraryClasses.Signer.Interfaces.IBytesSink METHOD Put 1478 System.Void (aByte:System.Byte:None:)
+Ripple.LibraryClasses.Signer.Interfaces.IBytesSink METHOD Put 1478 System.Void (bytes:System.Byte[]:None:)
+TYPE Ripple.LibraryClasses.Signer.Interfaces.IKeyPair BASE  INTERFACES 
+Ripple.LibraryClasses.Signer.Interfaces.IKeyPair METHOD CanonicalPubBytes 1478 System.Byte[] ()
+Ripple.LibraryClasses.Signer.Interfaces.IKeyPair METHOD Verify 1478 System.Boolean (message:System.Byte[]:None:;signature:System.Byte[]:None:)
+Ripple.LibraryClasses.Signer.Interfaces.IKeyPair METHOD Sign 1478 System.Byte[] (message:System.Byte[]:None:)
+Ripple.LibraryClasses.Signer.Interfaces.IKeyPair METHOD Id 1478 System.String ()
+TYPE Ripple.LibraryClasses.Signer.Interfaces.ISerializedType BASE  INTERFACES 
+Ripple.LibraryClasses.Signer.Interfaces.ISerializedType METHOD ToBytes 1478 System.Void (sink:Ripple.LibraryClasses.Signer.Interfaces.IBytesSink:None:)
+Ripple.LibraryClasses.Signer.Interfaces.ISerializedType METHOD ToJson 1478 Newtonsoft.Json.Linq.JToken ()
+TYPE Ripple.LibraryClasses.Signer.Hashes.Hash BASE System.Object INTERFACES Ripple.LibraryClasses.Signer.Interfaces.ISerializedType;System.IEquatable`1[Ripple.LibraryClasses.Signer.Hashes.Hash]
+Ripple.LibraryClasses.Signer.Hashes.Hash METHOD ToBytes 486 System.Void (sink:Ripple.LibraryClasses.Signer.Interfaces.IBytesSink:None:)
+Ripple.LibraryClasses.Signer.Hashes.Hash METHOD ToJson 486 Newtonsoft.Json.Linq.JToken ()
+Ripple.LibraryClasses.Signer.Hashes.Hash METHOD Equals 486 System.Boolean (other:Ripple.LibraryClasses.Signer.Hashes.Hash:None:)
+Ripple.LibraryClasses.Signer.Hashes.Hash METHOD ToString 198 System.String ()
+Ripple.LibraryClasses.Signer.Hashes.Hash METHOD op_Explicit 2198 System.String (h:Ripple.LibraryClasses.Signer.Hashes.Hash:None:)
+Ripple.LibraryClasses.Signer.Hashes.Hash FIELD Buffer 38 System.Byte[]
+TYPE Ripple.LibraryClasses.Signer.Hashes.Hash128 BASE Ripple.LibraryClasses.Signer.Hashes.Hash INTERFACES Ripple.LibraryClasses.Signer.Interfaces.ISerializedType;System.IEquatable`1[Ripple.LibraryClasses.Signer.Hashes.Hash]
+Ripple.LibraryClasses.Signer.Hashes.Hash128 CTOR 6278 buffer:System.Byte[]:None:
+Ripple.LibraryClasses.Signer.Hashes.Hash128 METHOD FromJson 150 Ripple.LibraryClasses.Signer.Hashes.Hash128 (token:Newtonsoft.Json.Linq.JToken:None:)
+Ripple.LibraryClasses.Signer.Hashes.Hash128 METHOD FromParser 150 Ripple.LibraryClasses.Signer.Hashes.Hash128 (parser:Ripple.LibraryClasses.Signer.BinaryParser:None:;hint:System.Nullable`1[System.Int32]:Optional, HasDefault:)
+TYPE Ripple.LibraryClasses.Signer.Hashes.Hash160 BASE Ripple.LibraryClasses.Signer.Hashes.Hash INTERFACES Ripple.LibraryClasses.Signer.Interfaces.ISerializedType;System.IEquatable`1[Ripple.LibraryClasses.Signer.Hashes.Hash]
+Ripple.LibraryClasses.Signer.Hashes.Hash160 CTOR 6278 buffer:System.Byte[]:None:
+Ripple.LibraryClasses.Signer.Hashes.Hash160 METHOD FromJson 150 Ripple.LibraryClasses.Signer.Hashes.Hash160 (token:Newtonsoft.Json.Linq.JToken:None:)
+Ripple.LibraryClasses.Signer.Hashes.Hash160 METHOD FromParser 150 Ripple.LibraryClasses.Signer.Hashes.Hash160 (parser:Ripple.LibraryClasses.Signer.BinaryParser:None:;hint:System.Nullable`1[System.Int32]:Optional, HasDefault:)
+TYPE Ripple.LibraryClasses.Signer.Hashes.Hash256 BASE Ripple.LibraryClasses.Signer.Hashes.Hash INTERFACES Ripple.LibraryClasses.Signer.Interfaces.ISerializedType;System.IEquatable`1[Ripple.LibraryClasses.Signer.Hashes.Hash]
+Ripple.LibraryClasses.Signer.Hashes.Hash256 CTOR 6278 buffer:System.Byte[]:None:
+Ripple.LibraryClasses.Signer.Hashes.Hash256 METHOD FromJson 150 Ripple.LibraryClasses.Signer.Hashes.Hash256 (token:Newtonsoft.Json.Linq.JToken:None:)
+Ripple.LibraryClasses.Signer.Hashes.Hash256 METHOD FromHex 150 Ripple.LibraryClasses.Signer.Hashes.Hash256 (token:System.String:None:)
+Ripple.LibraryClasses.Signer.Hashes.Hash256 METHOD FromParser 150 Ripple.LibraryClasses.Signer.Hashes.Hash256 (parser:Ripple.LibraryClasses.Signer.BinaryParser:None:;hint:System.Nullable`1[System.Int32]:Optional, HasDefault:)
+Ripple.LibraryClasses.Signer.Hashes.Hash256 METHOD Nibblet 134 System.Int32 (depth:System.Int32:None:)
+Ripple.LibraryClasses.Signer.Hashes.Hash256 FIELD Zero 54 Ripple.LibraryClasses.Signer.Hashes.Hash256
+TYPE Ripple.LibraryClasses.Signer.Hashes.HashPrefix BASE System.Enum INTERFACES System.IComparable;System.IConvertible;System.IFormattable
+Ripple.LibraryClasses.Signer.Hashes.HashPrefix FIELD value__ 1542 System.UInt32
+Ripple.LibraryClasses.Signer.Hashes.HashPrefix FIELD TransactionId 32854 Ripple.LibraryClasses.Signer.Hashes.HashPrefix
+Ripple.LibraryClasses.Signer.Hashes.HashPrefix FIELD TxNode 32854 Ripple.LibraryClasses.Signer.Hashes.HashPrefix
+Ripple.LibraryClasses.Signer.Hashes.HashPrefix FIELD LeafNode 32854 Ripple.LibraryClasses.Signer.Hashes.HashPrefix
+Ripple.LibraryClasses.Signer.Hashes.HashPrefix FIELD InnerNode 32854 Ripple.LibraryClasses.Signer.Hashes.HashPrefix
+Ripple.LibraryClasses.Signer.Hashes.HashPrefix FIELD LedgerMaster 32854 Ripple.LibraryClasses.Signer.Hashes.HashPrefix
+Ripple.LibraryClasses.Signer.Hashes.HashPrefix FIELD TxSign 32854 Ripple.LibraryClasses.Signer.Hashes.HashPrefix
+Ripple.LibraryClasses.Signer.Hashes.HashPrefix FIELD Validation 32854 Ripple.LibraryClasses.Signer.Hashes.HashPrefix
+Ripple.LibraryClasses.Signer.Hashes.HashPrefix FIELD Proposal 32854 Ripple.LibraryClasses.Signer.Hashes.HashPrefix
+TYPE Ripple.LibraryClasses.Signer.Hashes.HashPrefixExtensions BASE System.Object INTERFACES 
+Ripple.LibraryClasses.Signer.Hashes.HashPrefixExtensions METHOD Bytes 150 System.Byte[] (prefix:Ripple.LibraryClasses.Signer.Hashes.HashPrefix:None:)
+TYPE Ripple.LibraryClasses.Signer.Hashes.HashUtils BASE System.Object INTERFACES 
+Ripple.LibraryClasses.Signer.Hashes.HashUtils CTOR 6278 
+Ripple.LibraryClasses.Signer.Hashes.HashUtils METHOD DoubleDigest 150 System.Byte[] (buffer:System.Byte[]:None:)
+Ripple.LibraryClasses.Signer.Hashes.HashUtils METHOD Sha256 150 System.Byte[] (buffer:System.Byte[]:None:)
+Ripple.LibraryClasses.Signer.Hashes.HashUtils METHOD PublicKeyHash 150 System.Byte[] (bytes:System.Byte[]:None:)
+TYPE Ripple.LibraryClasses.Signer.Fields.AccountIdField BASE Ripple.LibraryClasses.Signer.Fields.Field INTERFACES System.IComparable`1[Ripple.LibraryClasses.Signer.EnumItem]
+Ripple.LibraryClasses.Signer.Fields.AccountIdField CTOR 6278 name:System.String:None:;nthOfType:System.Int32:None:;isSigningField:System.Boolean:Optional, HasDefault:True;isSerialised:System.Boolean:Optional, HasDefault:True
+TYPE Ripple.LibraryClasses.Signer.Fields.AmountField BASE Ripple.LibraryClasses.Signer.Fields.Field INTERFACES System.IComparable`1[Ripple.LibraryClasses.Signer.EnumItem]
+Ripple.LibraryClasses.Signer.Fields.AmountField CTOR 6278 name:System.String:None:;nthOfType:System.Int32:None:;isSigningField:System.Boolean:Optional, HasDefault:True;isSerialised:System.Boolean:Optional, HasDefault:True
+TYPE Ripple.LibraryClasses.Signer.Fields.BlobField BASE Ripple.LibraryClasses.Signer.Fields.Field INTERFACES System.IComparable`1[Ripple.LibraryClasses.Signer.EnumItem]
+Ripple.LibraryClasses.Signer.Fields.BlobField CTOR 6278 name:System.String:None:;nthOfType:System.Int32:None:;isSigningField:System.Boolean:Optional, HasDefault:True;isSerialised:System.Boolean:Optional, HasDefault:True
+TYPE Ripple.LibraryClasses.Signer.Fields.EngineResultField BASE Ripple.LibraryClasses.Signer.Fields.Uint8Field INTERFACES System.IComparable`1[Ripple.LibraryClasses.Signer.EnumItem]
+Ripple.LibraryClasses.Signer.Fields.EngineResultField CTOR 6278 name:System.String:None:;nthOfType:System.Int32:None:
+TYPE Ripple.LibraryClasses.Signer.Fields.Field BASE Ripple.LibraryClasses.Signer.EnumItem INTERFACES System.IComparable`1[Ripple.LibraryClasses.Signer.EnumItem]
+Ripple.LibraryClasses.Signer.Fields.Field CTOR 6278 name:System.String:None:;nthOfType:System.Int32:None:;type:Ripple.LibraryClasses.Signer.Fields.FieldType:None:;isSigningField:System.Boolean:Optional, HasDefault:True;isSerialised:System.Boolean:Optional, HasDefault:True
+Ripple.LibraryClasses.Signer.Fields.Field METHOD op_Implicit 2198 Ripple.LibraryClasses.Signer.Fields.Field (s:System.String:None:)
+Ripple.LibraryClasses.Signer.Fields.Field FIELD IsSigningField 38 System.Boolean
+Ripple.LibraryClasses.Signer.Fields.Field FIELD IsSerialised 38 System.Boolean
+Ripple.LibraryClasses.Signer.Fields.Field FIELD IsVlEncoded 38 System.Boolean
+Ripple.LibraryClasses.Signer.Fields.Field FIELD NthOfType 38 System.Int32
+Ripple.LibraryClasses.Signer.Fields.Field FIELD Type 38 Ripple.LibraryClasses.Signer.Fields.FieldType
+Ripple.LibraryClasses.Signer.Fields.Field FIELD Header 38 System.Byte[]
+Ripple.LibraryClasses.Signer.Fields.Field FIELD FromJson 6 Ripple.LibraryClasses.Signer.FromJson
+Ripple.LibraryClasses.Signer.Fields.Field FIELD FromParser 6 Ripple.LibraryClasses.Signer.FromParser
+Ripple.LibraryClasses.Signer.Fields.Field FIELD Values 54 Ripple.LibraryClasses.Signer.Enumeration`1[Ripple.LibraryClasses.Signer.Fields.Field]
+Ripple.LibraryClasses.Signer.Fields.Field FIELD Generic 54 Ripple.LibraryClasses.Signer.Fields.Field
+Ripple.LibraryClasses.Signer.Fields.Field FIELD Invalid 54 Ripple.LibraryClasses.Signer.Fields.Field
+Ripple.LibraryClasses.Signer.Fields.Field FIELD LedgerEntryType 54 Ripple.LibraryClasses.Signer.Fields.LedgerEntryTypeField
+Ripple.LibraryClasses.Signer.Fields.Field FIELD TransactionType 54 Ripple.LibraryClasses.Signer.Fields.TransactionTypeField
+Ripple.LibraryClasses.Signer.Fields.Field FIELD SignerWeight 54 Ripple.LibraryClasses.Signer.Fields.Uint16Field
+Ripple.LibraryClasses.Signer.Fields.Field FIELD TransferFee 54 Ripple.LibraryClasses.Signer.Fields.Uint16Field
+Ripple.LibraryClasses.Signer.Fields.Field FIELD Flags 54 Ripple.LibraryClasses.Signer.Fields.Uint32Field
+Ripple.LibraryClasses.Signer.Fields.Field FIELD SourceTag 54 Ripple.LibraryClasses.Signer.Fields.Uint32Field
+Ripple.LibraryClasses.Signer.Fields.Field FIELD Sequence 54 Ripple.LibraryClasses.Signer.Fields.Uint32Field
+Ripple.LibraryClasses.Signer.Fields.Field FIELD PreviousTxnLgrSeq 54 Ripple.LibraryClasses.Signer.Fields.Uint32Field
+Ripple.LibraryClasses.Signer.Fields.Field FIELD LedgerSequence 54 Ripple.LibraryClasses.Signer.Fields.Uint32Field
+Ripple.LibraryClasses.Signer.Fields.Field FIELD CloseTime 54 Ripple.LibraryClasses.Signer.Fields.Uint32Field
+Ripple.LibraryClasses.Signer.Fields.Field FIELD ParentCloseTime 54 Ripple.LibraryClasses.Signer.Fields.Uint32Field
+Ripple.LibraryClasses.Signer.Fields.Field FIELD SigningTime 54 Ripple.LibraryClasses.Signer.Fields.Uint32Field
+Ripple.LibraryClasses.Signer.Fields.Field FIELD Expiration 54 Ripple.LibraryClasses.Signer.Fields.Uint32Field
+Ripple.LibraryClasses.Signer.Fields.Field FIELD TransferRate 54 Ripple.LibraryClasses.Signer.Fields.Uint32Field
+Ripple.LibraryClasses.Signer.Fields.Field FIELD WalletSize 54 Ripple.LibraryClasses.Signer.Fields.Uint32Field
+Ripple.LibraryClasses.Signer.Fields.Field FIELD OwnerCount 54 Ripple.LibraryClasses.Signer.Fields.Uint32Field
+Ripple.LibraryClasses.Signer.Fields.Field FIELD DestinationTag 54 Ripple.LibraryClasses.Signer.Fields.Uint32Field
+Ripple.LibraryClasses.Signer.Fields.Field FIELD HighQualityIn 54 Ripple.LibraryClasses.Signer.Fields.Uint32Field
+Ripple.LibraryClasses.Signer.Fields.Field FIELD HighQualityOut 54 Ripple.LibraryClasses.Signer.Fields.Uint32Field
+Ripple.LibraryClasses.Signer.Fields.Field FIELD LowQualityIn 54 Ripple.LibraryClasses.Signer.Fields.Uint32Field
+Ripple.LibraryClasses.Signer.Fields.Field FIELD LowQualityOut 54 Ripple.LibraryClasses.Signer.Fields.Uint32Field
+Ripple.LibraryClasses.Signer.Fields.Field FIELD QualityIn 54 Ripple.LibraryClasses.Signer.Fields.Uint32Field
+Ripple.LibraryClasses.Signer.Fields.Field FIELD QualityOut 54 Ripple.LibraryClasses.Signer.Fields.Uint32Field
+Ripple.LibraryClasses.Signer.Fields.Field FIELD StampEscrow 54 Ripple.LibraryClasses.Signer.Fields.Uint32Field
+Ripple.LibraryClasses.Signer.Fields.Field FIELD BondAmount 54 Ripple.LibraryClasses.Signer.Fields.Uint32Field
+Ripple.LibraryClasses.Signer.Fields.Field FIELD LoadFee 54 Ripple.LibraryClasses.Signer.Fields.Uint32Field
+Ripple.LibraryClasses.Signer.Fields.Field FIELD OfferSequence 54 Ripple.LibraryClasses.Signer.Fields.Uint32Field
+Ripple.LibraryClasses.Signer.Fields.Field FIELD FirstLedgerSequence 54 Ripple.LibraryClasses.Signer.Fields.Uint32Field
+Ripple.LibraryClasses.Signer.Fields.Field FIELD LastLedgerSequence 54 Ripple.LibraryClasses.Signer.Fields.Uint32Field
+Ripple.LibraryClasses.Signer.Fields.Field FIELD TransactionIndex 54 Ripple.LibraryClasses.Signer.Fields.Uint32Field
+Ripple.LibraryClasses.Signer.Fields.Field FIELD OperationLimit 54 Ripple.LibraryClasses.Signer.Fields.Uint32Field
+Ripple.LibraryClasses.Signer.Fields.Field FIELD ReferenceFeeUnits 54 Ripple.LibraryClasses.Signer.Fields.Uint32Field
+Ripple.LibraryClasses.Signer.Fields.Field FIELD ReserveBase 54 Ripple.LibraryClasses.Signer.Fields.Uint32Field
+Ripple.LibraryClasses.Signer.Fields.Field FIELD ReserveIncrement 54 Ripple.LibraryClasses.Signer.Fields.Uint32Field
+Ripple.LibraryClasses.Signer.Fields.Field FIELD SetFlag 54 Ripple.LibraryClasses.Signer.Fields.Uint32Field
+Ripple.LibraryClasses.Signer.Fields.Field FIELD ClearFlag 54 Ripple.LibraryClasses.Signer.Fields.Uint32Field
+Ripple.LibraryClasses.Signer.Fields.Field FIELD SignerQuorum 54 Ripple.LibraryClasses.Signer.Fields.Uint32Field
+Ripple.LibraryClasses.Signer.Fields.Field FIELD CancelAfter 54 Ripple.LibraryClasses.Signer.Fields.Uint32Field
+Ripple.LibraryClasses.Signer.Fields.Field FIELD FinishAfter 54 Ripple.LibraryClasses.Signer.Fields.Uint32Field
+Ripple.LibraryClasses.Signer.Fields.Field FIELD SignerListID 54 Ripple.LibraryClasses.Signer.Fields.Uint32Field
+Ripple.LibraryClasses.Signer.Fields.Field FIELD SettleDelay 54 Ripple.LibraryClasses.Signer.Fields.Uint32Field
+Ripple.LibraryClasses.Signer.Fields.Field FIELD TicketCount 54 Ripple.LibraryClasses.Signer.Fields.Uint32Field
+Ripple.LibraryClasses.Signer.Fields.Field FIELD TicketSequence 54 Ripple.LibraryClasses.Signer.Fields.Uint32Field
+Ripple.LibraryClasses.Signer.Fields.Field FIELD NFTokenTaxon 54 Ripple.LibraryClasses.Signer.Fields.Uint32Field
+Ripple.LibraryClasses.Signer.Fields.Field FIELD MintedTokens 54 Ripple.LibraryClasses.Signer.Fields.Uint32Field
+Ripple.LibraryClasses.Signer.Fields.Field FIELD BurnedTokens 54 Ripple.LibraryClasses.Signer.Fields.Uint32Field
+Ripple.LibraryClasses.Signer.Fields.Field FIELD IndexNext 54 Ripple.LibraryClasses.Signer.Fields.Uint64Field
+Ripple.LibraryClasses.Signer.Fields.Field FIELD IndexPrevious 54 Ripple.LibraryClasses.Signer.Fields.Uint64Field
+Ripple.LibraryClasses.Signer.Fields.Field FIELD BookNode 54 Ripple.LibraryClasses.Signer.Fields.Uint64Field
+Ripple.LibraryClasses.Signer.Fields.Field FIELD OwnerNode 54 Ripple.LibraryClasses.Signer.Fields.Uint64Field
+Ripple.LibraryClasses.Signer.Fields.Field FIELD BaseFee 54 Ripple.LibraryClasses.Signer.Fields.Uint64Field
+Ripple.LibraryClasses.Signer.Fields.Field FIELD ExchangeRate 54 Ripple.LibraryClasses.Signer.Fields.Uint64Field
+Ripple.LibraryClasses.Signer.Fields.Field FIELD LowNode 54 Ripple.LibraryClasses.Signer.Fields.Uint64Field
+Ripple.LibraryClasses.Signer.Fields.Field FIELD HighNode 54 Ripple.LibraryClasses.Signer.Fields.Uint64Field
+Ripple.LibraryClasses.Signer.Fields.Field FIELD EmailHash 54 Ripple.LibraryClasses.Signer.Fields.Hash128Field
+Ripple.LibraryClasses.Signer.Fields.Field FIELD LedgerHash 54 Ripple.LibraryClasses.Signer.Fields.Hash256Field
+Ripple.LibraryClasses.Signer.Fields.Field FIELD ParentHash 54 Ripple.LibraryClasses.Signer.Fields.Hash256Field
+Ripple.LibraryClasses.Signer.Fields.Field FIELD TransactionHash 54 Ripple.LibraryClasses.Signer.Fields.Hash256Field
+Ripple.LibraryClasses.Signer.Fields.Field FIELD AccountHash 54 Ripple.LibraryClasses.Signer.Fields.Hash256Field
+Ripple.LibraryClasses.Signer.Fields.Field FIELD PreviousTxnID 54 Ripple.LibraryClasses.Signer.Fields.Hash256Field
+Ripple.LibraryClasses.Signer.Fields.Field FIELD LedgerIndex 54 Ripple.LibraryClasses.Signer.Fields.Hash256Field
+Ripple.LibraryClasses.Signer.Fields.Field FIELD WalletLocator 54 Ripple.LibraryClasses.Signer.Fields.Hash256Field
+Ripple.LibraryClasses.Signer.Fields.Field FIELD RootIndex 54 Ripple.LibraryClasses.Signer.Fields.Hash256Field
+Ripple.LibraryClasses.Signer.Fields.Field FIELD AccountTxnID 54 Ripple.LibraryClasses.Signer.Fields.Hash256Field
+Ripple.LibraryClasses.Signer.Fields.Field FIELD BookDirectory 54 Ripple.LibraryClasses.Signer.Fields.Hash256Field
+Ripple.LibraryClasses.Signer.Fields.Field FIELD InvoiceID 54 Ripple.LibraryClasses.Signer.Fields.Hash256Field
+Ripple.LibraryClasses.Signer.Fields.Field FIELD Nickname 54 Ripple.LibraryClasses.Signer.Fields.Hash256Field
+Ripple.LibraryClasses.Signer.Fields.Field FIELD Amendment 54 Ripple.LibraryClasses.Signer.Fields.Hash256Field
+Ripple.LibraryClasses.Signer.Fields.Field FIELD TicketID 54 Ripple.LibraryClasses.Signer.Fields.Hash256Field
+Ripple.LibraryClasses.Signer.Fields.Field FIELD Digest 54 Ripple.LibraryClasses.Signer.Fields.Hash256Field
+Ripple.LibraryClasses.Signer.Fields.Field FIELD Channel 54 Ripple.LibraryClasses.Signer.Fields.Hash256Field
+Ripple.LibraryClasses.Signer.Fields.Field FIELD ConsensusHash 54 Ripple.LibraryClasses.Signer.Fields.Hash256Field
+Ripple.LibraryClasses.Signer.Fields.Field FIELD hash 54 Ripple.LibraryClasses.Signer.Fields.Hash256Field
+Ripple.LibraryClasses.Signer.Fields.Field FIELD index 54 Ripple.LibraryClasses.Signer.Fields.Hash256Field
+Ripple.LibraryClasses.Signer.Fields.Field FIELD NFTokenID 54 Ripple.LibraryClasses.Signer.Fields.Hash256Field
+Ripple.LibraryClasses.Signer.Fields.Field FIELD NFTokenBuyOffer 54 Ripple.LibraryClasses.Signer.Fields.Hash256Field
+Ripple.LibraryClasses.Signer.Fields.Field FIELD NFTokenSellOffer 54 Ripple.LibraryClasses.Signer.Fields.Hash256Field
+Ripple.LibraryClasses.Signer.Fields.Field FIELD Amount 54 Ripple.LibraryClasses.Signer.Fields.AmountField
+Ripple.LibraryClasses.Signer.Fields.Field FIELD Balance 54 Ripple.LibraryClasses.Signer.Fields.AmountField
+Ripple.LibraryClasses.Signer.Fields.Field FIELD LimitAmount 54 Ripple.LibraryClasses.Signer.Fields.AmountField
+Ripple.LibraryClasses.Signer.Fields.Field FIELD TakerPays 54 Ripple.LibraryClasses.Signer.Fields.AmountField
+Ripple.LibraryClasses.Signer.Fields.Field FIELD TakerGets 54 Ripple.LibraryClasses.Signer.Fields.AmountField
+Ripple.LibraryClasses.Signer.Fields.Field FIELD LowLimit 54 Ripple.LibraryClasses.Signer.Fields.AmountField
+Ripple.LibraryClasses.Signer.Fields.Field FIELD HighLimit 54 Ripple.LibraryClasses.Signer.Fields.AmountField
+Ripple.LibraryClasses.Signer.Fields.Field FIELD Fee 54 Ripple.LibraryClasses.Signer.Fields.AmountField
+Ripple.LibraryClasses.Signer.Fields.Field FIELD SendMax 54 Ripple.LibraryClasses.Signer.Fields.AmountField
+Ripple.LibraryClasses.Signer.Fields.Field FIELD DeliverMin 54 Ripple.LibraryClasses.Signer.Fields.AmountField
+Ripple.LibraryClasses.Signer.Fields.Field FIELD MinimumOffer 54 Ripple.LibraryClasses.Signer.Fields.AmountField
+Ripple.LibraryClasses.Signer.Fields.Field FIELD RippleEscrow 54 Ripple.LibraryClasses.Signer.Fields.AmountField
+Ripple.LibraryClasses.Signer.Fields.Field FIELD DeliveredAmount 54 Ripple.LibraryClasses.Signer.Fields.AmountField
+Ripple.LibraryClasses.Signer.Fields.Field FIELD BrokerFee 54 Ripple.LibraryClasses.Signer.Fields.AmountField
+Ripple.LibraryClasses.Signer.Fields.Field FIELD NFTokenBrokerFee 54 Ripple.LibraryClasses.Signer.Fields.AmountField
+Ripple.LibraryClasses.Signer.Fields.Field FIELD taker_gets_funded 54 Ripple.LibraryClasses.Signer.Fields.AmountField
+Ripple.LibraryClasses.Signer.Fields.Field FIELD taker_pays_funded 54 Ripple.LibraryClasses.Signer.Fields.AmountField
+Ripple.LibraryClasses.Signer.Fields.Field FIELD PublicKey 54 Ripple.LibraryClasses.Signer.Fields.BlobField
+Ripple.LibraryClasses.Signer.Fields.Field FIELD MessageKey 54 Ripple.LibraryClasses.Signer.Fields.BlobField
+Ripple.LibraryClasses.Signer.Fields.Field FIELD SigningPubKey 54 Ripple.LibraryClasses.Signer.Fields.BlobField
+Ripple.LibraryClasses.Signer.Fields.Field FIELD TxnSignature 54 Ripple.LibraryClasses.Signer.Fields.BlobField
+Ripple.LibraryClasses.Signer.Fields.Field FIELD URI 54 Ripple.LibraryClasses.Signer.Fields.BlobField
+Ripple.LibraryClasses.Signer.Fields.Field FIELD Signature 54 Ripple.LibraryClasses.Signer.Fields.BlobField
+Ripple.LibraryClasses.Signer.Fields.Field FIELD Domain 54 Ripple.LibraryClasses.Signer.Fields.BlobField
+Ripple.LibraryClasses.Signer.Fields.Field FIELD FundCode 54 Ripple.LibraryClasses.Signer.Fields.BlobField
+Ripple.LibraryClasses.Signer.Fields.Field FIELD RemoveCode 54 Ripple.LibraryClasses.Signer.Fields.BlobField
+Ripple.LibraryClasses.Signer.Fields.Field FIELD ExpireCode 54 Ripple.LibraryClasses.Signer.Fields.BlobField
+Ripple.LibraryClasses.Signer.Fields.Field FIELD CreateCode 54 Ripple.LibraryClasses.Signer.Fields.BlobField
+Ripple.LibraryClasses.Signer.Fields.Field FIELD MemoType 54 Ripple.LibraryClasses.Signer.Fields.BlobField
+Ripple.LibraryClasses.Signer.Fields.Field FIELD MemoData 54 Ripple.LibraryClasses.Signer.Fields.BlobField
+Ripple.LibraryClasses.Signer.Fields.Field FIELD MemoFormat 54 Ripple.LibraryClasses.Signer.Fields.BlobField
+Ripple.LibraryClasses.Signer.Fields.Field FIELD Fulfillment 54 Ripple.LibraryClasses.Signer.Fields.BlobField
+Ripple.LibraryClasses.Signer.Fields.Field FIELD Condition 54 Ripple.LibraryClasses.Signer.Fields.BlobField
+Ripple.LibraryClasses.Signer.Fields.Field FIELD MasterSignature 54 Ripple.LibraryClasses.Signer.Fields.BlobField
+Ripple.LibraryClasses.Signer.Fields.Field FIELD Account 54 Ripple.LibraryClasses.Signer.Fields.AccountIdField
+Ripple.LibraryClasses.Signer.Fields.Field FIELD Owner 54 Ripple.LibraryClasses.Signer.Fields.AccountIdField
+Ripple.LibraryClasses.Signer.Fields.Field FIELD Destination 54 Ripple.LibraryClasses.Signer.Fields.AccountIdField
+Ripple.LibraryClasses.Signer.Fields.Field FIELD Issuer 54 Ripple.LibraryClasses.Signer.Fields.AccountIdField
+Ripple.LibraryClasses.Signer.Fields.Field FIELD Target 54 Ripple.LibraryClasses.Signer.Fields.AccountIdField
+Ripple.LibraryClasses.Signer.Fields.Field FIELD RegularKey 54 Ripple.LibraryClasses.Signer.Fields.AccountIdField
+Ripple.LibraryClasses.Signer.Fields.Field FIELD ObjectEndMarker 54 Ripple.LibraryClasses.Signer.Fields.StObjectField
+Ripple.LibraryClasses.Signer.Fields.Field FIELD TransactionMetaData 54 Ripple.LibraryClasses.Signer.Fields.StObjectField
+Ripple.LibraryClasses.Signer.Fields.Field FIELD CreatedNode 54 Ripple.LibraryClasses.Signer.Fields.StObjectField
+Ripple.LibraryClasses.Signer.Fields.Field FIELD DeletedNode 54 Ripple.LibraryClasses.Signer.Fields.StObjectField
+Ripple.LibraryClasses.Signer.Fields.Field FIELD ModifiedNode 54 Ripple.LibraryClasses.Signer.Fields.StObjectField
+Ripple.LibraryClasses.Signer.Fields.Field FIELD PreviousFields 54 Ripple.LibraryClasses.Signer.Fields.StObjectField
+Ripple.LibraryClasses.Signer.Fields.Field FIELD FinalFields 54 Ripple.LibraryClasses.Signer.Fields.StObjectField
+Ripple.LibraryClasses.Signer.Fields.Field FIELD NewFields 54 Ripple.LibraryClasses.Signer.Fields.StObjectField
+Ripple.LibraryClasses.Signer.Fields.Field FIELD TemplateEntry 54 Ripple.LibraryClasses.Signer.Fields.StObjectField
+Ripple.LibraryClasses.Signer.Fields.Field FIELD Memo 54 Ripple.LibraryClasses.Signer.Fields.StObjectField
+Ripple.LibraryClasses.Signer.Fields.Field FIELD SignerEntry 54 Ripple.LibraryClasses.Signer.Fields.StObjectField
+Ripple.LibraryClasses.Signer.Fields.Field FIELD Signer 54 Ripple.LibraryClasses.Signer.Fields.StObjectField
+Ripple.LibraryClasses.Signer.Fields.Field FIELD Majority 54 Ripple.LibraryClasses.Signer.Fields.StObjectField
+Ripple.LibraryClasses.Signer.Fields.Field FIELD ArrayEndMarker 54 Ripple.LibraryClasses.Signer.Fields.StArrayField
+Ripple.LibraryClasses.Signer.Fields.Field FIELD Signers 54 Ripple.LibraryClasses.Signer.Fields.StArrayField
+Ripple.LibraryClasses.Signer.Fields.Field FIELD SignerEntries 54 Ripple.LibraryClasses.Signer.Fields.StArrayField
+Ripple.LibraryClasses.Signer.Fields.Field FIELD Template 54 Ripple.LibraryClasses.Signer.Fields.StArrayField
+Ripple.LibraryClasses.Signer.Fields.Field FIELD Necessary 54 Ripple.LibraryClasses.Signer.Fields.StArrayField
+Ripple.LibraryClasses.Signer.Fields.Field FIELD Sufficient 54 Ripple.LibraryClasses.Signer.Fields.StArrayField
+Ripple.LibraryClasses.Signer.Fields.Field FIELD AffectedNodes 54 Ripple.LibraryClasses.Signer.Fields.StArrayField
+Ripple.LibraryClasses.Signer.Fields.Field FIELD Memos 54 Ripple.LibraryClasses.Signer.Fields.StArrayField
+Ripple.LibraryClasses.Signer.Fields.Field FIELD CloseResolution 54 Ripple.LibraryClasses.Signer.Fields.Uint8Field
+Ripple.LibraryClasses.Signer.Fields.Field FIELD Method 54 Ripple.LibraryClasses.Signer.Fields.Uint8Field
+Ripple.LibraryClasses.Signer.Fields.Field FIELD TransactionResult 54 Ripple.LibraryClasses.Signer.Fields.EngineResultField
+Ripple.LibraryClasses.Signer.Fields.Field FIELD TickSize 54 Ripple.LibraryClasses.Signer.Fields.Uint8Field
+Ripple.LibraryClasses.Signer.Fields.Field FIELD TakerPaysCurrency 54 Ripple.LibraryClasses.Signer.Fields.Hash160Field
+Ripple.LibraryClasses.Signer.Fields.Field FIELD TakerPaysIssuer 54 Ripple.LibraryClasses.Signer.Fields.Hash160Field
+Ripple.LibraryClasses.Signer.Fields.Field FIELD TakerGetsCurrency 54 Ripple.LibraryClasses.Signer.Fields.Hash160Field
+Ripple.LibraryClasses.Signer.Fields.Field FIELD TakerGetsIssuer 54 Ripple.LibraryClasses.Signer.Fields.Hash160Field
+Ripple.LibraryClasses.Signer.Fields.Field FIELD Paths 54 Ripple.LibraryClasses.Signer.Fields.PathSetField
+Ripple.LibraryClasses.Signer.Fields.Field FIELD Indexes 54 Ripple.LibraryClasses.Signer.Fields.Vector256Field
+Ripple.LibraryClasses.Signer.Fields.Field FIELD Hashes 54 Ripple.LibraryClasses.Signer.Fields.Vector256Field
+Ripple.LibraryClasses.Signer.Fields.Field FIELD Features 54 Ripple.LibraryClasses.Signer.Fields.Vector256Field
+Ripple.LibraryClasses.Signer.Fields.Field FIELD NFTokenOffers 54 Ripple.LibraryClasses.Signer.Fields.Vector256Field
+Ripple.LibraryClasses.Signer.Fields.Field FIELD Transaction 54 Ripple.LibraryClasses.Signer.Fields.Field
+Ripple.LibraryClasses.Signer.Fields.Field FIELD LedgerEntry 54 Ripple.LibraryClasses.Signer.Fields.Field
+Ripple.LibraryClasses.Signer.Fields.Field FIELD Validation 54 Ripple.LibraryClasses.Signer.Fields.Field
+TYPE Ripple.LibraryClasses.Signer.Fields.FieldType BASE Ripple.LibraryClasses.Signer.EnumItem INTERFACES System.IComparable`1[Ripple.LibraryClasses.Signer.EnumItem]
+Ripple.LibraryClasses.Signer.Fields.FieldType CTOR 6278 name:System.String:None:;ordinal:System.Int32:None:
+Ripple.LibraryClasses.Signer.Fields.FieldType FIELD Values 22 Ripple.LibraryClasses.Signer.Enumeration`1[Ripple.LibraryClasses.Signer.Fields.FieldType]
+Ripple.LibraryClasses.Signer.Fields.FieldType FIELD Unknown 54 Ripple.LibraryClasses.Signer.Fields.FieldType
+Ripple.LibraryClasses.Signer.Fields.FieldType FIELD Done 54 Ripple.LibraryClasses.Signer.Fields.FieldType
+Ripple.LibraryClasses.Signer.Fields.FieldType FIELD NotPresent 54 Ripple.LibraryClasses.Signer.Fields.FieldType
+Ripple.LibraryClasses.Signer.Fields.FieldType FIELD Uint16 54 Ripple.LibraryClasses.Signer.Fields.FieldType
+Ripple.LibraryClasses.Signer.Fields.FieldType FIELD Uint32 54 Ripple.LibraryClasses.Signer.Fields.FieldType
+Ripple.LibraryClasses.Signer.Fields.FieldType FIELD Uint64 54 Ripple.LibraryClasses.Signer.Fields.FieldType
+Ripple.LibraryClasses.Signer.Fields.FieldType FIELD Hash128 54 Ripple.LibraryClasses.Signer.Fields.FieldType
+Ripple.LibraryClasses.Signer.Fields.FieldType FIELD Hash256 54 Ripple.LibraryClasses.Signer.Fields.FieldType
+Ripple.LibraryClasses.Signer.Fields.FieldType FIELD Amount 54 Ripple.LibraryClasses.Signer.Fields.FieldType
+Ripple.LibraryClasses.Signer.Fields.FieldType FIELD Blob 54 Ripple.LibraryClasses.Signer.Fields.FieldType
+Ripple.LibraryClasses.Signer.Fields.FieldType FIELD AccountId 54 Ripple.LibraryClasses.Signer.Fields.FieldType
+Ripple.LibraryClasses.Signer.Fields.FieldType FIELD StObject 54 Ripple.LibraryClasses.Signer.Fields.FieldType
+Ripple.LibraryClasses.Signer.Fields.FieldType FIELD StArray 54 Ripple.LibraryClasses.Signer.Fields.FieldType
+Ripple.LibraryClasses.Signer.Fields.FieldType FIELD Uint8 54 Ripple.LibraryClasses.Signer.Fields.FieldType
+Ripple.LibraryClasses.Signer.Fields.FieldType FIELD Hash160 54 Ripple.LibraryClasses.Signer.Fields.FieldType
+Ripple.LibraryClasses.Signer.Fields.FieldType FIELD PathSet 54 Ripple.LibraryClasses.Signer.Fields.FieldType
+Ripple.LibraryClasses.Signer.Fields.FieldType FIELD Vector256 54 Ripple.LibraryClasses.Signer.Fields.FieldType
+Ripple.LibraryClasses.Signer.Fields.FieldType FIELD Transaction 54 Ripple.LibraryClasses.Signer.Fields.FieldType
+Ripple.LibraryClasses.Signer.Fields.FieldType FIELD LedgerEntry 54 Ripple.LibraryClasses.Signer.Fields.FieldType
+Ripple.LibraryClasses.Signer.Fields.FieldType FIELD Validation 54 Ripple.LibraryClasses.Signer.Fields.FieldType
+TYPE Ripple.LibraryClasses.Signer.Fields.Hash128Field BASE Ripple.LibraryClasses.Signer.Fields.Field INTERFACES System.IComparable`1[Ripple.LibraryClasses.Signer.EnumItem]
+Ripple.LibraryClasses.Signer.Fields.Hash128Field CTOR 6278 name:System.String:None:;nthOfType:System.Int32:None:;isSigningField:System.Boolean:Optional, HasDefault:True;isSerialised:System.Boolean:Optional, HasDefault:True
+TYPE Ripple.LibraryClasses.Signer.Fields.Hash160Field BASE Ripple.LibraryClasses.Signer.Fields.Field INTERFACES System.IComparable`1[Ripple.LibraryClasses.Signer.EnumItem]
+Ripple.LibraryClasses.Signer.Fields.Hash160Field CTOR 6278 name:System.String:None:;nthOfType:System.Int32:None:;isSigningField:System.Boolean:Optional, HasDefault:True;isSerialised:System.Boolean:Optional, HasDefault:True
+TYPE Ripple.LibraryClasses.Signer.Fields.Hash256Field BASE Ripple.LibraryClasses.Signer.Fields.Field INTERFACES System.IComparable`1[Ripple.LibraryClasses.Signer.EnumItem]
+Ripple.LibraryClasses.Signer.Fields.Hash256Field CTOR 6278 name:System.String:None:;nthOfType:System.Int32:None:;isSigningField:System.Boolean:Optional, HasDefault:True;isSerialised:System.Boolean:Optional, HasDefault:True
+TYPE Ripple.LibraryClasses.Signer.Fields.LedgerEntryTypeField BASE Ripple.LibraryClasses.Signer.Fields.Uint16Field INTERFACES System.IComparable`1[Ripple.LibraryClasses.Signer.EnumItem]
+Ripple.LibraryClasses.Signer.Fields.LedgerEntryTypeField CTOR 6278 name:System.String:None:;nthOfType:System.Int32:None:
+TYPE Ripple.LibraryClasses.Signer.Fields.PathSetField BASE Ripple.LibraryClasses.Signer.Fields.Field INTERFACES System.IComparable`1[Ripple.LibraryClasses.Signer.EnumItem]
+Ripple.LibraryClasses.Signer.Fields.PathSetField CTOR 6278 name:System.String:None:;nthOfType:System.Int32:None:;isSigningField:System.Boolean:Optional, HasDefault:True;isSerialised:System.Boolean:Optional, HasDefault:True
+TYPE Ripple.LibraryClasses.Signer.Fields.StArrayField BASE Ripple.LibraryClasses.Signer.Fields.Field INTERFACES System.IComparable`1[Ripple.LibraryClasses.Signer.EnumItem]
+Ripple.LibraryClasses.Signer.Fields.StArrayField CTOR 6278 name:System.String:None:;nthOfType:System.Int32:None:;isSigningField:System.Boolean:Optional, HasDefault:True;isSerialised:System.Boolean:Optional, HasDefault:True
+TYPE Ripple.LibraryClasses.Signer.Fields.StObjectField BASE Ripple.LibraryClasses.Signer.Fields.Field INTERFACES System.IComparable`1[Ripple.LibraryClasses.Signer.EnumItem]
+Ripple.LibraryClasses.Signer.Fields.StObjectField CTOR 6278 name:System.String:None:;nthOfType:System.Int32:None:;isSigningField:System.Boolean:Optional, HasDefault:True;isSerialised:System.Boolean:Optional, HasDefault:True
+TYPE Ripple.LibraryClasses.Signer.Fields.TransactionTypeField BASE Ripple.LibraryClasses.Signer.Fields.Uint16Field INTERFACES System.IComparable`1[Ripple.LibraryClasses.Signer.EnumItem]
+Ripple.LibraryClasses.Signer.Fields.TransactionTypeField CTOR 6278 name:System.String:None:;nthOfType:System.Int32:None:
+TYPE Ripple.LibraryClasses.Signer.Fields.Uint16Field BASE Ripple.LibraryClasses.Signer.Fields.Field INTERFACES System.IComparable`1[Ripple.LibraryClasses.Signer.EnumItem]
+Ripple.LibraryClasses.Signer.Fields.Uint16Field CTOR 6278 name:System.String:None:;nthOfType:System.Int32:None:;isSigningField:System.Boolean:Optional, HasDefault:True;isSerialised:System.Boolean:Optional, HasDefault:True
+TYPE Ripple.LibraryClasses.Signer.Fields.Uint32Field BASE Ripple.LibraryClasses.Signer.Fields.Field INTERFACES System.IComparable`1[Ripple.LibraryClasses.Signer.EnumItem]
+Ripple.LibraryClasses.Signer.Fields.Uint32Field CTOR 6278 name:System.String:None:;nthOfType:System.Int32:None:;isSigningField:System.Boolean:Optional, HasDefault:True;isSerialised:System.Boolean:Optional, HasDefault:True
+TYPE Ripple.LibraryClasses.Signer.Fields.Uint64Field BASE Ripple.LibraryClasses.Signer.Fields.Field INTERFACES System.IComparable`1[Ripple.LibraryClasses.Signer.EnumItem]
+Ripple.LibraryClasses.Signer.Fields.Uint64Field CTOR 6278 name:System.String:None:;nthOfType:System.Int32:None:;isSigningField:System.Boolean:Optional, HasDefault:True;isSerialised:System.Boolean:Optional, HasDefault:True
+TYPE Ripple.LibraryClasses.Signer.Fields.Uint8Field BASE Ripple.LibraryClasses.Signer.Fields.Field INTERFACES System.IComparable`1[Ripple.LibraryClasses.Signer.EnumItem]
+Ripple.LibraryClasses.Signer.Fields.Uint8Field CTOR 6278 name:System.String:None:;nthOfType:System.Int32:None:;isSigningField:System.Boolean:Optional, HasDefault:True;isSerialised:System.Boolean:Optional, HasDefault:True
+TYPE Ripple.LibraryClasses.Signer.Fields.Vector256Field BASE Ripple.LibraryClasses.Signer.Fields.Field INTERFACES System.IComparable`1[Ripple.LibraryClasses.Signer.EnumItem]
+Ripple.LibraryClasses.Signer.Fields.Vector256Field CTOR 6278 name:System.String:None:;nthOfType:System.Int32:None:;isSigningField:System.Boolean:Optional, HasDefault:True;isSerialised:System.Boolean:Optional, HasDefault:True
+TYPE Ripple.LibraryClasses.CreateAddress.AddressData BASE System.Object INTERFACES 
+Ripple.LibraryClasses.CreateAddress.AddressData CTOR 6278 
+Ripple.LibraryClasses.CreateAddress.AddressData METHOD get_Address 2182 System.String ()
+Ripple.LibraryClasses.CreateAddress.AddressData METHOD set_Address 2182 System.Void (value:System.String:None:)
+Ripple.LibraryClasses.CreateAddress.AddressData METHOD get_Seed 2182 System.String ()
+Ripple.LibraryClasses.CreateAddress.AddressData METHOD set_Seed 2182 System.Void (value:System.String:None:)
+TYPE Ripple.LibraryClasses.CreateAddress.Seed BASE System.Object INTERFACES 
+Ripple.LibraryClasses.CreateAddress.Seed CTOR 6278 seedBytes:System.Byte[]:None:
+Ripple.LibraryClasses.CreateAddress.Seed CTOR 6278 version:System.String:None:;seedBytes:System.Byte[]:None:
+Ripple.LibraryClasses.CreateAddress.Seed METHOD ToString 198 System.String ()
+Ripple.LibraryClasses.CreateAddress.Seed METHOD Bytes 134 System.Byte[] ()
+Ripple.LibraryClasses.CreateAddress.Seed METHOD SetEd25519 134 Ripple.LibraryClasses.CreateAddress.Seed ()
+Ripple.LibraryClasses.CreateAddress.Seed METHOD SetNodeKey 134 Ripple.LibraryClasses.CreateAddress.Seed ()
+Ripple.LibraryClasses.CreateAddress.Seed METHOD KeyPair 134 Ripple.LibraryClasses.Signer.Interfaces.IKeyPair ()
+Ripple.LibraryClasses.CreateAddress.Seed METHOD RootKeyPair 134 Ripple.LibraryClasses.Signer.Interfaces.IKeyPair ()
+Ripple.LibraryClasses.CreateAddress.Seed METHOD KeyPair 134 Ripple.LibraryClasses.Signer.Interfaces.IKeyPair (pairIndex:System.Int32:None:)
+Ripple.LibraryClasses.CreateAddress.Seed METHOD FromBase58 150 Ripple.LibraryClasses.CreateAddress.Seed (b58:System.String:None:)
+Ripple.LibraryClasses.CreateAddress.Seed METHOD FromPassPhrase 150 Ripple.LibraryClasses.CreateAddress.Seed (passPhrase:System.String:None:)
+Ripple.LibraryClasses.CreateAddress.Seed METHOD FromRandom 150 Ripple.LibraryClasses.CreateAddress.Seed ()
+TYPE Ripple.LibraryClasses.ValidateAddress.AddressCodec+DecodedSeed BASE System.Object INTERFACES 
+Ripple.LibraryClasses.ValidateAddress.AddressCodec+DecodedSeed CTOR 6278 type:System.String:None:;payload:System.Byte[]:None:
+Ripple.LibraryClasses.ValidateAddress.AddressCodec+DecodedSeed FIELD Type 38 System.String
+Ripple.LibraryClasses.ValidateAddress.AddressCodec+DecodedSeed FIELD Bytes 38 System.Byte[]
+TYPE Ripple.LibraryClasses.Signer.B58+Decoded BASE System.Object INTERFACES 
+Ripple.LibraryClasses.Signer.B58+Decoded CTOR 6278 version:System.Byte[]:None:;payload:System.Byte[]:None:;typeName:System.String:None:
+Ripple.LibraryClasses.Signer.B58+Decoded FIELD Payload 38 System.Byte[]
+Ripple.LibraryClasses.Signer.B58+Decoded FIELD Type 38 System.String
+Ripple.LibraryClasses.Signer.B58+Decoded FIELD VersionBytes 38 System.Byte[]
+TYPE Ripple.LibraryClasses.Signer.B58+Version BASE System.Object INTERFACES 
+Ripple.LibraryClasses.Signer.B58+Version CTOR 6278 versionBytes:System.Byte[]:None:;expectedLength:System.Int32:None:
+Ripple.LibraryClasses.Signer.B58+Version METHOD With 150 Ripple.LibraryClasses.Signer.B58+Version (versionByte:System.Byte:None:;expectedLength:System.Int32:None:)
+Ripple.LibraryClasses.Signer.B58+Version METHOD With 150 Ripple.LibraryClasses.Signer.B58+Version (versionBytes:System.Byte[]:None:;expectedLength:System.Int32:None:)
+Ripple.LibraryClasses.Signer.B58+Version FIELD ExpectedLength 6 System.Int32
+Ripple.LibraryClasses.Signer.B58+Version FIELD VersionBytes 6 System.Byte[]
+TYPE Ripple.LibraryClasses.Signer.B58+Versions BASE System.Object INTERFACES 
+Ripple.LibraryClasses.Signer.B58+Versions CTOR 6278 versionsArray:Ripple.LibraryClasses.Signer.B58+Version[]:None:;namesArray:System.String[]:None:
+Ripple.LibraryClasses.Signer.B58+Versions METHOD With 150 Ripple.LibraryClasses.Signer.B58+Versions (typeName:System.String:None:;version:Ripple.LibraryClasses.Signer.B58+Version:None:)
+Ripple.LibraryClasses.Signer.B58+Versions METHOD And 134 Ripple.LibraryClasses.Signer.B58+Versions (typeName:System.String:None:;version:Ripple.LibraryClasses.Signer.B58+Version:None:)
+Ripple.LibraryClasses.Signer.B58+Versions METHOD Find 134 Ripple.LibraryClasses.Signer.B58+Version (sought:System.String:None:)
+Ripple.LibraryClasses.Signer.B58+Versions FIELD NamesArray 6 System.String[]
+Ripple.LibraryClasses.Signer.B58+Versions FIELD VersionsArray 6 Ripple.LibraryClasses.Signer.B58+Version[]
+TYPE Ripple.LibraryClasses.Signer.Currency+Issue BASE System.Object INTERFACES 
+Ripple.LibraryClasses.Signer.Currency+Issue CTOR 6278 
+TYPE Ripple.LibraryClasses.Signer.EngineResult+EngineResultValues BASE Ripple.LibraryClasses.Signer.SerializedEnumeration`2[Ripple.LibraryClasses.Signer.EngineResult,System.Byte] INTERFACES System.Collections.Generic.IEnumerable`1[Ripple.LibraryClasses.Signer.EngineResult];System.Collections.IEnumerable
+Ripple.LibraryClasses.Signer.EngineResult+EngineResultValues CTOR 6278 
+TYPE Ripple.LibraryClasses.Signer.LedgerEntryType+Enumeration BASE Ripple.LibraryClasses.Signer.SerializedEnumeration`2[Ripple.LibraryClasses.Signer.LedgerEntryType,System.UInt16] INTERFACES System.Collections.Generic.IEnumerable`1[Ripple.LibraryClasses.Signer.LedgerEntryType];System.Collections.IEnumerable
+Ripple.LibraryClasses.Signer.LedgerEntryType+Enumeration CTOR 6278 
+TYPE Ripple.LibraryClasses.Signer.TransactionType+Enumeration BASE Ripple.LibraryClasses.Signer.SerializedEnumeration`2[Ripple.LibraryClasses.Signer.TransactionType,System.UInt16] INTERFACES System.Collections.Generic.IEnumerable`1[Ripple.LibraryClasses.Signer.TransactionType];System.Collections.IEnumerable
+Ripple.LibraryClasses.Signer.TransactionType+Enumeration CTOR 6278 
+TYPE Ripple.LibraryClasses.Signer.TxFormat+Requirement BASE System.Enum INTERFACES System.IComparable;System.IConvertible;System.IFormattable
+Ripple.LibraryClasses.Signer.TxFormat+Requirement FIELD value__ 1542 System.Int32
+Ripple.LibraryClasses.Signer.TxFormat+Requirement FIELD Default 32854 Ripple.LibraryClasses.Signer.TxFormat+Requirement
+Ripple.LibraryClasses.Signer.TxFormat+Requirement FIELD Optional 32854 Ripple.LibraryClasses.Signer.TxFormat+Requirement
+Ripple.LibraryClasses.Signer.TxFormat+Requirement FIELD Required 32854 Ripple.LibraryClasses.Signer.TxFormat+Requirement

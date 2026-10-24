@@ -115,9 +115,18 @@ namespace Ripple
                 var page = await GetPaymentsAsync(address, new PaymentHistoryRequest {
                     FromLedger = from, ToLedger = to, ContinuationToken = continuation }, token).ConfigureAwait(false);
                 if (!page.RequestedRangeAvailable) throw new InvalidDataException("Server cannot supply the complete payment history required for catch-up. Use a server with the missing ledger range.");
-                foreach (var payment in page.Payments)
+                // account_tx orders pages, but does not guarantee the order within a page.
+                var payments = new List<TransactionInfo>(page.Payments);
+                foreach (var payment in payments)
                 {
                     if (!payment.TransactionIndex.HasValue) throw new InvalidDataException("Payment history has no transaction index.");
+                }
+                payments.Sort((left, right) => {
+                    int ledgerOrder = left.LedgerIndex.Value.CompareTo(right.LedgerIndex.Value);
+                    return ledgerOrder != 0 ? ledgerOrder : left.TransactionIndex.Value.CompareTo(right.TransactionIndex.Value);
+                });
+                foreach (var payment in payments)
+                {
                     uint ledger = payment.LedgerIndex.Value, index = payment.TransactionIndex.Value;
                     if (!hashes.Add(payment.Hash)) continue;
                     if (ledger < lastLedger || (ledger == lastLedger && index < lastIndex)) throw new InvalidDataException("Payment history is not in ledger order.");
