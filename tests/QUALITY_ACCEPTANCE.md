@@ -222,3 +222,14 @@ Follow-up execution record:
    genuinely unresolved receipt. Both cases and the full suite pass (328 per
    runtime, 656 total). This is a follow-up new commit; earlier commits remain
    intact.
+
+Follow-up final integration passed: 328 tests per runtime (656 total), a real
+async Web Forms page with 31 checks, 46 checks per package-only consumer target,
+and unchanged precompiled legacy consumers against published 1.0.1 followed by
+the final DLL. The fresh package's DLL hashes match the loaded consumer copies;
+dependency declarations are identical to the previously verified package. No
+new online advisory audit or live transaction/network verification was performed
+in this follow-up. The temporary IIS process was stopped. Original API/signature
+fixtures, low-level signer source, project dependencies and earlier verification
+records remain untouched. Details and runtime/deployment limits are recorded in
+`Ripple.Integration/follow-up-verification.json`.

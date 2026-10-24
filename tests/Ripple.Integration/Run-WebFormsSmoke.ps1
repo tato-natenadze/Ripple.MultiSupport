@@ -65,8 +65,20 @@ protected void Page_Load(object sender, EventArgs e)
         await new Ripple.Tests.HistoryRangeTests().DefaultRangePinsTheFirstAvailableLedgerAndExposesLaterPruning();
         await new Ripple.Tests.ContinuationValidationTests().InvalidCheckpointIsAnArgumentErrorBeforeIO("range-string");
         await new Ripple.Tests.ContinuationValidationTests().DateLikeServerMarkerRoundTripsWithoutReformatting();
+        await new Ripple.Tests.PaymentShutdownTests().ShutdownDuringRecoveryReturnsTheReceipt(true, false);
+        await new Ripple.Tests.PaymentRecoveryTests().EveryRecoveredReceiptBlocksUntilItsOwnOutcomeIsFinal(false);
+        await new Ripple.Tests.PaymentFinalityTests().LaterMissingHistoryDoesNotReopenAFinalPayment("tesSUCCESS");
+        await new Ripple.Tests.PaymentFinalityTests().AWaitingSendObservesConcurrentFinalRecovery(false);
+        await new Ripple.Tests.PaymentFinalityTests().AWaitingSendObservesConcurrentFinalRecovery(true);
+        await new Ripple.Tests.PaymentWatchRecoveryTests().InitialLedgerFailureRecoversBeforeSavingTheStartCheckpoint("Transport");
+        await new Ripple.Tests.PaymentWatchRecoveryTests().TransientRpcFailureAfterSubscriptionReconnectsAndCatchesUp("tooBusy");
+        await new Ripple.Tests.PaymentWatchRecoveryTests().TransientHistoryFailureReplaysTheUnfinishedBatchBeforeCheckpointing();
+        await new Ripple.Tests.PreflightResponseValidationTests().InvalidTypesAreRejectedBeforePreparationAndSubmission("authorization", "\"true\"");
+        await new Ripple.Tests.PreflightResponseValidationTests().ValidTypesAndPreviouslyOptionalFieldsStillWork("omitQueue");
+        new Ripple.Tests.PaymentReceiptValidationTests().InvalidBinaryReceiptsConsistentlyReportTheBlobArgument("73FF");
+        new Ripple.Tests.PaymentReceiptValidationTests().ValidReceiptRoundTripsPreserveEveryField(false);
         Response.ContentType = "application/json";
-        Response.Write("{\"webforms\":\"passed\",\"runtime\":\"" + Environment.Version + "\",\"apis\":\"legacy and all five new APIs\",\"quality_regressions\":\"all eight fixes\"}");
+        Response.Write("{\"webforms\":\"passed\",\"runtime\":\"" + Environment.Version + "\",\"checks\":31,\"apis\":\"legacy and all five new APIs\",\"quality_regressions\":\"original eight fixes and six follow-up fixes\"}");
     }));
 }
 </script>
