@@ -79,7 +79,11 @@ namespace Ripple
                         throw new InvalidOperationException("Sender has pending/external transactions (validated Sequence=" + source.Sequence +
                             ", current Sequence=" + RequiredUInt(currentData, "Sequence") + ", queued=" + ((uint?)current["queue_data"]?["txn_count"] ?? 0) +
                             "). Wait for validation before sending.");
-                    uint lastLedger = checked(ledger.Index + _options.LastLedgerOffset);
+                    // Cluster members can have different tips. Do not base expiry on an older
+                    // validated snapshot after a newer current/fee ledger was already observed.
+                    uint observedLedger = Math.Max(ledger.Index, (uint?)current["ledger_current_index"] ?? ledger.Index);
+                    observedLedger = Math.Max(observedLedger, (uint?)feeResult["ledger_current_index"] ?? ledger.Index);
+                    uint lastLedger = checked(observedLedger + _options.LastLedgerOffset);
                     var tx = new JObject { ["TransactionType"] = "Payment", ["Account"] = sender,
                         ["Destination"] = destination, ["Amount"] = amountDrops, ["Fee"] = XrpToDrops(fee, "fee"),
                         ["Sequence"] = source.Sequence, ["LastLedgerSequence"] = lastLedger };

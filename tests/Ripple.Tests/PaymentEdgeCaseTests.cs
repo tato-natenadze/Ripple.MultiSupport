@@ -126,6 +126,26 @@ namespace Ripple.Tests
         }
 
         [TestMethod]
+        public async Task PaymentExpiryUsesTheNewestObservedServerLedger()
+        {
+            var server = new PaymentTests.Server();
+            var handler = new RpcHandler { Respond = async (m, p, ct) => {
+                var result = await server.Respond(m, p, ct);
+                if (m == "account_info" && (string)p["ledger_index"] == "current")
+                { result["ledger_current_index"] = 110; server.Ledger = 110; }
+                return result;
+            } };
+            using (var http = new HttpClient(handler))
+            using (var client = new XrplClient(RpcHandler.Options(), http))
+            {
+                var result = await client.SendXrpAsync(TestTransactions.SecpSeed,
+                    new XrpPaymentRequest { Destination = TestTransactions.Destination, AmountXrp = 1 });
+                Assert.AreEqual(TransactionStatus.Succeeded, result.Status);
+                Assert.AreEqual(114u, result.Receipt.LastLedger);
+            }
+        }
+
+        [TestMethod]
         public async Task MemoByteLimitAndInvalidAddressFailBeforeIO()
         {
             var handler = new RpcHandler { Respond = (m, p, ct) => throw new Exception("Unexpected I/O") };
