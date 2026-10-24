@@ -19,6 +19,8 @@ namespace Ripple
             decimal amount = payment.AmountXrp;
             uint? tag = payment.DestinationTag;
             string memo = payment.Memo;
+            bool? destinationTestNetwork;
+            destination = NormalizePaymentDestination(destination, ref tag, out destinationTestNetwork);
             ValidateClassicAddress(senderAddress, nameof(senderAddress));
             ValidateClassicAddress(destination, nameof(payment.Destination));
             XrpToDrops(amount, nameof(payment.AmountXrp));
@@ -33,7 +35,7 @@ namespace Ripple
                 try
                 {
                     await ResolvePendingPaymentsAsync(senderAddress, operation.Token).ConfigureAwait(false);
-                    var state = await ReadPaymentPreflightAsync(senderAddress, destination, amount, tag, operation.Token).ConfigureAwait(false);
+                    var state = await ReadPaymentPreflightAsync(senderAddress, destination, amount, tag, operation.Token, destinationTestNetwork).ConfigureAwait(false);
                     decimal debit = amount + state.Fee;
                     return new PaymentQuote { Sender = senderAddress, Destination = destination, DestinationTag = tag,
                         LedgerIndex = state.Ledger.Index, AmountXrp = amount, EstimatedFeeXrp = state.Fee,
@@ -75,9 +77,9 @@ namespace Ripple
         }
 
         private async Task<PaymentPreflight> ReadPaymentPreflightAsync(string sender, string destination, decimal amount,
-            uint? tag, CancellationToken token)
+            uint? tag, CancellationToken token, bool? destinationTestNetwork = null)
         {
-            var ledger = await GetLedgerAsync(token).ConfigureAwait(false);
+            var ledger = await GetPaymentLedgerAsync(destinationTestNetwork, token).ConfigureAwait(false);
             var source = await ReadAccountAsync(sender, ledger, token).ConfigureAwait(false);
             if (!source.Exists) throw new InvalidOperationException("Sender account is not funded.");
             if (source.MasterKeyDisabled) throw new InvalidOperationException("Sender master key is disabled. The high-level payment method requires the master seed.");

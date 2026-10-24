@@ -40,6 +40,8 @@ namespace Ripple
             uint? tag = payment.DestinationTag;
             string memo = payment.Memo;
             var prepared = payment.OnPreparedAsync;
+            bool? destinationTestNetwork;
+            destination = NormalizePaymentDestination(destination, ref tag, out destinationTestNetwork);
             ValidateClassicAddress(destination, nameof(payment.Destination));
             string amountDrops = XrpToDrops(amount, nameof(payment.AmountXrp));
             byte[] memoBytes = memo == null ? null : new UTF8Encoding(false, true).GetBytes(memo);
@@ -57,7 +59,7 @@ namespace Ripple
                 {
                     PaymentReceipt previous;
                     await ResolvePendingPaymentsAsync(sender, operation.Token).ConfigureAwait(false);
-                    var preflight = await ReadPaymentPreflightAsync(sender, destination, amount, tag, operation.Token).ConfigureAwait(false);
+                    var preflight = await ReadPaymentPreflightAsync(sender, destination, amount, tag, operation.Token, destinationTestNetwork).ConfigureAwait(false);
                     var ledger = preflight.Ledger;
                     var source = preflight.Source;
                     decimal fee = preflight.Fee;
