@@ -56,60 +56,12 @@ namespace Ripple
                 try
                 {
                     PaymentReceipt previous;
-                    while ((previous = FindPendingPayment(sender)) != null)
-                    {
-                        var state = await GetTransactionAsync(previous, operation.Token).ConfigureAwait(false);
-                        if (!IsFinal(state.Status))
-                        {
-                            // Another receipt lookup may have finalized this hash
-                            // while this request was waiting on older history.
-                            lock (_receiptLookupLock)
-                            {
-                                Dictionary<string, PaymentReceipt> pending;
-                                if (_pendingPayments.TryGetValue(sender, out pending) && pending.ContainsKey(previous.Hash))
-                                    throw new PendingPaymentException(previous);
-                            }
-                        }
-                    }
-                    var ledger = await GetLedgerAsync(operation.Token).ConfigureAwait(false);
-                    var source = await ReadAccountAsync(sender, ledger, operation.Token).ConfigureAwait(false);
-                    if (!source.Exists) throw new InvalidOperationException("Sender account is not funded.");
-                    if (source.MasterKeyDisabled) throw new InvalidOperationException("Sender master key is disabled. The high-level payment method requires the master seed.");
-                    var target = await ReadAccountAsync(destination, ledger, operation.Token).ConfigureAwait(false);
-                    if (target.RequiresDestinationTag && !tag.HasValue) throw new ArgumentException("Destination requires a DestinationTag.", nameof(payment));
-                    if (!target.Exists && amount < ledger.BaseReserve) throw new ArgumentException("Payment is below the destination account activation reserve.", nameof(payment));
-                    if (target.DepositAuthorization && !(target.BalanceXrp <= ledger.BaseReserve && amount <= ledger.BaseReserve))
-                    {
-                        var authorization = await RpcAsync("deposit_authorized", new JObject { ["source_account"] = sender,
-                            ["destination_account"] = destination, ["ledger_index"] = ledger.Index }, operation.Token).ConfigureAwait(false);
-                        var authorized = authorization["deposit_authorized"];
-                        if (authorized?.Type != JTokenType.Boolean)
-                            throw new InvalidDataException("Invalid deposit authorization response.");
-                        if (!(bool)authorized)
-                            throw new InvalidOperationException("Destination has not authorized this sender.");
-                    }
-                    var feeResult = await RpcAsync("fee", null, operation.Token).ConfigureAwait(false);
-                    decimal fee = ReadPaymentFee(feeResult);
-                    if (fee <= 0 || fee > _options.MaxFeeXrp) throw new InvalidOperationException("Network fee exceeds the configured limit or is invalid.");
-                    if (amount + fee > source.EstimatedSpendableXrp) throw new InvalidOperationException("Insufficient spendable XRP after reserve and fee.");
-                    // Refuse to guess around payments submitted by another client/process.
-                    var current = await RpcAsync("account_info", new JObject { ["account"] = sender, ["ledger_index"] = "current", ["queue"] = true }, operation.Token).ConfigureAwait(false);
-                    var currentData = current["account_data"] as JObject;
-                    if (currentData == null || (string)currentData["Account"] != sender)
-                        throw new InvalidDataException("Server returned different current account data.");
-                    var queue = current["queue_data"];
-                    if (queue != null && !(queue is JObject)) throw new InvalidDataException("Invalid account queue data.");
-                    uint queued = ResponseUInt(queue?["txn_count"], "queue_data.txn_count") ?? 0;
-                    uint currentSequence = RequiredUInt(currentData, "Sequence");
-                    if (currentSequence != source.Sequence || queued > 0)
-                        throw new InvalidOperationException("Sender has pending/external transactions (validated Sequence=" + source.Sequence +
-                            ", current Sequence=" + currentSequence + ", queued=" + queued +
-                            "). Wait for validation before sending.");
-                    // Cluster members can have different tips. Do not base expiry on an older
-                    // validated snapshot after a newer current/fee ledger was already observed.
-                    uint observedLedger = Math.Max(ledger.Index, ResponseUInt(current["ledger_current_index"], "ledger_current_index") ?? ledger.Index);
-                    observedLedger = Math.Max(observedLedger, ResponseUInt(feeResult["ledger_current_index"], "ledger_current_index") ?? ledger.Index);
-                    uint lastLedger = checked(observedLedger + _options.LastLedgerOffset);
+                    await ResolvePendingPaymentsAsync(sender, operation.Token).ConfigureAwait(false);
+                    var preflight = await ReadPaymentPreflightAsync(sender, destination, amount, tag, operation.Token).ConfigureAwait(false);
+                    var ledger = preflight.Ledger;
+                    var source = preflight.Source;
+                    decimal fee = preflight.Fee;
+                    uint lastLedger = checked(preflight.ObservedLedger + _options.LastLedgerOffset);
                     var tx = new JObject { ["TransactionType"] = "Payment", ["Account"] = sender,
                         ["Destination"] = destination, ["Amount"] = amountDrops, ["Fee"] = XrpToDrops(fee, "fee"),
                         ["Sequence"] = source.Sequence, ["LastLedgerSequence"] = lastLedger };
