@@ -190,8 +190,12 @@ if (page.ContinuationToken != null)
 ```
 
 Continuation tokens pin the ledger range and are bound to the account/server.
+Without an explicit lower bound, the first page's earliest available ledger is
+pinned for continuation. Older version-1 tokens containing `from: -1` remain
+accepted and pin the earliest available ledger when their next page is read.
 When requesting an explicit range, inspect `RequestedRangeAvailable`; a server
-may not have the full history. History is ordered from older to newer transactions.
+may not have the full history. Pages are requested oldest first; each history
+page preserves server order. Incoming monitoring sorts each page by ledger/index.
 
 ```csharp
 await client.WatchIncomingPaymentsAsync(address,

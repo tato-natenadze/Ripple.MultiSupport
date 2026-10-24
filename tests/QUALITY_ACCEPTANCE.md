@@ -95,3 +95,6 @@ not a claim that every possible runtime condition has been tested.
    the guard. All fifteen new cases pass, including 256 deterministic valid
    payloads, special addresses, large Unicode/surrogates, checksums and no-I/O
    rejection. Full suite 191 per runtime (382 total).
+7. History range: default-range pruning and legacy-token upgrade cases failed
+   before the fix. All five new cases now pass, with original explicit bounds and
+   binding checks intact. Full suite 196 per runtime (392 total).

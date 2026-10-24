@@ -164,7 +164,7 @@ namespace Ripple
             if (response["marker"] != null && response["marker"].Type != JTokenType.Null)
             {
                 var cursor = new JObject { ["version"] = 1, ["endpoint"] = _options.RpcEndpoint.AbsoluteUri,
-                    ["account"] = address, ["from"] = from, ["to"] = to, ["marker"] = response["marker"].DeepClone() };
+                    ["account"] = address, ["from"] = from == -1 ? actualFrom : from, ["to"] = to, ["marker"] = response["marker"].DeepClone() };
                 next = Convert.ToBase64String(Encoding.UTF8.GetBytes(cursor.ToString(Formatting.None)));
             }
             return new PaymentHistoryPage { Payments = payments.AsReadOnly(), ContinuationToken = next,
