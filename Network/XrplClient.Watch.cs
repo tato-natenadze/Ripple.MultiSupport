@@ -44,7 +44,7 @@ namespace Ripple
                 {
                     uint nextLedger = saved != null ? DecodeCheckpoint(address, saved) : from ?? checked((await GetLedgerAsync(operation.Token).ConfigureAwait(false)).Index + 1);
                     if (saved == null && saveCheckpoint != null)
-                        await InvokeWatchCallback(() => saveCheckpoint(EncodeCheckpoint(address, nextLedger), operation.Token)).ConfigureAwait(false);
+                        await InvokeWatchCallback(() => saveCheckpoint(EncodeCheckpoint(address, nextLedger), operation.Token), operation.Token).ConfigureAwait(false);
                     while (true)
                     {
                         operation.Token.ThrowIfCancellationRequested();
@@ -75,7 +75,7 @@ namespace Ripple
                                         await ReplayIncomingAsync(address, nextLedger, end, onPayment, operation.Token).ConfigureAwait(false);
                                         uint completed = checked(end + 1);
                                         if (saveCheckpoint != null)
-                                            await InvokeWatchCallback(() => saveCheckpoint(EncodeCheckpoint(address, completed), operation.Token)).ConfigureAwait(false);
+                                            await InvokeWatchCallback(() => saveCheckpoint(EncodeCheckpoint(address, completed), operation.Token), operation.Token).ConfigureAwait(false);
                                         nextLedger = completed;
                                     }
                                     operation.Token.ThrowIfCancellationRequested();
@@ -127,6 +127,7 @@ namespace Ripple
                 });
                 foreach (var payment in payments)
                 {
+                    token.ThrowIfCancellationRequested();
                     uint ledger = payment.LedgerIndex.Value, index = payment.TransactionIndex.Value;
                     if (!hashes.Add(payment.Hash)) continue;
                     if (ledger < lastLedger || (ledger == lastLedger && index < lastIndex)) throw new InvalidDataException("Payment history is not in ledger order.");
@@ -134,15 +135,16 @@ namespace Ripple
                     if (payment.Status != TransactionStatus.Succeeded || payment.Destination != address || payment.Sender == address) continue;
                     if (!payment.DeliveredAmountXrp.HasValue || payment.DeliveredAmountXrp <= 0)
                         throw new InvalidDataException("Incoming XRP payment has no usable delivered_amount; manual reconciliation is required.");
-                    await InvokeWatchCallback(() => onPayment(payment, token)).ConfigureAwait(false);
+                    await InvokeWatchCallback(() => onPayment(payment, token), token).ConfigureAwait(false);
                 }
                 continuation = page.ContinuationToken;
                 if (continuation != null && !markers.Add(continuation)) throw new InvalidDataException("Server repeated a history page marker.");
             } while (continuation != null);
         }
 
-        private static async Task InvokeWatchCallback(Func<Task> callback)
+        private static async Task InvokeWatchCallback(Func<Task> callback, CancellationToken token)
         {
+            token.ThrowIfCancellationRequested();
             try { await callback().ConfigureAwait(false); }
             catch (Exception ex) { throw new WatchCallbackException(ex); }
         }

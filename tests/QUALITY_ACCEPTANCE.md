@@ -88,3 +88,6 @@ not a claim that every possible runtime condition has been tested.
    all twelve new error cases now pass. Full suite 171 per runtime (342 total),
    including HTTP 400/429/503 on Framework, request/confirmation deadlines,
    actual RPC method attribution, seed redaction and existing API compatibility.
+5. Watch cancellation: four of five new cases failed before the fix. All now pass,
+   including disposal, already-cancelled startup, restart/hash deduplication and
+   checkpoint failure. Full suite 176 per runtime (352 total).

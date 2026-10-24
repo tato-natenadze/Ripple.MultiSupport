@@ -220,6 +220,8 @@ a crash or callback/checkpoint failure, some events can be replayed. Atomically
 record a unique `(network, transaction hash)` and credit your user's balance in
 the same database transaction. Persist checkpoints outside process memory.
 Callback failures stop the watch and are propagated. Cancelling/disposal stops it.
+Cancellation is checked before starting each payment/checkpoint callback. An
+already-running callback is awaited and must handle cancellation cooperatively.
 
 ### ASP.NET Web Forms first
 
