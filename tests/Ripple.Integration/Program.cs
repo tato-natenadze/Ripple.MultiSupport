@@ -15,9 +15,9 @@ namespace Ripple.Integration
     {
         private static async Task<int> Main(string[] args)
         {
-            if (args.Length != 2 || args[0] != "--testnet")
+            if (args.Length != 2 || (args[0] != "--testnet" && args[0] != "--verify-testnet"))
             {
-                Console.Error.WriteLine("Explicit Testnet run only: --testnet <receipt-directory>. Funds one NEW test wallet and makes two Testnet payments. Never uses Mainnet.");
+                Console.Error.WriteLine("--testnet <receipt-directory>: funds a NEW Testnet wallet and makes two Testnet payments. --verify-testnet <receipt-directory>: rechecks an existing run without submitting. Never uses Mainnet.");
                 return 2;
             }
             try
@@ -25,7 +25,8 @@ namespace Ripple.Integration
                 Directory.CreateDirectory(args[1]);
                 using (var deadline = new CancellationTokenSource(TimeSpan.FromMinutes(4)))
                 {
-                    Console.WriteLine(await Testnet.RunAsync(args[1], deadline.Token));
+                    Console.WriteLine(args[0] == "--testnet" ? await Testnet.RunAsync(args[1], deadline.Token) :
+                        await Testnet.VerifyAsync(args[1], deadline.Token));
                     return 0;
                 }
             }
@@ -106,6 +107,38 @@ namespace Ripple.Integration
         private static Func<PaymentReceipt, CancellationToken, Task> Persist(string directory, string name) => (receipt, ct) => {
             File.WriteAllText(Path.Combine(directory, name), JsonConvert.SerializeObject(receipt)); return Task.CompletedTask;
         };
+
+        public static async Task<string> VerifyAsync(string directory, CancellationToken token)
+        {
+            var receipt = JsonConvert.DeserializeObject<PaymentReceipt>(File.ReadAllText(Path.Combine(directory, "payment.json")));
+            if (receipt.RpcEndpoint != Rpc) throw new Exception("Only this runner's fixed Testnet endpoint is accepted.");
+            using (var client = new XrplClient(new XrplClientOptions { RpcEndpoint = Rpc, WebSocketEndpoint = Ws,
+                RequestTimeout = TimeSpan.FromSeconds(30) }))
+            {
+                var tx = await client.GetTransactionAsync(receipt, token).ConfigureAwait(false);
+                var byHash = await client.GetTransactionAsync(receipt.Hash, token).ConfigureAwait(false);
+                var account = await client.GetAccountAsync(tx.Destination, token).ConfigureAwait(false);
+                var page = await client.GetPaymentsAsync(tx.Destination, new PaymentHistoryRequest {
+                    FromLedger = tx.LedgerIndex, ToLedger = tx.LedgerIndex }, token).ConfigureAwait(false);
+                bool observed = false;
+                using (var stop = CancellationTokenSource.CreateLinkedTokenSource(token))
+                {
+                    try
+                    {
+                        await client.WatchIncomingPaymentsAsync(tx.Destination, (incoming, ct) => {
+                            if (incoming.Hash == receipt.Hash) { observed = true; stop.Cancel(); }
+                            return Task.CompletedTask;
+                        }, new PaymentWatchOptions { FromLedger = tx.LedgerIndex }, stop.Token).ConfigureAwait(false);
+                    }
+                    catch (OperationCanceledException) when (observed && !token.IsCancellationRequested) { }
+                }
+                if (tx.Status != TransactionStatus.Succeeded || byHash.Status != TransactionStatus.Succeeded || !account.Exists ||
+                    !page.RequestedRangeAvailable || !page.Payments.Any(p => p.Hash == receipt.Hash) || !observed)
+                    throw new Exception("Existing Testnet payment verification failed.");
+                return new JObject { ["runtime"] = Environment.Version.ToString(), ["payment_hash"] = receipt.Hash,
+                    ["status"] = "installed package queries, recovery and WebSocket replay passed; no submission" }.ToString(Formatting.None);
+            }
+        }
         private static void RequireSuccess(PaymentResult result)
         {
             if (result.Status != TransactionStatus.Succeeded)

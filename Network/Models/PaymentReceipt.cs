@@ -5,7 +5,7 @@ using Ripple.LibraryClasses.Signer.Fields;
 
 namespace Ripple
 {
-    /// <summary>Secret-free recovery data. Persist before broadcast; JSON serialization is supported.</summary>
+    /// <summary>Recovery data without a wallet seed/private key. Persist before broadcast; JSON serialization is supported.</summary>
     public sealed class PaymentReceipt
     {
         public string Hash { get; }

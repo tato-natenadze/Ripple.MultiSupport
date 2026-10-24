@@ -5,12 +5,11 @@
 
 			<!-- NuGet identity -->
 			<PackageId>Ripple.MultiSupport</PackageId>
-			<Version>1.0.1</Version>
+			<Version>1.1.0</Version>
 			<Authors>Tato</Authors>
 			<Company></Company>
 			<Product>Ripple.MultiSupport</Product>
-			<Description>Ripple library for creating wallet, validate address and sign transaction.
-These are needed to add Ripple chain in your system.
+			<Description>XRPL wallet generation, address validation, offline signing, XRP payments, transaction history and incoming-payment monitoring for .NET Framework and .NET 8.
 			</Description>
 			<PackageTags>xrp;ripple;signing;crypto</PackageTags>
 
