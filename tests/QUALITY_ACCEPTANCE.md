@@ -188,3 +188,8 @@ Follow-up execution record:
    and the complete suite pass afterward (251 per runtime, 502 total). Caller
    cancellation, pre-submit disposal, final success and injected HTTP ownership
    remain covered. Final integration verification is pending the remaining fixes.
+2. Multiple recovery: three new cases failed before the fix (including a
+   deterministically ordered concurrent recovery). All five new cases and the
+   full suite now pass (256 per runtime, 512 total). Pending state is indexed by
+   sender and hash under the existing lock; other senders are not scanned or
+   blocked. Reservation still checks for recovered receipts before broadcasting.

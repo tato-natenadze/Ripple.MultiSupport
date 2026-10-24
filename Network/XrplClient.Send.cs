@@ -17,7 +17,10 @@ namespace Ripple
     public sealed partial class XrplClient
     {
         private readonly ConcurrentDictionary<string, SemaphoreSlim> _accountGates = new ConcurrentDictionary<string, SemaphoreSlim>();
-        private readonly ConcurrentDictionary<string, PaymentReceipt> _pendingPayments = new ConcurrentDictionary<string, PaymentReceipt>();
+        // The receipt lock protects both levels. Keep sender lookup independent
+        // of the number of other accounts being recovered.
+        private readonly Dictionary<string, Dictionary<string, PaymentReceipt>> _pendingPayments =
+            new Dictionary<string, Dictionary<string, PaymentReceipt>>(StringComparer.Ordinal);
         private readonly object _receiptLookupLock = new object();
         private readonly Dictionary<string, ReceiptLookup> _receiptLookups = new Dictionary<string, ReceiptLookup>(StringComparer.Ordinal);
         private sealed class ReceiptLookup
@@ -53,7 +56,7 @@ namespace Ripple
                 try
                 {
                     PaymentReceipt previous;
-                    while (_pendingPayments.TryGetValue(sender, out previous))
+                    while ((previous = FindPendingPayment(sender)) != null)
                     {
                         var state = await GetTransactionAsync(previous, operation.Token).ConfigureAwait(false);
                         if (!IsFinal(state.Status)) throw new PendingPaymentException(previous);
@@ -100,10 +103,12 @@ namespace Ripple
                     var receipt = new PaymentReceipt(signed.Hash, sender, source.Sequence, checked(ledger.Index + 1), lastLedger, signed.TxBlob, _options.RpcEndpoint);
                     if (prepared != null) await prepared(receipt, operation.Token).ConfigureAwait(false);
                     operation.Token.ThrowIfCancellationRequested();
-                    while (!_pendingPayments.TryAdd(sender, receipt))
+                    lock (_receiptLookupLock)
                     {
                         operation.Token.ThrowIfCancellationRequested();
-                        if (_pendingPayments.TryGetValue(sender, out previous)) throw new PendingPaymentException(previous);
+                        previous = FindPendingPayment(sender);
+                        if (previous != null) throw new PendingPaymentException(previous);
+                        TrackPendingPayment(receipt);
                     }
                     var result = new PaymentResult { Receipt = receipt, Transaction = Unknown(receipt.Hash) };
                     string activeMethod = "submit";
@@ -167,12 +172,14 @@ namespace Ripple
                     if (IsFinal(tx.Status))
                     {
                         lookup.Finalized = true;
-                        PaymentReceipt pending;
-                        if (_pendingPayments.TryGetValue(receipt.Sender, out pending) && pending.Hash == receipt.Hash)
-                            ((ICollection<KeyValuePair<string, PaymentReceipt>>)_pendingPayments).Remove(
-                                new KeyValuePair<string, PaymentReceipt>(receipt.Sender, pending));
+                        Dictionary<string, PaymentReceipt> pending;
+                        if (_pendingPayments.TryGetValue(receipt.Sender, out pending))
+                        {
+                            pending.Remove(receipt.Hash);
+                            if (pending.Count == 0) _pendingPayments.Remove(receipt.Sender);
+                        }
                     }
-                    else if (!lookup.Finalized) _pendingPayments.TryAdd(receipt.Sender, receipt);
+                    else if (!lookup.Finalized) TrackPendingPayment(receipt);
                 }
                 // A hash-only lookup cannot prove expiry. Keep uncertain transactions blocking the sender lane.
                 return tx;
@@ -184,6 +191,26 @@ namespace Ripple
                     if (--lookup.Readers == 0) _receiptLookups.Remove(receipt.Hash);
                 }
             }
+        }
+
+        private PaymentReceipt FindPendingPayment(string sender)
+        {
+            lock (_receiptLookupLock)
+            {
+                Dictionary<string, PaymentReceipt> pending;
+                if (_pendingPayments.TryGetValue(sender, out pending))
+                    foreach (var receipt in pending.Values) return receipt;
+            }
+            return null;
+        }
+
+        // Caller holds _receiptLookupLock, including the reservation check.
+        private void TrackPendingPayment(PaymentReceipt receipt)
+        {
+            Dictionary<string, PaymentReceipt> pending;
+            if (!_pendingPayments.TryGetValue(receipt.Sender, out pending))
+                _pendingPayments.Add(receipt.Sender, pending = new Dictionary<string, PaymentReceipt>(StringComparer.Ordinal));
+            if (!pending.ContainsKey(receipt.Hash)) pending.Add(receipt.Hash, receipt);
         }
 
         private static bool IsFinal(TransactionStatus state) => state == TransactionStatus.Succeeded || state == TransactionStatus.Failed ||
