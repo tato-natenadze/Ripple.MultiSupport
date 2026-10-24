@@ -205,3 +205,8 @@ Follow-up execution record:
    uncheckpointed batch in order; permanent RPC errors and callback RPC errors
    still stop, and cancellation interrupts initial recovery backoff. Endpoints,
    configured delays and existing ordering/checkpoint tests are preserved.
+5. Preflight validation: all thirty malformed-field cases failed before the fix;
+   all thirty-six new cases now pass, with no preparation callback or submission
+   on invalid data. Valid authorization, zero/omitted queue fields, optional
+   ledger fields and the newest observed tip remain supported. Full suite: 313
+   per runtime, 626 total; legacy signature/API fixtures remain unchanged.

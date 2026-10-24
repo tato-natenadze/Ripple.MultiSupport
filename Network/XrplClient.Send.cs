@@ -72,7 +72,10 @@ namespace Ripple
                     {
                         var authorization = await RpcAsync("deposit_authorized", new JObject { ["source_account"] = sender,
                             ["destination_account"] = destination, ["ledger_index"] = ledger.Index }, operation.Token).ConfigureAwait(false);
-                        if ((bool?)authorization["deposit_authorized"] != true)
+                        var authorized = authorization["deposit_authorized"];
+                        if (authorized?.Type != JTokenType.Boolean)
+                            throw new InvalidDataException("Invalid deposit authorization response.");
+                        if (!(bool)authorized)
                             throw new InvalidOperationException("Destination has not authorized this sender.");
                     }
                     var feeResult = await RpcAsync("fee", null, operation.Token).ConfigureAwait(false);
@@ -85,14 +88,18 @@ namespace Ripple
                     var currentData = current["account_data"] as JObject;
                     if (currentData == null || (string)currentData["Account"] != sender)
                         throw new InvalidDataException("Server returned different current account data.");
-                    if (RequiredUInt(currentData, "Sequence") != source.Sequence || (uint?)current["queue_data"]?["txn_count"] > 0)
+                    var queue = current["queue_data"];
+                    if (queue != null && !(queue is JObject)) throw new InvalidDataException("Invalid account queue data.");
+                    uint queued = ResponseUInt(queue?["txn_count"], "queue_data.txn_count") ?? 0;
+                    uint currentSequence = RequiredUInt(currentData, "Sequence");
+                    if (currentSequence != source.Sequence || queued > 0)
                         throw new InvalidOperationException("Sender has pending/external transactions (validated Sequence=" + source.Sequence +
-                            ", current Sequence=" + RequiredUInt(currentData, "Sequence") + ", queued=" + ((uint?)current["queue_data"]?["txn_count"] ?? 0) +
+                            ", current Sequence=" + currentSequence + ", queued=" + queued +
                             "). Wait for validation before sending.");
                     // Cluster members can have different tips. Do not base expiry on an older
                     // validated snapshot after a newer current/fee ledger was already observed.
-                    uint observedLedger = Math.Max(ledger.Index, (uint?)current["ledger_current_index"] ?? ledger.Index);
-                    observedLedger = Math.Max(observedLedger, (uint?)feeResult["ledger_current_index"] ?? ledger.Index);
+                    uint observedLedger = Math.Max(ledger.Index, ResponseUInt(current["ledger_current_index"], "ledger_current_index") ?? ledger.Index);
+                    observedLedger = Math.Max(observedLedger, ResponseUInt(feeResult["ledger_current_index"], "ledger_current_index") ?? ledger.Index);
                     uint lastLedger = checked(observedLedger + _options.LastLedgerOffset);
                     var tx = new JObject { ["TransactionType"] = "Payment", ["Account"] = sender,
                         ["Destination"] = destination, ["Amount"] = amountDrops, ["Fee"] = XrpToDrops(fee, "fee"),
