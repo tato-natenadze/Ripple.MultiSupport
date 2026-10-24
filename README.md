@@ -14,10 +14,6 @@ and **.NET 8**.
 dotnet add package Ripple.MultiSupport
 ```
 
-**Release status:** NuGet currently provides **1.0.1** with the `RippleClient` API.
-This repository contains **1.1.0** source, including `XrplClient`; build from source
-to use the new APIs until that version is published.
-
 ## API
 
 | Client | Method | Purpose |
@@ -31,8 +27,8 @@ to use the new APIs until that version is published.
 | | `GetPaymentsAsync(address, request)` | Read validated incoming/outgoing XRP payment history |
 | | `WatchIncomingPaymentsAsync(address, callback, options, token)` | Monitor successful incoming XRP payments with checkpoint recovery |
 
-Existing `RippleClient` calls remain available. All async operations accept a
-`CancellationToken`. The payment client uses the account's master seed.
+All async operations accept a `CancellationToken`. The payment client uses the
+account's master seed.
 
 ## Send XRP
 
