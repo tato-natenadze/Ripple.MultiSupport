@@ -75,3 +75,6 @@ not a claim that every possible runtime condition has been tested.
 1. Watch ordering: three new cases failed before the fix; all four ordering cases
    and the full suite passed afterward (119 per runtime, 238 total). Legacy and
    pre-review API checks passed. Integration gate remains pending until all fixes.
+2. Pending state: the original failure and expiry cases failed before the fix.
+   Seven new cases now pass, including overlapping stale/final lookups and a
+   receipt restored during preparation; full suite 126 per runtime (252 total).

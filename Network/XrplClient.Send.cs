@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
 using System.IO;
@@ -17,6 +18,13 @@ namespace Ripple
     {
         private readonly ConcurrentDictionary<string, SemaphoreSlim> _accountGates = new ConcurrentDictionary<string, SemaphoreSlim>();
         private readonly ConcurrentDictionary<string, PaymentReceipt> _pendingPayments = new ConcurrentDictionary<string, PaymentReceipt>();
+        private readonly object _receiptLookupLock = new object();
+        private readonly Dictionary<string, ReceiptLookup> _receiptLookups = new Dictionary<string, ReceiptLookup>(StringComparer.Ordinal);
+        private sealed class ReceiptLookup
+        {
+            internal int Readers;
+            internal bool Finalized;
+        }
 
         public async Task<PaymentResult> SendXrpAsync(string seed, XrpPaymentRequest payment,
             CancellationToken cancellationToken = default(CancellationToken))
@@ -45,11 +53,10 @@ namespace Ripple
                 try
                 {
                     PaymentReceipt previous;
-                    if (_pendingPayments.TryGetValue(sender, out previous))
+                    while (_pendingPayments.TryGetValue(sender, out previous))
                     {
                         var state = await GetTransactionAsync(previous, operation.Token).ConfigureAwait(false);
                         if (!IsFinal(state.Status)) throw new PendingPaymentException(previous);
-                        _pendingPayments.TryRemove(sender, out previous);
                     }
                     var ledger = await GetLedgerAsync(operation.Token).ConfigureAwait(false);
                     var source = await ReadAccountAsync(sender, ledger, operation.Token).ConfigureAwait(false);
@@ -93,7 +100,11 @@ namespace Ripple
                     var receipt = new PaymentReceipt(signed.Hash, sender, source.Sequence, checked(ledger.Index + 1), lastLedger, signed.TxBlob, _options.RpcEndpoint);
                     if (prepared != null) await prepared(receipt, operation.Token).ConfigureAwait(false);
                     operation.Token.ThrowIfCancellationRequested();
-                    _pendingPayments[sender] = receipt;
+                    while (!_pendingPayments.TryAdd(sender, receipt))
+                    {
+                        operation.Token.ThrowIfCancellationRequested();
+                        if (_pendingPayments.TryGetValue(sender, out previous)) throw new PendingPaymentException(previous);
+                    }
                     var result = new PaymentResult { Receipt = receipt, Transaction = Unknown(receipt.Hash) };
                     using (var wait = CancellationTokenSource.CreateLinkedTokenSource(operation.Token))
                     {
@@ -132,15 +143,42 @@ namespace Ripple
         {
             if (receipt == null) throw new ArgumentNullException(nameof(receipt));
             if (receipt.RpcEndpoint != _options.RpcEndpoint) throw new ArgumentException("Receipt belongs to a different RPC endpoint.", nameof(receipt));
-            var tx = await ReadTransactionAsync(receipt.Hash, receipt.FirstLedger, receipt.LastLedger, cancellationToken).ConfigureAwait(false);
-            if (!tx.Found)
+            ReceiptLookup lookup;
+            lock (_receiptLookupLock)
             {
-                var ledger = await GetLedgerAsync(cancellationToken).ConfigureAwait(false);
-                if (ledger.Index >= receipt.LastLedger && tx.SearchedAll) tx.Status = TransactionStatus.Expired;
+                if (!_receiptLookups.TryGetValue(receipt.Hash, out lookup)) _receiptLookups.Add(receipt.Hash, lookup = new ReceiptLookup());
+                lookup.Readers++;
             }
-            if (!IsFinal(tx.Status)) _pendingPayments.TryAdd(receipt.Sender, receipt);
-            // A hash-only lookup cannot prove expiry. Keep uncertain transactions blocking the sender lane.
-            return tx;
+            try
+            {
+                var tx = await ReadTransactionAsync(receipt.Hash, receipt.FirstLedger, receipt.LastLedger, cancellationToken).ConfigureAwait(false);
+                if (!tx.Found)
+                {
+                    var ledger = await GetLedgerAsync(cancellationToken).ConfigureAwait(false);
+                    if (ledger.Index >= receipt.LastLedger && tx.SearchedAll) tx.Status = TransactionStatus.Expired;
+                }
+                lock (_receiptLookupLock)
+                {
+                    if (IsFinal(tx.Status))
+                    {
+                        lookup.Finalized = true;
+                        PaymentReceipt pending;
+                        if (_pendingPayments.TryGetValue(receipt.Sender, out pending) && pending.Hash == receipt.Hash)
+                            ((ICollection<KeyValuePair<string, PaymentReceipt>>)_pendingPayments).Remove(
+                                new KeyValuePair<string, PaymentReceipt>(receipt.Sender, pending));
+                    }
+                    else if (!lookup.Finalized) _pendingPayments.TryAdd(receipt.Sender, receipt);
+                }
+                // A hash-only lookup cannot prove expiry. Keep uncertain transactions blocking the sender lane.
+                return tx;
+            }
+            finally
+            {
+                lock (_receiptLookupLock)
+                {
+                    if (--lookup.Readers == 0) _receiptLookups.Remove(receipt.Hash);
+                }
+            }
         }
 
         private static bool IsFinal(TransactionStatus state) => state == TransactionStatus.Succeeded || state == TransactionStatus.Failed ||
