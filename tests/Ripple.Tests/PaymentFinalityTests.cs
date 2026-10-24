@@ -1,5 +1,6 @@
 using System;
 using System.Net.Http;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json.Linq;
@@ -97,6 +98,53 @@ namespace Ripple.Tests
                 };
                 await Assert.ThrowsExceptionAsync<HttpRequestException>(() => client.GetTransactionAsync(first.Receipt));
                 Assert.AreEqual(TransactionStatus.Succeeded, (await client.SendXrpAsync(TestTransactions.SecpSeed, Payment())).Status);
+            }
+        }
+
+        [DataTestMethod]
+        [DataRow(false)]
+        [DataRow(true)]
+        [Timeout(10000)]
+        public async Task AWaitingSendObservesConcurrentFinalRecovery(bool otherUnresolved)
+        {
+            var server = new PaymentTests.Server { LoseSubmitResponse = true, NeverFind = true };
+            var handler = new RpcHandler { Respond = server.Respond };
+            using (var http = new HttpClient(handler))
+            using (var client = new XrplClient(RpcHandler.Options(), http))
+            {
+                var first = await client.SendXrpAsync(TestTransactions.SecpSeed, Payment());
+                server.NeverFind = false; server.LoseSubmitResponse = false;
+                var final = await server.Respond("tx", new JObject(), CancellationToken.None);
+                var entered = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+                var release = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+                var other = PaymentRecoveryTests.Receipt(108, "2000000");
+                int oldQueries = 0;
+                handler.Respond = async (m, p, ct) => {
+                    if (m == "tx" && (string)p["transaction"] == first.Receipt.Hash)
+                    {
+                        if (Interlocked.Increment(ref oldQueries) == 1)
+                        { entered.TrySetResult(true); await release.Task.ConfigureAwait(false); return Missing(); }
+                        return (JObject)final.DeepClone();
+                    }
+                    if (m == "tx" && (string)p["transaction"] == other.Hash) return Missing();
+                    return await server.Respond(m, p, ct).ConfigureAwait(false);
+                };
+                var sending = client.SendXrpAsync(TestTransactions.SecpSeed, Payment());
+                await entered.Task;
+                Assert.AreEqual(TransactionStatus.Succeeded, (await client.GetTransactionAsync(first.Receipt)).Status);
+                if (otherUnresolved) await client.GetTransactionAsync(other);
+                release.TrySetResult(true);
+                if (otherUnresolved)
+                {
+                    var blocked = await Assert.ThrowsExceptionAsync<PendingPaymentException>(async () => { await sending; });
+                    Assert.AreEqual(other.Hash, blocked.Receipt.Hash);
+                    Assert.AreEqual(1, server.Signed.Count);
+                }
+                else
+                {
+                    Assert.AreEqual(TransactionStatus.Succeeded, (await sending).Status);
+                    Assert.AreEqual(2, server.Signed.Count);
+                }
             }
         }
     }

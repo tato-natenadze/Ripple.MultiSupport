@@ -59,7 +59,17 @@ namespace Ripple
                     while ((previous = FindPendingPayment(sender)) != null)
                     {
                         var state = await GetTransactionAsync(previous, operation.Token).ConfigureAwait(false);
-                        if (!IsFinal(state.Status)) throw new PendingPaymentException(previous);
+                        if (!IsFinal(state.Status))
+                        {
+                            // Another receipt lookup may have finalized this hash
+                            // while this request was waiting on older history.
+                            lock (_receiptLookupLock)
+                            {
+                                Dictionary<string, PaymentReceipt> pending;
+                                if (_pendingPayments.TryGetValue(sender, out pending) && pending.ContainsKey(previous.Hash))
+                                    throw new PendingPaymentException(previous);
+                            }
+                        }
                     }
                     var ledger = await GetLedgerAsync(operation.Token).ConfigureAwait(false);
                     var source = await ReadAccountAsync(sender, ledger, operation.Token).ConfigureAwait(false);

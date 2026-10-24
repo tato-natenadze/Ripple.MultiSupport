@@ -215,3 +215,10 @@ Follow-up execution record:
    runtime, 652 total). Both key types retain every receipt field through JSON;
    the public low-level parser still throws its original exception. Only the
    receipt constructor normalizes invalid input. Final integration is pending.
+3. Additional send/recovery overlap: two new deterministic cases showed that a
+   send already waiting on Unknown could still throw for an older finalized
+   receipt. The send now checks whether that exact hash remains pending under
+   the receipt lock. It proceeds after final recovery, or blocks on a different
+   genuinely unresolved receipt. Both cases and the full suite pass (328 per
+   runtime, 656 total). This is a follow-up new commit; earlier commits remain
+   intact.
