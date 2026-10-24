@@ -4,10 +4,28 @@
 offline transaction signing, and direct XRP payments, history and incoming-payment monitoring.
 It targets **.NET Standard 2.0** and **.NET 8**, so it works on old .NET Framework (e.g., 4.7.2 Web Forms) and modern .NET.
 
+[Source code](https://github.com/tato-natenadze/Ripple.MultiSupport) ·
+[NuGet package](https://www.nuget.org/packages/Ripple.MultiSupport)
+
+The latest published NuGet version is **1.0.1**. This repository contains the
+**1.1.0** source, including the new `XrplClient` APIs. Those APIs require building
+this source until a corresponding package is published; installing 1.0.1 provides
+the existing `RippleClient` API.
+
 ## Install
 ```powershell
 dotnet add package Ripple.MultiSupport
 ```
+
+To build the current source, install the .NET 8 SDK or a newer SDK that supports
+both targets, then run from the repository root:
+
+```powershell
+dotnet build Ripple.csproj --configuration Release -p:GeneratePackageOnBuild=false
+```
+
+The outputs are `bin/Release/netstandard2.0/Ripple.dll` and
+`bin/Release/net8.0/Ripple.dll`.
 
 ## Public entry points
 
@@ -363,3 +381,8 @@ Protocol references: [public API](https://xrpl.org/docs/references/http-websocke
 [reliable submission](https://xrpl.org/docs/concepts/transactions/reliable-transaction-submission),
 [Payment metadata](https://xrpl.org/docs/references/protocol/transactions/types/payment),
 [public servers](https://xrpl.org/docs/tutorials/public-servers).
+
+## License and attribution
+
+Licensed under the [Apache License 2.0](LICENSE). See [NOTICE](NOTICE) for
+third-party attribution. Both files are included in the NuGet package.

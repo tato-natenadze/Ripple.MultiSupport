@@ -17,6 +17,9 @@
 			<PackageLicenseFile>LICENSE</PackageLicenseFile>
 			<PackageReadmeFile>README.md</PackageReadmeFile>
 			<PackageIcon>icon.png</PackageIcon>
+			<PackageProjectUrl>https://github.com/tato-natenadze/Ripple.MultiSupport</PackageProjectUrl>
+			<RepositoryUrl>https://github.com/tato-natenadze/Ripple.MultiSupport.git</RepositoryUrl>
+			<RepositoryType>git</RepositoryType>
 
 			<!-- Optional assembly metadata -->
 			<AssemblyVersion>1.0.0.0</AssemblyVersion>
@@ -29,6 +32,7 @@
 			<None Include="README.md" Pack="true" PackagePath="\" />
 			<None Include="icon.png" Pack="true" PackagePath="\" />
 			<None Include="LICENSE" Pack="true" PackagePath="\" />
+			<None Include="NOTICE" Pack="true" PackagePath="\" />
 		</ItemGroup>
 
 		<ItemGroup>
