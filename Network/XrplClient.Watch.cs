@@ -59,7 +59,7 @@ namespace Ripple
                                     await socket.SendAsync(new JObject { ["id"] = "payments", ["command"] = "subscribe", ["api_version"] = 2,
                                         ["accounts"] = new JArray(address), ["streams"] = new JArray("ledger") }.ToString(Formatting.None), connect.Token).ConfigureAwait(false);
                                     JObject ack;
-                                    do { ack = JObject.Parse(await socket.ReceiveAsync(connect.Token).ConfigureAwait(false)); }
+                                    do { ack = ReadJsonObject(await socket.ReceiveAsync(connect.Token).ConfigureAwait(false)); }
                                     while ((string)ack["id"] != "payments");
                                     if ((string)ack["status"] == "error" || ack["error"] != null)
                                         throw new XrplRpcException("subscribe", (string)ack["error"] ?? "unknown", "Subscription was rejected.");
@@ -83,7 +83,7 @@ namespace Ripple
                                     {
                                         receive.CancelAfter(_options.RequestTimeout);
                                         // A closed/idle connection is reconnected, followed by catch-up from nextLedger.
-                                        JObject.Parse(await socket.ReceiveAsync(receive.Token).ConfigureAwait(false));
+                                        ReadJsonObject(await socket.ReceiveAsync(receive.Token).ConfigureAwait(false));
                                     }
                                 }
                             }
