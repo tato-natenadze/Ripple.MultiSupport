@@ -35,7 +35,8 @@ namespace Ripple
                     throw new ArgumentException("Receipt does not match its signed payment.");
                 Hash = actualHash;
             }
-            catch (Exception ex) when (ex is ArgumentException || ex is FormatException || ex is System.Collections.Generic.KeyNotFoundException || ex is IndexOutOfRangeException)
+            catch (Exception ex) when (ex is ArgumentException || ex is FormatException || ex is System.Collections.Generic.KeyNotFoundException ||
+                ex is IndexOutOfRangeException || ex is InvalidOperationException)
             { throw new ArgumentException("Receipt does not contain a matching signed payment.", nameof(txBlob)); }
             Sender = sender; Sequence = sequence; FirstLedger = firstLedger; LastLedger = lastLedger;
             TxBlob = txBlob; RpcEndpoint = rpcEndpoint;

@@ -210,3 +210,8 @@ Follow-up execution record:
    on invalid data. Valid authorization, zero/omitted queue fields, optional
    ledger fields and the newest observed tip remain supported. Full suite: 313
    per runtime, 626 total; legacy signature/API fixtures remain unchanged.
+6. Receipt errors: five malformed binary cases reproduced the parser exception
+   leak before the fix. All thirteen new cases and the full suite pass (326 per
+   runtime, 652 total). Both key types retain every receipt field through JSON;
+   the public low-level parser still throws its original exception. Only the
+   receipt constructor normalizes invalid input. Final integration is pending.
