@@ -37,7 +37,7 @@ namespace Ripple.Tests
         {
             ["hash"] = hash ?? new string('A', 64), ["validated"] = validated, ["ledger_index"] = ledger,
             ["tx_json"] = new JObject { ["TransactionType"] = "Payment", ["Account"] = TestTransactions.Account,
-                ["Destination"] = TestTransactions.Destination, ["DestinationTag"] = 0, ["DeliverMax"] = "1000000", ["Fee"] = "12" },
+                ["Destination"] = TestTransactions.Destination, ["DestinationTag"] = 0, ["DeliverMax"] = "1000000", ["Fee"] = "12", ["Sequence"] = 1 },
             ["meta"] = new JObject { ["TransactionResult"] = code, ["TransactionIndex"] = 0, ["delivered_amount"] = "1000000" }
         };
         internal static JObject History(string address, uint from, uint to, params JObject[] transactions) => new JObject

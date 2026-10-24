@@ -7,6 +7,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using Ripple.LibraryClasses.Signer;
 
 namespace Ripple
 {
@@ -27,8 +28,14 @@ namespace Ripple
             if (ledger == null || ledger["seq"] == null || ledger["reserve_base_xrp"] == null || ledger["reserve_inc_xrp"] == null)
                 throw new InvalidDataException("Server has no validated ledger/reserve information.");
             // A stale server must not be used for funding or expiry decisions.
-            if (ledger["age"] != null && (double)ledger["age"] > 120)
-                throw new InvalidDataException("Server's validated ledger is stale.");
+            if (ledger["age"] != null)
+            {
+                double age;
+                if ((ledger["age"].Type != JTokenType.Integer && ledger["age"].Type != JTokenType.Float) ||
+                    !double.TryParse((string)ledger["age"], NumberStyles.Float, CultureInfo.InvariantCulture, out age) ||
+                    double.IsNaN(age) || double.IsInfinity(age) || age < 0 || age > 120)
+                    throw new InvalidDataException("Server's validated ledger age is invalid or stale.");
+            }
             return new LedgerSnapshot
             {
                 Index = RequiredUInt(ledger, "seq"),
@@ -81,7 +88,7 @@ namespace Ripple
             return ReadTransactionAsync(hash.ToUpperInvariant(), null, null, cancellationToken);
         }
 
-        private async Task<TransactionInfo> ReadTransactionAsync(string hash, uint? from, uint? to, CancellationToken token)
+        private async Task<TransactionInfo> ReadTransactionAsync(string hash, uint? from, uint? to, CancellationToken token, PaymentReceipt receipt = null)
         {
             var args = new JObject { ["transaction"] = hash, ["binary"] = false };
             if (from.HasValue) args["min_ledger"] = from.Value;
@@ -92,12 +99,15 @@ namespace Ripple
                 var tx = ParseTransaction(result);
                 if (!string.Equals(tx.Hash, hash, StringComparison.OrdinalIgnoreCase))
                     throw new InvalidDataException("Server returned a different transaction hash.");
+                if (receipt != null) ValidateReceiptTransaction(result, tx, receipt);
                 return tx;
             }
             catch (XrplRpcException ex) when (ex.Code == "txnNotFound")
             {
+                var searched = ex.Response?["searched_all"];
+                if (searched != null && searched.Type != JTokenType.Boolean) throw new InvalidDataException("Invalid searched_all proof.");
                 return new TransactionInfo { Hash = hash, Status = TransactionStatus.Unknown,
-                    SearchedAll = (bool?)ex.Response?["searched_all"] == true };
+                    SearchedAll = searched != null && (bool)searched };
             }
         }
 
@@ -143,7 +153,7 @@ namespace Ripple
             var hashes = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
             foreach (var entry in entries)
             {
-                var transaction = ParseTransaction((JObject)entry);
+                var transaction = ParseTransaction(entry as JObject);
                 if (!transaction.Validated || !transaction.LedgerIndex.HasValue || transaction.LedgerIndex < actualFrom || transaction.LedgerIndex > actualTo)
                     throw new InvalidDataException("History contains a transaction outside its validated range.");
                 // account_tx also includes trades and other transactions that merely affect owned objects.
@@ -164,50 +174,129 @@ namespace Ripple
 
         private static TransactionInfo ParseTransaction(JObject envelope)
         {
-            var tx = envelope["tx_json"] as JObject ?? envelope["tx"] as JObject ?? envelope;
+            var tx = TransactionBody(envelope);
             var meta = envelope["meta"] as JObject;
-            bool validated = (bool?)envelope["validated"] == true;
-            string hash = (string)envelope["hash"] ?? (string)tx["hash"];
-            ValidateHash(hash);
-            string code = (string)meta?["TransactionResult"];
-            if (validated && code == null) throw new InvalidDataException("Validated transaction has no final result.");
-            if (validated && envelope["ledger_index"] == null && tx["ledger_index"] == null)
+            if (envelope["validated"]?.Type != JTokenType.Boolean) throw new InvalidDataException("Missing or invalid validated flag.");
+            bool validated = (bool)envelope["validated"];
+            string hash = ResponseString(envelope, "hash", false) ?? ResponseString(tx, "hash");
+            try { ValidateHash(hash); }
+            catch (ArgumentException ex) { throw new InvalidDataException("Invalid transaction hash in response.", ex); }
+            if (tx["hash"] != null && !string.Equals(hash, ResponseString(tx, "hash"), StringComparison.OrdinalIgnoreCase))
+                throw new InvalidDataException("Conflicting transaction hashes.");
+            if (envelope["meta"] != null && meta == null) throw new InvalidDataException("Invalid transaction metadata.");
+            string code = meta == null ? null : ResponseString(meta, "TransactionResult", false);
+            if (validated && (code == null || (code != "tesSUCCESS" && !code.StartsWith("tec", StringComparison.Ordinal))))
+                throw new InvalidDataException("Validated transaction has no valid final result.");
+            uint? ledger = ResponseUInt(envelope["ledger_index"], "ledger_index") ?? ResponseUInt(tx["ledger_index"], "ledger_index");
+            if (validated && (!ledger.HasValue || ledger == 0))
                 throw new InvalidDataException("Validated transaction has no ledger index.");
+            if (envelope["ledger_index"] != null && tx["ledger_index"] != null && ledger != ResponseUInt(tx["ledger_index"], "ledger_index"))
+                throw new InvalidDataException("Conflicting transaction ledger indexes.");
+            string type = ResponseString(tx, "TransactionType");
+            string sender = ResponseAddress(tx, "Account");
+            if (!ResponseUInt(tx["Sequence"], "Sequence").HasValue) throw new InvalidDataException("Missing transaction sequence.");
+            decimal fee = DropsToXrp(ResponseString(tx, "Fee"));
             var amount = tx["DeliverMax"] ?? tx["Amount"];
-            bool xrpPayment = (string)tx["TransactionType"] == "Payment" && amount?.Type == JTokenType.String;
+            if (tx["DeliverMax"] != null && tx["Amount"] != null && !JToken.DeepEquals(tx["DeliverMax"], tx["Amount"]))
+                throw new InvalidDataException("Conflicting Payment amount fields.");
+            string destination = type == "Payment" ? ResponseAddress(tx, "Destination") : ResponseString(tx, "Destination", false);
+            if (type == "Payment" && (amount == null || (amount.Type != JTokenType.String && !(amount is JObject))))
+                throw new InvalidDataException("Missing or invalid Payment amount.");
+            if (type == "Payment" && amount is JObject issued &&
+                (issued["value"]?.Type != JTokenType.String || string.IsNullOrEmpty((string)issued["value"]) ||
+                !((issued["currency"]?.Type == JTokenType.String && issued["issuer"]?.Type == JTokenType.String) || issued["mpt_issuance_id"]?.Type == JTokenType.String)))
+                throw new InvalidDataException("Invalid issued Payment amount.");
+            bool xrpPayment = type == "Payment" && amount.Type == JTokenType.String;
+            decimal? amountXrp = xrpPayment ? (decimal?)DropsToXrp(amount) : null;
+            if (amountXrp == 0) throw new InvalidDataException("Payment amount must be positive.");
             var delivered = meta?["delivered_amount"];
             decimal? deliveredXrp = null;
-            if (validated && code == "tesSUCCESS" && xrpPayment && delivered?.Type == JTokenType.String && (string)delivered != "unavailable")
-                deliveredXrp = DropsToXrp(delivered);
+            if (validated && code == "tesSUCCESS" && xrpPayment && delivered != null)
+            {
+                if (delivered.Type != JTokenType.String) throw new InvalidDataException("Invalid XRP delivered_amount.");
+                if ((string)delivered != "unavailable")
+                {
+                    deliveredXrp = DropsToXrp(delivered);
+                    if (deliveredXrp <= 0 || deliveredXrp > amountXrp) throw new InvalidDataException("Inconsistent XRP delivered_amount.");
+                }
+            }
             return new TransactionInfo
             {
                 Hash = hash.ToUpperInvariant(), Found = true, Validated = validated,
                 Status = !validated ? TransactionStatus.Pending : code == "tesSUCCESS" ? TransactionStatus.Succeeded : TransactionStatus.Failed,
-                ResultCode = code, TransactionType = (string)tx["TransactionType"], Sender = (string)tx["Account"],
-                Destination = (string)tx["Destination"], DestinationTag = (uint?)tx["DestinationTag"],
-                LedgerIndex = (uint?)(envelope["ledger_index"] ?? tx["ledger_index"]), TransactionIndex = (uint?)meta?["TransactionIndex"],
-                IsXrpPayment = xrpPayment, AmountXrp = xrpPayment ? (decimal?)DropsToXrp(amount) : null,
-                DeliveredAmountXrp = deliveredXrp, FeeXrp = tx["Fee"] == null ? null : (decimal?)DropsToXrp(tx["Fee"])
+                ResultCode = code, TransactionType = type, Sender = sender,
+                Destination = destination, DestinationTag = ResponseUInt(tx["DestinationTag"], "DestinationTag"),
+                LedgerIndex = ledger, TransactionIndex = ResponseUInt(meta?["TransactionIndex"], "TransactionIndex"),
+                IsXrpPayment = xrpPayment, AmountXrp = amountXrp, DeliveredAmountXrp = deliveredXrp, FeeXrp = fee
             };
+        }
+
+        private static JObject TransactionBody(JObject envelope)
+        {
+            if (envelope == null) throw new InvalidDataException("Invalid transaction entry.");
+            if (envelope["tx_json"] != null) return envelope["tx_json"] as JObject ?? throw new InvalidDataException("Invalid tx_json.");
+            if (envelope["tx"] != null) return envelope["tx"] as JObject ?? throw new InvalidDataException("Invalid tx.");
+            return envelope;
+        }
+
+        private static string ResponseString(JObject obj, string name, bool required = true)
+        {
+            var value = obj[name];
+            if (value == null && !required) return null;
+            if (value?.Type != JTokenType.String || string.IsNullOrEmpty((string)value)) throw new InvalidDataException("Missing or invalid " + name + ".");
+            return (string)value;
+        }
+
+        private static string ResponseAddress(JObject obj, string name)
+        {
+            string value = ResponseString(obj, name);
+            if (!RippleClient.ValidateAddress(value)) throw new InvalidDataException("Invalid " + name + " address.");
+            return value;
+        }
+
+        private static uint? ResponseUInt(JToken token, string name)
+        {
+            if (token == null) return null;
+            uint value;
+            if (token.Type != JTokenType.Integer || !uint.TryParse(token.ToString(), NumberStyles.None, CultureInfo.InvariantCulture, out value))
+                throw new InvalidDataException("Invalid " + name + ".");
+            return value;
+        }
+
+        private static void ValidateReceiptTransaction(JObject envelope, TransactionInfo tx, PaymentReceipt receipt)
+        {
+            if (tx.Validated && (tx.LedgerIndex < receipt.FirstLedger || tx.LedgerIndex > receipt.LastLedger))
+                throw new InvalidDataException("Payment was returned outside its signed ledger range.");
+            var body = (JObject)TransactionBody(envelope).DeepClone();
+            if (body["DeliverMax"] != null) { body["Amount"] = body["DeliverMax"].DeepClone(); body.Remove("DeliverMax"); }
+            try
+            {
+                if (!string.Equals(StObject.FromJson(body).ToHex(), receipt.TxBlob, StringComparison.OrdinalIgnoreCase))
+                    throw new InvalidDataException("Transaction body does not match the saved signed payment.");
+            }
+            catch (Exception ex) when (ex is ArgumentException || ex is FormatException || ex is OverflowException || ex is InvalidOperationException || ex is KeyNotFoundException)
+            { throw new InvalidDataException("Invalid signed payment response.", ex); }
+            if (tx.Status == TransactionStatus.Succeeded && tx.DeliveredAmountXrp != tx.AmountXrp)
+                throw new InvalidDataException("Delivered XRP does not match the saved direct payment.");
         }
 
         private static void RequireValidated(JObject response)
         {
-            if ((bool?)response["validated"] != true) throw new InvalidDataException("Server returned unvalidated data.");
+            if (response["validated"]?.Type != JTokenType.Boolean || !(bool)response["validated"])
+                throw new InvalidDataException("Server returned unvalidated or invalid data.");
         }
 
         private static uint RequiredUInt(JObject obj, string name)
         {
-            uint value;
-            if (obj[name] == null || !uint.TryParse(obj[name].ToString(), NumberStyles.None, CultureInfo.InvariantCulture, out value))
-                throw new InvalidDataException("Missing or invalid " + name + ".");
-            return value;
+            return ResponseUInt(obj[name], name) ?? throw new InvalidDataException("Missing " + name + ".");
         }
 
         private static decimal RequiredDecimal(JObject obj, string name)
         {
             decimal value;
-            if (obj[name] == null || !decimal.TryParse((string)obj[name], NumberStyles.Float, CultureInfo.InvariantCulture, out value) || value < 0)
+            var token = obj[name];
+            if (token == null || (token.Type != JTokenType.Integer && token.Type != JTokenType.Float && token.Type != JTokenType.String) ||
+                !decimal.TryParse((string)token, NumberStyles.Float, CultureInfo.InvariantCulture, out value) || value < 0 || value > 100000000000m)
                 throw new InvalidDataException("Missing or invalid " + name + ".");
             return value;
         }

@@ -126,7 +126,7 @@ namespace Ripple
                         }
                         result.Diagnostic = "Confirmation wait expired. Check the receipt before creating any replacement payment.";
                     }
-                    catch (Exception ex) when (ex is HttpRequestException || ex is OperationCanceledException || ex is IOException ||
+                    catch (Exception ex) when (ex is HttpRequestException || ex is OperationCanceledException || ex is IOException || ex is InvalidDataException ||
                         ex is XrplRpcException || ex is ArgumentException || ex is FormatException || ex is OverflowException)
                     {
                         result.Diagnostic = "Submission/confirmation is indeterminate (" + ex.GetType().Name + "). Query the saved receipt; do not create a replacement payment.";
@@ -151,7 +151,7 @@ namespace Ripple
             }
             try
             {
-                var tx = await ReadTransactionAsync(receipt.Hash, receipt.FirstLedger, receipt.LastLedger, cancellationToken).ConfigureAwait(false);
+                var tx = await ReadTransactionAsync(receipt.Hash, receipt.FirstLedger, receipt.LastLedger, cancellationToken, receipt).ConfigureAwait(false);
                 if (!tx.Found)
                 {
                     var ledger = await GetLedgerAsync(cancellationToken).ConfigureAwait(false);

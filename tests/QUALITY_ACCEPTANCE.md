@@ -78,3 +78,9 @@ not a claim that every possible runtime condition has been tested.
 2. Pending state: the original failure and expiry cases failed before the fix.
    Seven new cases now pass, including overlapping stale/final lookups and a
    receipt restored during preparation; full suite 126 per runtime (252 total).
+3. Response validation: 24 of the initial 28 new cases reproduced defects; four
+   additional proof-field cases failed in the follow-up. All 33 new cases and the
+   full suite now pass (159 per runtime, 318 total). The culture regression gate
+   caught a numeric-format issue during implementation; it was corrected without
+   changing the accepted expectation. Signed receipt comparison covers API v2's
+   DeliverMax alias and v1/v2 metadata; malformed post-submit data retains receipt.
