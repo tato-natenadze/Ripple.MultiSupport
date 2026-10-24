@@ -14,6 +14,8 @@ namespace Ripple.LibraryClasses.Signer.Keys
 
         private ECDsaSigner _signer;
 
+        private readonly object _signingLock = new object();
+
         private bool _isNodeKey;
 
         public K256KeyPair(BigInteger priv)
@@ -58,7 +60,9 @@ namespace Ripple.LibraryClasses.Signer.Keys
 
         private EcdsaSignature CreateEcdsaSignature(byte[] hash)
         {
-            BigInteger[] array = _signer.GenerateSignature(hash);
+            BigInteger[] array;
+            // The deterministic nonce calculator is mutable and belongs to this key.
+            lock (_signingLock) { array = _signer.GenerateSignature(hash); }
             BigInteger r = array[0];
             BigInteger bigInteger = array[1];
             BigInteger bigInteger2 = Secp256K1.Order().Subtract(bigInteger);
