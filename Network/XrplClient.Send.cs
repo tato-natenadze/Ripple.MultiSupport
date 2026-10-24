@@ -1,0 +1,150 @@
+using System;
+using System.Collections.Concurrent;
+using System.Diagnostics;
+using System.Globalization;
+using System.IO;
+using System.Net.Http;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
+using Newtonsoft.Json.Linq;
+using Ripple.LibraryClasses.CreateAddress;
+using Ripple.LibraryClasses.Signer;
+
+namespace Ripple
+{
+    public sealed partial class XrplClient
+    {
+        private readonly ConcurrentDictionary<string, SemaphoreSlim> _accountGates = new ConcurrentDictionary<string, SemaphoreSlim>();
+        private readonly ConcurrentDictionary<string, PaymentReceipt> _pendingPayments = new ConcurrentDictionary<string, PaymentReceipt>();
+
+        public async Task<PaymentResult> SendXrpAsync(string seed, XrpPaymentRequest payment,
+            CancellationToken cancellationToken = default(CancellationToken))
+        {
+            ThrowIfDisposed();
+            if (payment == null) throw new ArgumentNullException(nameof(payment));
+            // Snapshot caller-owned input before the first await.
+            string destination = payment.Destination;
+            decimal amount = payment.AmountXrp;
+            uint? tag = payment.DestinationTag;
+            string memo = payment.Memo;
+            var prepared = payment.OnPreparedAsync;
+            ValidateClassicAddress(destination, nameof(payment.Destination));
+            string amountDrops = XrpToDrops(amount, nameof(payment.AmountXrp));
+            byte[] memoBytes = memo == null ? null : new UTF8Encoding(false, true).GetBytes(memo);
+            if (memoBytes != null && memoBytes.Length > 1000) throw new ArgumentException("Memo exceeds 1000 UTF-8 bytes.", nameof(payment));
+            string sender;
+            try { sender = Seed.FromBase58(seed).KeyPair().Id(); }
+            catch (Exception ex) when (ex is ArgumentException || ex is FormatException)
+            { throw new ArgumentException("Invalid XRPL seed.", nameof(seed)); }
+            if (sender == destination) throw new ArgumentException("A direct XRP payment requires different sender and destination.", nameof(payment));
+            var gate = _accountGates.GetOrAdd(sender, _ => new SemaphoreSlim(1, 1));
+            using (var operation = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken, _lifetime.Token))
+            {
+                await gate.WaitAsync(operation.Token).ConfigureAwait(false);
+                try
+                {
+                    PaymentReceipt previous;
+                    if (_pendingPayments.TryGetValue(sender, out previous))
+                    {
+                        var state = await GetTransactionAsync(previous, operation.Token).ConfigureAwait(false);
+                        if (!IsFinal(state.Status)) throw new PendingPaymentException(previous);
+                        _pendingPayments.TryRemove(sender, out previous);
+                    }
+                    var ledger = await GetLedgerAsync(operation.Token).ConfigureAwait(false);
+                    var source = await ReadAccountAsync(sender, ledger, operation.Token).ConfigureAwait(false);
+                    if (!source.Exists) throw new InvalidOperationException("Sender account is not funded.");
+                    if (source.MasterKeyDisabled) throw new InvalidOperationException("Sender master key is disabled. The high-level payment method requires the master seed.");
+                    var target = await ReadAccountAsync(destination, ledger, operation.Token).ConfigureAwait(false);
+                    if (target.RequiresDestinationTag && !tag.HasValue) throw new ArgumentException("Destination requires a DestinationTag.", nameof(payment));
+                    if (!target.Exists && amount < ledger.BaseReserve) throw new ArgumentException("Payment is below the destination account activation reserve.", nameof(payment));
+                    if (target.DepositAuthorization && !(target.BalanceXrp <= ledger.BaseReserve && amount <= ledger.BaseReserve))
+                    {
+                        var authorization = await RpcAsync("deposit_authorized", new JObject { ["source_account"] = sender,
+                            ["destination_account"] = destination, ["ledger_index"] = ledger.Index }, operation.Token).ConfigureAwait(false);
+                        if ((bool?)authorization["deposit_authorized"] != true)
+                            throw new InvalidOperationException("Destination has not authorized this sender.");
+                    }
+                    var feeResult = await RpcAsync("fee", null, operation.Token).ConfigureAwait(false);
+                    var fees = feeResult["drops"] as JObject ?? throw new InvalidDataException("Missing fee data.");
+                    decimal fee = Math.Max(DropsToXrp(fees["open_ledger_fee"]), DropsToXrp(fees["base_fee"]));
+                    if (fee <= 0 || fee > _options.MaxFeeXrp) throw new InvalidOperationException("Network fee exceeds the configured limit or is invalid.");
+                    if (amount + fee > source.EstimatedSpendableXrp) throw new InvalidOperationException("Insufficient spendable XRP after reserve and fee.");
+                    // Refuse to guess around payments submitted by another client/process.
+                    var current = await RpcAsync("account_info", new JObject { ["account"] = sender, ["ledger_index"] = "current", ["queue"] = true }, operation.Token).ConfigureAwait(false);
+                    var currentData = current["account_data"] as JObject;
+                    if (currentData == null || (string)currentData["Account"] != sender)
+                        throw new InvalidDataException("Server returned different current account data.");
+                    if (RequiredUInt(currentData, "Sequence") != source.Sequence || (uint?)current["queue_data"]?["txn_count"] > 0)
+                        throw new InvalidOperationException("Sender has pending/external transactions; wait for validation before sending.");
+                    uint lastLedger = checked(ledger.Index + _options.LastLedgerOffset);
+                    var tx = new JObject { ["TransactionType"] = "Payment", ["Account"] = sender,
+                        ["Destination"] = destination, ["Amount"] = amountDrops, ["Fee"] = XrpToDrops(fee, "fee"),
+                        ["Sequence"] = source.Sequence, ["LastLedgerSequence"] = lastLedger };
+                    if (tag.HasValue) tx["DestinationTag"] = tag.Value;
+                    if (memoBytes != null) tx["Memos"] = new JArray(new JObject { ["Memo"] = new JObject { ["MemoData"] = B16.Encode(memoBytes) } });
+                    var signed = TxSigner.SignJson(tx, seed);
+                    var receipt = new PaymentReceipt(signed.Hash, sender, source.Sequence, checked(ledger.Index + 1), lastLedger, signed.TxBlob, _options.RpcEndpoint);
+                    if (prepared != null) await prepared(receipt, operation.Token).ConfigureAwait(false);
+                    operation.Token.ThrowIfCancellationRequested();
+                    _pendingPayments[sender] = receipt;
+                    var result = new PaymentResult { Receipt = receipt, Transaction = Unknown(receipt.Hash) };
+                    using (var wait = CancellationTokenSource.CreateLinkedTokenSource(operation.Token))
+                    {
+                    wait.CancelAfter(_options.ConfirmationTimeout);
+                    try
+                    {
+                        var submission = await RpcAsync("submit", new JObject { ["tx_blob"] = signed.TxBlob }, wait.Token).ConfigureAwait(false);
+                        result.SubmissionResultCode = (string)submission["engine_result"];
+                        // Even tesSUCCESS here is provisional. Only validated metadata completes a payment.
+                        var timer = Stopwatch.StartNew();
+                        while (timer.Elapsed < _options.ConfirmationTimeout)
+                        {
+                            wait.Token.ThrowIfCancellationRequested();
+                            result.Transaction = await GetTransactionAsync(receipt, wait.Token).ConfigureAwait(false);
+                            if (IsFinal(result.Status)) return result;
+                            var remaining = _options.ConfirmationTimeout - timer.Elapsed;
+                            if (remaining <= TimeSpan.Zero) break;
+                            await Task.Delay(remaining < _options.PollInterval ? remaining : _options.PollInterval, wait.Token).ConfigureAwait(false);
+                        }
+                        result.Diagnostic = "Confirmation wait expired. Check the receipt before creating any replacement payment.";
+                    }
+                    catch (Exception ex) when (ex is HttpRequestException || ex is OperationCanceledException || ex is IOException ||
+                        ex is XrplRpcException || ex is ArgumentException || ex is FormatException || ex is OverflowException)
+                    {
+                        result.Diagnostic = "Submission/confirmation is indeterminate (" + ex.GetType().Name + "). Query the saved receipt; do not create a replacement payment.";
+                    }
+                    return result;
+                    }
+                }
+                finally { gate.Release(); }
+            }
+        }
+
+        /// <summary>Recover a saved payment's status, including proven expiry. Does not submit anything.</summary>
+        public async Task<TransactionInfo> GetTransactionAsync(PaymentReceipt receipt, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (receipt == null) throw new ArgumentNullException(nameof(receipt));
+            if (receipt.RpcEndpoint != _options.RpcEndpoint) throw new ArgumentException("Receipt belongs to a different RPC endpoint.", nameof(receipt));
+            var tx = await ReadTransactionAsync(receipt.Hash, receipt.FirstLedger, receipt.LastLedger, cancellationToken).ConfigureAwait(false);
+            if (!tx.Found)
+            {
+                var ledger = await GetLedgerAsync(cancellationToken).ConfigureAwait(false);
+                if (ledger.Index >= receipt.LastLedger && tx.SearchedAll) tx.Status = TransactionStatus.Expired;
+            }
+            if (!IsFinal(tx.Status)) _pendingPayments.TryAdd(receipt.Sender, receipt);
+            // A hash-only lookup cannot prove expiry. Keep uncertain transactions blocking the sender lane.
+            return tx;
+        }
+
+        private static bool IsFinal(TransactionStatus state) => state == TransactionStatus.Succeeded || state == TransactionStatus.Failed ||
+            state == TransactionStatus.Expired || state == TransactionStatus.Rejected;
+        private static TransactionInfo Unknown(string hash) => new TransactionInfo { Hash = hash, Status = TransactionStatus.Unknown };
+        private static string XrpToDrops(decimal value, string name)
+        {
+            if (value <= 0 || value > 100000000000m || value * 1000000m != decimal.Truncate(value * 1000000m))
+                throw new ArgumentOutOfRangeException(name, "XRP must be positive, in range and have at most six decimal places.");
+            return (value * 1000000m).ToString("0", CultureInfo.InvariantCulture);
+        }
+    }
+}
