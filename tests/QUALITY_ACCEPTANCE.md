@@ -193,3 +193,9 @@ Follow-up execution record:
    full suite now pass (256 per runtime, 512 total). Pending state is indexed by
    sender and hash under the existing lock; other senders are not scanned or
    blocked. Reservation still checks for recovered receipts before broadcasting.
+3. Finality: four of five new cases failed before the fix. Finalized hashes and
+   their small finality flags now survive subsequent lookups for the client
+   lifetime; full transaction responses are not cached. Fresh Unknown results
+   and network exceptions remain visible to callers. All five cases and the
+   full suite pass (261 per runtime, 522 total), including the original overlap
+   tests and newer unresolved receipts.

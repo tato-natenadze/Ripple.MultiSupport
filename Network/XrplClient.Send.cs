@@ -188,7 +188,9 @@ namespace Ripple
             {
                 lock (_receiptLookupLock)
                 {
-                    if (--lookup.Readers == 0) _receiptLookups.Remove(receipt.Hash);
+                    // Keep only the hash/finality flag for the client lifetime.
+                    // Later missing history must not reopen a finalized payment.
+                    if (--lookup.Readers == 0 && !lookup.Finalized) _receiptLookups.Remove(receipt.Hash);
                 }
             }
         }
