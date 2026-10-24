@@ -213,7 +213,9 @@ callbacks. With no checkpoint/FromLedger, monitoring starts after the validated
 ledger observed at invocation. Use `FromLedger` to explicitly replay older data.
 
 Monitoring uses WebSocket notifications to wake authoritative HTTP history queries.
-It reconnects after transient transport errors and replays the missed range.
+It retries transient transport errors, including the initial ledger request, and
+temporary RPC errors (`tooBusy`, `noNetwork`, `noCurrent`, `noClosed`,
+`failedToForward`), then replays the missed range using the configured poll delay.
 Only successful, validated XRP Payments to the watched destination are delivered;
 the amount comes from metadata `DeliveredAmountXrp`, never merely the requested
 amount. Missing delivered amounts/history stop processing for reconciliation.

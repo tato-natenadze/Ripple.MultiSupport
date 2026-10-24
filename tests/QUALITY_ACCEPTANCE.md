@@ -199,3 +199,9 @@ Follow-up execution record:
    and network exceptions remain visible to callers. All five cases and the
    full suite pass (261 per runtime, 522 total), including the original overlap
    tests and newer unresolved receipts.
+4. Watch recovery: eleven transport/RPC recovery cases reproduced the defects
+   before the fix. All sixteen new cases and the full suite pass (277 per
+   runtime, 554 total). Temporary RPC failure between history pages replays the
+   uncheckpointed batch in order; permanent RPC errors and callback RPC errors
+   still stop, and cancellation interrupts initial recovery backoff. Endpoints,
+   configured delays and existing ordering/checkpoint tests are preserved.

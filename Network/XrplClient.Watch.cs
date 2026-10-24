@@ -42,7 +42,7 @@ namespace Ripple
             {
                 using (var operation = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken, _lifetime.Token))
                 {
-                    uint nextLedger = saved != null ? DecodeCheckpoint(address, saved) : from ?? checked((await GetLedgerAsync(operation.Token).ConfigureAwait(false)).Index + 1);
+                    uint nextLedger = saved != null ? DecodeCheckpoint(address, saved) : from ?? await GetWatchStartLedgerAsync(operation.Token).ConfigureAwait(false);
                     if (saved == null && saveCheckpoint != null)
                         await InvokeWatchCallback(() => saveCheckpoint(EncodeCheckpoint(address, nextLedger), operation.Token), operation.Token).ConfigureAwait(false);
                     while (true)
@@ -149,8 +149,28 @@ namespace Ripple
             catch (Exception ex) { throw new WatchCallbackException(ex); }
         }
 
-        private static bool IsWatchConnectionError(Exception ex) => ex is WebSocketException || ex is HttpRequestException ||
-            ex is OperationCanceledException || (ex is IOException && !(ex is InvalidDataException));
+        private async Task<uint> GetWatchStartLedgerAsync(CancellationToken token)
+        {
+            while (true)
+            {
+                token.ThrowIfCancellationRequested();
+                try { return checked((await GetLedgerAsync(token).ConfigureAwait(false)).Index + 1); }
+                catch (Exception ex) when (!token.IsCancellationRequested && IsWatchConnectionError(ex))
+                {
+                    await Task.Delay(_options.PollInterval, token).ConfigureAwait(false);
+                }
+            }
+        }
+
+        private static bool IsWatchConnectionError(Exception ex)
+        {
+            var rpc = ex as XrplRpcException;
+            if (rpc != null)
+                return rpc.Code == "tooBusy" || rpc.Code == "noNetwork" || rpc.Code == "noCurrent" ||
+                    rpc.Code == "noClosed" || rpc.Code == "failedToForward";
+            return ex is WebSocketException || ex is HttpRequestException || ex is OperationCanceledException ||
+                (ex is IOException && !(ex is InvalidDataException));
+        }
 
         private string EncodeCheckpoint(string address, uint nextLedger) => Convert.ToBase64String(Encoding.UTF8.GetBytes(
             new JObject { ["version"] = 1, ["account"] = address, ["endpoint"] = _options.RpcEndpoint.AbsoluteUri,
