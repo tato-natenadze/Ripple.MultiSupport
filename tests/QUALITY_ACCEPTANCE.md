@@ -83,61 +83,6 @@ which has not been verified by these checks. Newly discovered in-scope defects
 must be recorded and resolved or explicitly remain open; passing this list is
 not a claim that every possible runtime condition has been tested.
 
-## Execution record
-
-1. Watch ordering: three new cases failed before the fix; all four ordering cases
-   and the full suite passed afterward (119 per runtime, 238 total). Legacy and
-   pre-review API checks passed. Integration gate remains pending until all fixes.
-2. Pending state: the original failure and expiry cases failed before the fix.
-   Seven new cases now pass, including overlapping stale/final lookups and a
-   receipt restored during preparation; full suite 126 per runtime (252 total).
-3. Response validation: 24 of the initial 28 new cases reproduced defects; four
-   additional proof-field cases failed in the follow-up. All 33 new cases and the
-   full suite now pass (159 per runtime, 318 total). The culture regression gate
-   caught a numeric-format issue during implementation; it was corrected without
-   changing the accepted expectation. Signed receipt comparison covers API v2's
-   DeliverMax alias and v1/v2 metadata; malformed post-submit data retains receipt.
-4. Error diagnostics: nine initial cases failed without structured diagnostics;
-   all twelve new error cases now pass. Full suite 171 per runtime (342 total),
-   including HTTP 400/429/503 on Framework, request/confirmation deadlines,
-   actual RPC method attribution, seed redaction and existing API compatibility.
-5. Watch cancellation: four of five new cases failed before the fix. All now pass,
-   including disposal, already-cancelled startup, restart/hash deduplication and
-   checkpoint failure. Full suite 176 per runtime (352 total).
-6. Address bounds: the oversized Base58 timing case failed on both runtimes before
-   the guard. All fifteen new cases pass, including 256 deterministic valid
-   payloads, special addresses, large Unicode/surrogates, checksums and no-I/O
-   rejection. Full suite 191 per runtime (382 total).
-7. History range: default-range pruning and legacy-token upgrade cases failed
-   before the fix. All five new cases now pass, with original explicit bounds and
-   binding checks intact. Full suite 196 per runtime (392 total).
-8. Continuation/checkpoint validation: 25 of 46 initial cases failed before the
-   fix. All 48 new cases now pass, including strict field types, duplicate keys,
-   UTF-8, opaque marker types/date-like strings and request snapshotting. The
-   additional invalid-UTF-8 response case also failed before its correction.
-   Full suite 244 per runtime (488 total). Existing checkpoint/restart and old
-   version-1 token tests remain unchanged and pass.
-9. URI advisory: the fresh online consumer restore initially reported three
-   advisories for 4.3.0 in its win-x86 graph. After the 4.3.2 override, both fresh
-   package-only consumers build with zero warnings/errors and online audit has no
-   entries. Full suite remains 244 per runtime (488 total); patched IIS and
-   unchanged precompiled consumers also pass.
-10. Verification-runner diagnostic: the pruned receipt previously produced an
-    unrelated null-address error. Both runtimes now produce the expected explicit
-    Unknown/history diagnostic. The same runner's success path also passed on
-    both runtimes using a receipt reconstructed from an already validated recent
-    public Testnet payment (no seed or submission). Full suite remains 488/488.
-
-Final integration gate passed with the limits in
-`Ripple.Integration/quality-verification.json`. Saved Testnet history was pruned
-on the original endpoint; both runtime paths passed read-only recovery and actual
-WebSocket replay on an explicitly configured official history server. Original
-receipts and endpoint binding were preserved. The historical consumer-hash file
-predated the existing binaries and was left intact; the same current precompiled
-consumer hashes were checked before/after running both published 1.0.1 and the new
-DLL. No user deployment/database acceptance or actual Framework 4.7.2 runtime
-verification is claimed.
-
 ## Follow-up review: six authorized fixes
 
 Reference: `c1eb62d`. Preserve the original API/signature fixtures and all earlier
@@ -181,58 +126,6 @@ new commit. Passing checks do not establish user deployment acceptance.
 Final verification must include the complete suite, API/golden signature checks,
 package-only consumers, precompiled legacy consumers and the isolated async Web
 Forms smoke check with the final library. Do not publish or send transactions.
-
-Follow-up execution record:
-
-1. Shutdown: two disposal cases failed before the fix; all seven shutdown cases
-   and the complete suite pass afterward (251 per runtime, 502 total). Caller
-   cancellation, pre-submit disposal, final success and injected HTTP ownership
-   remain covered. Final integration verification is pending the remaining fixes.
-2. Multiple recovery: three new cases failed before the fix (including a
-   deterministically ordered concurrent recovery). All five new cases and the
-   full suite now pass (256 per runtime, 512 total). Pending state is indexed by
-   sender and hash under the existing lock; other senders are not scanned or
-   blocked. Reservation still checks for recovered receipts before broadcasting.
-3. Finality: four of five new cases failed before the fix. Finalized hashes and
-   their small finality flags now survive subsequent lookups for the client
-   lifetime; full transaction responses are not cached. Fresh Unknown results
-   and network exceptions remain visible to callers. All five cases and the
-   full suite pass (261 per runtime, 522 total), including the original overlap
-   tests and newer unresolved receipts.
-4. Watch recovery: eleven transport/RPC recovery cases reproduced the defects
-   before the fix. All sixteen new cases and the full suite pass (277 per
-   runtime, 554 total). Temporary RPC failure between history pages replays the
-   uncheckpointed batch in order; permanent RPC errors and callback RPC errors
-   still stop, and cancellation interrupts initial recovery backoff. Endpoints,
-   configured delays and existing ordering/checkpoint tests are preserved.
-5. Preflight validation: all thirty malformed-field cases failed before the fix;
-   all thirty-six new cases now pass, with no preparation callback or submission
-   on invalid data. Valid authorization, zero/omitted queue fields, optional
-   ledger fields and the newest observed tip remain supported. Full suite: 313
-   per runtime, 626 total; legacy signature/API fixtures remain unchanged.
-6. Receipt errors: five malformed binary cases reproduced the parser exception
-   leak before the fix. All thirteen new cases and the full suite pass (326 per
-   runtime, 652 total). Both key types retain every receipt field through JSON;
-   the public low-level parser still throws its original exception. Only the
-   receipt constructor normalizes invalid input. Final integration is pending.
-3. Additional send/recovery overlap: two new deterministic cases showed that a
-   send already waiting on Unknown could still throw for an older finalized
-   receipt. The send now checks whether that exact hash remains pending under
-   the receipt lock. It proceeds after final recovery, or blocks on a different
-   genuinely unresolved receipt. Both cases and the full suite pass (328 per
-   runtime, 656 total). This is a follow-up new commit; earlier commits remain
-   intact.
-
-Follow-up final integration passed: 328 tests per runtime (656 total), a real
-async Web Forms page with 31 checks, 46 checks per package-only consumer target,
-and unchanged precompiled legacy consumers against published 1.0.1 followed by
-the final DLL. The fresh package's DLL hashes match the loaded consumer copies;
-dependency declarations are identical to the previously verified package. No
-new online advisory audit or live transaction/network verification was performed
-in this follow-up. The temporary IIS process was stopped. Original API/signature
-fixtures, low-level signer source, project dependencies and earlier verification
-records remain untouched. Details and runtime/deployment limits are recorded in
-`Ripple.Integration/follow-up-verification.json`.
 
 ## Explicit live Testnet edge-case verification
 
@@ -281,28 +174,3 @@ Acceptance:
 The live matrix belongs to the separate integration executable and must never
 run as part of the ordinary unit suite. Preserve the original --testnet and
 --verify-testnet behavior and the existing acceptance/signature expectations.
-
-Live execution: both package consumers submitted 18 Payments (17 successful and
-one expected fee-only failure), plus four AccountSet setup transactions each.
-All payment proofs and 44 live assertions per runtime completed. Both initial
-runners then exposed an incorrect new test expectation: a rejected payment that
-only affected the sender was required in the unaffected recipient's history.
-Raw account_tx, metadata and XRPL's getAffectedAccounts implementation confirmed
-the test error. Only the test's history-membership calculation changed; production
-code and all amount/status/signature checks stayed intact.
-
-After that correction, every saved receipt and both account histories were
-independently rechecked by the opposite runtime, with zero new submissions.
-All 36 receipt proofs passed. The 18 matching cases have zero differences across
-252 monetary/status/tag/error-field comparisons. Independent pinned raw balance
-snapshots account for every drop: each run started with 100000000 drops, ended
-with 99999780 across its three wallets, and paid exactly 220 drops in fees.
-Both source wallets retained exactly 1000000 drops of base reserve. Replay
-produced the documented at-least-once callbacks and exactly 13 unique host credits
-per run. Ordinary regression tests still pass: 328 per target, 656 total.
-
-Original failed reports and logs are preserved alongside the successful read-only
-reverification and public receipts. See `Ripple.Integration/live-edge-verification.json`
-for the precise correction, hashes, target/runtime distinctions and deployment
-limits. No production library changes, network fallback, package publication or
-new library functionality resulted from this live test request.

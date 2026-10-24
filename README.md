@@ -355,9 +355,9 @@ transport fixtures, after building the normal suite:
 
 The script isolates the IIS Express configuration/site, uses a temporary localhost
 port, and stops its own server in `finally`. It does not edit your IIS configuration.
-Actual verification evidence and limitations are recorded in
-`tests/Ripple.Integration/verification.json`. The net472 runs used the installed
-.NET Framework 4.8 runtime; the user's own deployment/database still needs integration testing.
+Acceptance criteria are in `tests/QUALITY_ACCEPTANCE.md`. The net472 verification
+ran on the installed .NET Framework 4.8 runtime; the user's own deployment/database
+still needs integration testing.
 
 Protocol references: [public API](https://xrpl.org/docs/references/http-websocket-apis/public-api-methods),
 [reliable submission](https://xrpl.org/docs/concepts/transactions/reliable-transaction-submission),
