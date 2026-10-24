@@ -137,3 +137,54 @@ predated the existing binaries and was left intact; the same current precompiled
 consumer hashes were checked before/after running both published 1.0.1 and the new
 DLL. No user deployment/database acceptance or actual Framework 4.7.2 runtime
 verification is claimed.
+
+## Follow-up review: six authorized fixes
+
+Reference: `c1eb62d`. Preserve the original API/signature fixtures and all earlier
+acceptance gates. Change only the six defects demonstrated in the follow-up
+review. Each numbered item requires a failing regression test first, the full
+suite on both target paths after the fix, a scoped diff review, and a separate
+new commit. Passing checks do not establish user deployment acceptance.
+
+1. **Shutdown after broadcast.** Handle client disposal during confirmation as
+   cancellation while retaining the receipt and an indeterminate result. Accept
+   only if disposal and caller cancellation both preserve the receipt after
+   submission, there is exactly one submission, and pre-submission disposal or
+   cancellation still throws without sending. A known validated result must not
+   become a failure merely because shutdown overlaps its response.
+2. **Multiple recovered receipts.** Track every unresolved receipt per sender.
+   Completing one must remove only that hash; any other unresolved receipt must
+   continue to block signing/submission. Cover both recovery orders, different
+   senders, concurrent lookups, recovery during preparation, and the existing
+   sequential/parallel send tests. No automatic resubmission is authorized.
+3. **Previously finalized receipts.** Remember finalized hashes for the client
+   lifetime so that later missing history cannot restore their pending lock.
+   Preserve fresh query results and exceptions; do not invent a successful
+   response from a cache. Cover success, validated failure, expiry, overlapping
+   queries, and a newer genuinely unresolved receipt that must remain blocked.
+4. **Watch recovery.** Include the initial ledger request in transient recovery,
+   and retry explicit temporary RPC errors (`tooBusy`, `noNetwork`, `noCurrent`,
+   `noClosed`, `failedToForward`). Preserve the configured endpoint and delay.
+   Permanent RPC errors, malformed data and callback failures must still stop.
+   Cancellation must stop retries; payment ordering, at-least-once replay and
+   checkpoint advancement only after acknowledged callbacks must remain intact.
+5. **Preflight response types.** Reject non-boolean deposit authorization and
+   non-integer/out-of-range queue counts or observed ledger indexes before
+   persistence/signing/submission. Preserve valid boolean/integer values, zero
+   queue counts, optional omitted fields and newest-observed-ledger expiry.
+   A malformed reply must never cause a submission or expose a signing seed.
+6. **Invalid receipt errors.** Normalize the receipt constructor's invalid binary
+   parser operation into ArgumentException for `txBlob`. Preserve valid receipt
+   JSON round trips, hash/sequence/endpoint checks, signed bytes and the existing
+   public low-level parser behavior.
+
+Final verification must include the complete suite, API/golden signature checks,
+package-only consumers, precompiled legacy consumers and the isolated async Web
+Forms smoke check with the final library. Do not publish or send transactions.
+
+Follow-up execution record:
+
+1. Shutdown: two disposal cases failed before the fix; all seven shutdown cases
+   and the complete suite pass afterward (251 per runtime, 502 total). Caller
+   cancellation, pre-submit disposal, final success and injected HTTP ownership
+   remain covered. Final integration verification is pending the remaining fixes.

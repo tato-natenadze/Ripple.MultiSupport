@@ -130,7 +130,8 @@ namespace Ripple
                         result.Error = PaymentFailure(new OperationCanceledException(), activeMethod, seed, operation.IsCancellationRequested);
                     }
                     catch (Exception ex) when (ex is HttpRequestException || ex is OperationCanceledException || ex is IOException || ex is InvalidDataException ||
-                        ex is XrplRpcException || ex is ArgumentException || ex is FormatException || ex is OverflowException)
+                        ex is XrplRpcException || ex is ArgumentException || ex is FormatException || ex is OverflowException ||
+                        (ex is ObjectDisposedException && _lifetime.IsCancellationRequested))
                     {
                         result.Diagnostic = "Submission/confirmation is indeterminate (" + ex.GetType().Name + "). Query the saved receipt; do not create a replacement payment.";
                         result.Error = PaymentFailure(ex, activeMethod, seed, operation.IsCancellationRequested);

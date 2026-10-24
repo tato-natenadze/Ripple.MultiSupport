@@ -19,6 +19,7 @@ namespace Ripple
 #endif
             PaymentErrorKind kind;
             if (rpc != null) kind = PaymentErrorKind.Rpc;
+            else if (exception is ObjectDisposedException && operationCancelled) kind = PaymentErrorKind.Cancelled;
             else if (exception is OperationCanceledException) kind = operationCancelled ? PaymentErrorKind.Cancelled : PaymentErrorKind.Timeout;
             else if (status.HasValue) kind = PaymentErrorKind.Http;
             else if (exception is InvalidDataException || exception is ArgumentException || exception is FormatException || exception is OverflowException)
