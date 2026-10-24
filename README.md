@@ -328,6 +328,24 @@ receipts/checkpoints in the requested directory; it accepts no production seed.
 Use `--verify-testnet` instead of `--testnet` to recheck a previous run's receipts,
 history and live WebSocket replay without funding or submitting anything.
 
+For the explicit live edge-case matrix, use `--testnet-edge-cases <directory>`
+with either target. This creates fresh Testnet wallets, funds the sender, and
+tests exact drops/balance/fee accounting, both signing key types, amount cultures,
+parallel sends, tag/memo boundaries, real validated failure, pre-submit rejection,
+expiry, response loss/cancellation/disposal after submission, and checkpoint
+replay. It writes public receipts and `report.json`, never wallet seeds. Test-only
+AccountSet transactions configure the new recipient accounts for tag and deposit
+authorization cases. The final spendable-boundary case leaves the sender's base
+reserve. Endpoints are fixed to the official Ripple Testnet server and the runner
+checks `network_id=1` before funding/submission.
+
+Use `--verify-edge-cases <directory>` on the other target to recheck the saved
+receipts, validated amounts and historical balance changes without submitting.
+Each payment is checked against raw ledger JSON and account balances immediately
+before/after its validated ledger; an expected fee-only failure is checked for
+zero recipient credit. Network faults are explicitly injected only after an
+actual Testnet submit response; a new payment is never submitted as a retry.
+
 To exercise an actual Web Forms async page under IIS Express with deterministic
 transport fixtures, after building the normal suite:
 

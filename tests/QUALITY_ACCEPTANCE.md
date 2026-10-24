@@ -233,3 +233,76 @@ in this follow-up. The temporary IIS process was stopped. Original API/signature
 fixtures, low-level signer source, project dependencies and earlier verification
 records remain untouched. Details and runtime/deployment limits are recorded in
 `Ripple.Integration/follow-up-verification.json`.
+
+## Explicit live Testnet edge-case verification
+
+User request: exercise real Testnet edge cases on both target paths, with no
+amount, fee, delivered-value or status divergence. This authorizes test-only
+transactions between newly created wallets. It does not authorize adding library
+features or changing established production behavior to accommodate a test.
+
+Acceptance:
+
+- Run the same matrix using the final local NuGet package on .NET 8 and net472
+  consuming netstandard2.0. Identify the actual installed Framework runtime.
+- Before writing to the network, verify the fixed official server's network_id
+  is 1. Create fresh keys in memory; persist no seeds and never accept Mainnet
+  credentials/endpoints. Save public receipts before each submission.
+- For every submitted payment, compare signed Amount/Fee/Tag/Memo, raw validated
+  transaction metadata, SDK receipt/hash results, and source/recipient balances
+  at ledger L-1 and L. Debit must equal delivered drops plus fee; recipient credit
+  must equal delivered drops. Check account sequence and receipt ledger bounds.
+- Cover one drop, six-decimal amounts, en-US/ka-GE/de-DE/fr-FR, parallel sends,
+  secp256k1 and Ed25519, exact activation reserve, zero/max destination tags,
+  1000-byte UTF-8 memo, zero/negative/excess-precision/overflow amounts, invalid
+  addresses/memo, fee limits, insufficient spendable funds and cancellation.
+- Rejected preflight/persistence/cancellation cases must submit nothing and keep
+  balance/sequence unchanged. A real fee-claiming validated failure must return
+  Failed, debit only the fee and never produce an incoming credit callback.
+- Test a prepared but unbroadcast receipt: Unknown blocks replacement before
+  expiry; complete history later proves Expired. Do not resubmit it.
+- Inject response loss, cancellation and disposal AFTER an actual Testnet submit
+  response. Require an indeterminate receipt, one submission and eventual exact
+  recovery from the ledger. Label these as injected transport faults.
+- Check live WebSocket monitoring, replay of an old checkpoint with host-side
+  hash deduplication, advancement only after acknowledged work, and resumption
+  from the advanced checkpoint without old payments. This is an in-memory host
+  deduplication test, not database transaction verification.
+- Page through both accounts' payment histories and match every known hash
+  affecting that account, amount, fee, delivered value and status exactly once.
+  Derive affected accounts from raw metadata. A fee-only failure changes the
+  sender, and must not be required in an unaffected recipient's account_tx index.
+- Send the exact available balance minus fee, confirm that precisely the base
+  reserve remains, and reject a further outgoing payment without submission.
+- Re-read each runtime's saved receipts using the other runtime and independently
+  repeat the ledger/balance checks. Do not claim success for an incomplete run,
+  an unavailable server, missing history or a skipped assertion.
+
+The live matrix belongs to the separate integration executable and must never
+run as part of the ordinary unit suite. Preserve the original --testnet and
+--verify-testnet behavior and the existing acceptance/signature expectations.
+
+Live execution: both package consumers submitted 18 Payments (17 successful and
+one expected fee-only failure), plus four AccountSet setup transactions each.
+All payment proofs and 44 live assertions per runtime completed. Both initial
+runners then exposed an incorrect new test expectation: a rejected payment that
+only affected the sender was required in the unaffected recipient's history.
+Raw account_tx, metadata and XRPL's getAffectedAccounts implementation confirmed
+the test error. Only the test's history-membership calculation changed; production
+code and all amount/status/signature checks stayed intact.
+
+After that correction, every saved receipt and both account histories were
+independently rechecked by the opposite runtime, with zero new submissions.
+All 36 receipt proofs passed. The 18 matching cases have zero differences across
+252 monetary/status/tag/error-field comparisons. Independent pinned raw balance
+snapshots account for every drop: each run started with 100000000 drops, ended
+with 99999780 across its three wallets, and paid exactly 220 drops in fees.
+Both source wallets retained exactly 1000000 drops of base reserve. Replay
+produced the documented at-least-once callbacks and exactly 13 unique host credits
+per run. Ordinary regression tests still pass: 328 per target, 656 total.
+
+Original failed reports and logs are preserved alongside the successful read-only
+reverification and public receipts. See `Ripple.Integration/live-edge-verification.json`
+for the precise correction, hashes, target/runtime distinctions and deployment
+limits. No production library changes, network fallback, package publication or
+new library functionality resulted from this live test request.

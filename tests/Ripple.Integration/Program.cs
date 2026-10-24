@@ -15,18 +15,21 @@ namespace Ripple.Integration
     {
         private static async Task<int> Main(string[] args)
         {
-            if (args.Length != 2 || (args[0] != "--testnet" && args[0] != "--verify-testnet"))
+            if (args.Length != 2 || (args[0] != "--testnet" && args[0] != "--verify-testnet" &&
+                args[0] != "--testnet-edge-cases" && args[0] != "--verify-edge-cases"))
             {
-                Console.Error.WriteLine("--testnet <receipt-directory>: funds a NEW Testnet wallet and makes two Testnet payments. --verify-testnet <receipt-directory>: rechecks an existing run without submitting. Never uses Mainnet.");
+                Console.Error.WriteLine("--testnet <receipt-directory>: funds a NEW Testnet wallet and makes two Testnet payments. --verify-testnet <receipt-directory>: rechecks an existing run without submitting. --testnet-edge-cases <directory>: fresh Testnet wallets and live payment edge cases. --verify-edge-cases <directory>: independently rechecks those receipts without submitting. Never uses Mainnet.");
                 return 2;
             }
             try
             {
                 Directory.CreateDirectory(args[1]);
-                using (var deadline = new CancellationTokenSource(TimeSpan.FromMinutes(4)))
+                bool edgeCases = args[0] == "--testnet-edge-cases" || args[0] == "--verify-edge-cases";
+                using (var deadline = new CancellationTokenSource(TimeSpan.FromMinutes(edgeCases ? 12 : 4)))
                 {
-                    Console.WriteLine(args[0] == "--testnet" ? await Testnet.RunAsync(args[1], deadline.Token) :
-                        await Testnet.VerifyAsync(args[1], deadline.Token));
+                    Console.WriteLine(edgeCases ? (args[0] == "--testnet-edge-cases" ?
+                        await TestnetEdgeCases.RunAsync(args[1], deadline.Token) : await TestnetEdgeCases.VerifyAsync(args[1], deadline.Token)) :
+                        (args[0] == "--testnet" ? await Testnet.RunAsync(args[1], deadline.Token) : await Testnet.VerifyAsync(args[1], deadline.Token)));
                     return 0;
                 }
             }
