@@ -1,7 +1,47 @@
 .vs/
-**/bin/
-**/obj/
-**/TestResults/
-/artifacts/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Generated build, package and test output
+[Bb]in/
+[Oo]bj/
+[Pp]ackages/
+[Tt]est[Rr]esults/
+[Aa]rtifacts/
+[Cc]overage/
 *.nupkg
 *.snupkg
+*.dll
+*.exe
+*.pdb
+*.cache
+*.coverage
+*.coveragexml
+*.trx
+*.log
+
+# Temporary files and local OS metadata
+*.tmp
+*.temp
+*.bak
+*.orig
+*.rej
+*~
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Private local runtime data and credentials
+App_Data/
+.env
+.env.*
+!.env.example
+!.env.template
+*.pfx
+*.p12
+*.key
+
+# Disposable live-network verification records; unit-test fixtures stay tracked
+/tests/Ripple.Integration/Fixtures/
