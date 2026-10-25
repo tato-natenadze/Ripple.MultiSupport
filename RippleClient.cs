@@ -5,7 +5,6 @@ using Ripple.LibraryClasses.Signer.Fields;
 using Ripple.LibraryClasses.Signer.Interfaces;
 using Ripple.LibraryClasses.ValidateAddress;
 using System;
-using System.Globalization;
 using Newtonsoft.Json;
 
 namespace Ripple
@@ -74,10 +73,8 @@ namespace Ripple
                 JToken value = property.Value;
                 if (field.Type == FieldType.Uint8 || field.Type == FieldType.Uint16 || field.Type == FieldType.Uint32)
                 {
-                    decimal number;
                     if (value.Type == JTokenType.Boolean || (value.Type == JTokenType.Float &&
-                        (!decimal.TryParse(value.ToString(Formatting.None), NumberStyles.Float, CultureInfo.InvariantCulture, out number) ||
-                         decimal.Truncate(number) != number)))
+                        !IsIntegralFloat((JValue)value)))
                         throw new ArgumentException("Unsigned transaction fields require whole numbers.", "txObject");
                 }
                 if (field.Type == FieldType.StObject && value is JObject nested)
@@ -86,6 +83,13 @@ namespace Ripple
                     foreach (var item in array)
                         if (item is JObject entry) ValidateSigningInput(entry, depth + 1);
             }
+        }
+
+        private static bool IsIntegralFloat(JValue value)
+        {
+            if (value.Value is decimal exact) return decimal.Truncate(exact) == exact;
+            double number = (double)value;
+            return !double.IsNaN(number) && !double.IsInfinity(number) && Math.Truncate(number) == number;
         }
 
         // Bound serialization before any recursive protocol conversion, including
