@@ -24,7 +24,7 @@ namespace Ripple
             ValidateClassicAddress(senderAddress, nameof(senderAddress));
             ValidateClassicAddress(destination, nameof(payment.Destination));
             XrpToDrops(amount, nameof(payment.AmountXrp));
-            if (memo != null && new UTF8Encoding(false, true).GetByteCount(memo) > 1000)
+            if (memo != null && (memo.Length > 1000 || new UTF8Encoding(false, true).GetByteCount(memo) > 1000))
                 throw new ArgumentException("Memo exceeds 1000 UTF-8 bytes.", nameof(payment));
             if (senderAddress == destination)
                 throw new ArgumentException("A direct XRP payment requires different sender and destination.", nameof(payment));

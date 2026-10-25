@@ -29,6 +29,8 @@ namespace Ripple.LibraryClasses.Signer
 
         public override byte[] Read(int n)
         {
+            if (n < 0 || Cursor < 0 || Cursor > Size || n > Size - Cursor)
+                throw new ArgumentOutOfRangeException(nameof(n), "Read exceeds the remaining serialized data.");
             byte[] array = new byte[n];
             Array.Copy(Bytes, Cursor, array, 0, n);
             Cursor += n;

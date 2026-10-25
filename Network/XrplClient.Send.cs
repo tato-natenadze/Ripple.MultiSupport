@@ -69,8 +69,10 @@ namespace Ripple
             destination = NormalizePaymentDestination(destination, ref tag, out destinationTestNetwork);
             ValidateClassicAddress(destination, nameof(payment.Destination));
             string amountDrops = XrpToDrops(amount, nameof(payment.AmountXrp));
-            byte[] memoBytes = memo == null ? null : new UTF8Encoding(false, true).GetBytes(memo);
-            if (memoBytes != null && memoBytes.Length > 1000) throw new ArgumentException("Memo exceeds 1000 UTF-8 bytes.", nameof(payment));
+            var utf8 = new UTF8Encoding(false, true);
+            if (memo != null && (memo.Length > 1000 || utf8.GetByteCount(memo) > 1000))
+                throw new ArgumentException("Memo exceeds 1000 UTF-8 bytes.", nameof(payment));
+            byte[] memoBytes = memo == null ? null : utf8.GetBytes(memo);
             string sender;
             try { sender = Seed.FromBase58(seed).KeyPair().Id(); }
             catch (Exception ex) when (ex is ArgumentException || ex is FormatException)
