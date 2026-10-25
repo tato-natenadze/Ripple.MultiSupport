@@ -63,7 +63,7 @@ The example uses **Testnet**. Configure matching HTTP/WebSocket endpoints for
 [your network](https://xrpl.org/docs/tutorials/public-servers).
 Keep one shared client for the application's lifetime and dispose it at shutdown;
 multiple processes/workers need host-side coordination for the same sender.
-The built-in HTTP transport rejects redirects; configure the final RPC URL.
+The built-in HTTP and WebSocket transports reject redirects; configure the final endpoint URLs.
 A caller-supplied `HttpClient` controls its own redirect and transport policy.
 
 ## Payment handling
