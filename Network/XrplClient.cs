@@ -26,7 +26,7 @@ namespace Ripple
         {
             _options = (options ?? throw new ArgumentNullException(nameof(options))).Snapshot();
             _ownsHttp = httpClient == null;
-            _http = httpClient ?? new HttpClient();
+            _http = httpClient ?? new HttpClient(new HttpClientHandler { AllowAutoRedirect = false });
         }
 
         internal async Task<JObject> RpcAsync(string method, JObject parameters, CancellationToken cancellationToken)
