@@ -7,19 +7,19 @@ namespace Ripple
 {
     public sealed partial class XrplClient
     {
-        private static string NormalizePaymentDestination(string destination, ref uint? tag, out bool? testNetwork)
+        private static string NormalizePaymentDestination(string destination, ref uint? tag, out bool? testNetwork, string parameter = "payment")
         {
             testNetwork = null;
             if (string.IsNullOrEmpty(destination) || (destination[0] != 'X' && destination[0] != 'T')) return destination;
             var address = XAddressCodec.Decode(destination);
             if (tag.HasValue && tag != address.DestinationTag)
-                throw new ArgumentException("DestinationTag conflicts with the X-address.", "payment");
+                throw new ArgumentException("DestinationTag conflicts with the X-address.", parameter);
             tag = address.DestinationTag;
             testNetwork = address.IsTestNetwork;
             return address.ClassicAddress;
         }
 
-        private async Task<LedgerSnapshot> GetPaymentLedgerAsync(bool? destinationTestNetwork, CancellationToken token)
+        private async Task<LedgerSnapshot> GetPaymentLedgerAsync(bool? destinationTestNetwork, CancellationToken token, string parameter = "payment")
         {
             if (!destinationTestNetwork.HasValue) return await GetLedgerAsync(token).ConfigureAwait(false);
             var network = await GetNetworkInfoAsync(token).ConfigureAwait(false);
@@ -27,7 +27,7 @@ namespace Ripple
                 throw new InvalidDataException("The server did not report a supported Mainnet, Testnet or Devnet identity for this X-address.");
             bool test = network.NetworkId.Value != 0;
             if (test != destinationTestNetwork.Value)
-                throw new ArgumentException("The X-address network does not match the connected network.", "payment");
+                throw new ArgumentException("The X-address network does not match the connected network.", parameter);
             return new LedgerSnapshot { Index = network.ValidatedLedgerIndex,
                 BaseReserve = network.BaseReserveXrp, OwnerReserve = network.OwnerReserveXrp };
         }

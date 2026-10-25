@@ -56,7 +56,8 @@ namespace Ripple
             return await ReadAccountAsync(address, ledger, cancellationToken).ConfigureAwait(false);
         }
 
-        private async Task<AccountInfo> ReadAccountAsync(string address, LedgerSnapshot ledger, CancellationToken token)
+        private async Task<AccountInfo> ReadAccountAsync(string address, LedgerSnapshot ledger, CancellationToken token,
+            Action<JObject> inspect = null)
         {
             JObject response;
             try
@@ -76,7 +77,7 @@ namespace Ripple
             uint owners = RequiredUInt(data, "OwnerCount");
             decimal balance = DropsToXrp(data["Balance"]);
             decimal reserve = ledger.BaseReserve + ledger.OwnerReserve * owners;
-            return new AccountInfo
+            var account = new AccountInfo
             {
                 Address = address, Exists = true, LedgerIndex = ledger.Index, BalanceXrp = balance,
                 OwnerCount = owners, Sequence = RequiredUInt(data, "Sequence"), EstimatedReserveXrp = reserve,
@@ -85,6 +86,8 @@ namespace Ripple
                 DepositAuthorization = (flags & 0x01000000) != 0,
                 MasterKeyDisabled = (flags & 0x00100000) != 0
             };
+            inspect?.Invoke(data);
+            return account;
         }
 
         public Task<TransactionInfo> GetTransactionAsync(string hash, CancellationToken cancellationToken = default(CancellationToken))
@@ -93,7 +96,8 @@ namespace Ripple
             return ReadTransactionAsync(hash.ToUpperInvariant(), null, null, cancellationToken);
         }
 
-        private async Task<TransactionInfo> ReadTransactionAsync(string hash, uint? from, uint? to, CancellationToken token, PaymentReceipt receipt = null)
+        private async Task<TransactionInfo> ReadTransactionAsync(string hash, uint? from, uint? to, CancellationToken token,
+            PaymentReceipt receipt = null, Action<JObject, TransactionInfo> inspect = null)
         {
             var args = new JObject { ["transaction"] = hash, ["binary"] = false };
             if (from.HasValue) args["min_ledger"] = from.Value;
@@ -105,6 +109,7 @@ namespace Ripple
                 if (!string.Equals(tx.Hash, hash, StringComparison.OrdinalIgnoreCase))
                     throw new InvalidDataException("Server returned a different transaction hash.");
                 if (receipt != null) ValidateReceiptTransaction(result, tx, receipt);
+                inspect?.Invoke(result, tx);
                 return tx;
             }
             catch (XrplRpcException ex) when (ex.Code == "txnNotFound")

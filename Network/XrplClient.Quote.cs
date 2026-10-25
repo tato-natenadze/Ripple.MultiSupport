@@ -66,6 +66,7 @@ namespace Ripple
 
         private async Task ResolvePendingPaymentsAsync(string sender, CancellationToken token)
         {
+            await ResolvePendingAccountDeletesAsync(sender, token).ConfigureAwait(false);
             PaymentReceipt previous;
             while ((previous = FindPendingPayment(sender)) != null)
             {

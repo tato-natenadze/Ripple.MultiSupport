@@ -174,3 +174,41 @@ Acceptance:
 The live matrix belongs to the separate integration executable and must never
 run as part of the ordinary unit suite. Preserve the original --testnet and
 --verify-testnet behavior and the existing acceptance/signature expectations.
+
+## AccountDelete and tabbed sample acceptance
+
+User request: add official account deletion and return of remaining XRP to the
+library and to a separate tab in the existing Web Forms sample.
+
+- Preserve every existing public member, signed-payment fixture, API fixture,
+  payment amount/fee rule, receipt recovery rule and shared sender gate.
+- Use transaction type 21, a funded different destination, the documented account
+  and NFT sequence bounds, deletion-blocker queries, the 1000-object limit,
+  destination authorization/tag requirements and any reserve sponsorship rules.
+- The deletion fee comes from the network's owner reserve. Apply an explicit
+  deletion fee ceiling without changing the normal payment fee limit. Never
+  round an XRP quantity or add the reserve a second time to the balance.
+- Preflight, persistence and pre-submission cancellation failures submit nothing.
+  Use fail_hard. Treat submit responses as provisional, persist a seed-free
+  receipt before broadcast and preserve indeterminate results after transport
+  failure/cancellation. Never automatically resubmit an AccountDelete.
+- Bind recovered transaction bytes and ledger bounds to the saved receipt.
+  Only validated tesSUCCESS proves deletion. Match actual returned XRP against
+  destination balance metadata; validated failures may charge only the fee.
+- A pending deletion blocks another payment/quote/deletion for the same sender.
+  Cancellation and disposal release sender gates without reopening final receipts.
+- Pass the unchanged existing suite and new public-method tests on net8.0 and
+  net472 consuming netstandard2.0. Compare signing with an official XRPL SDK.
+- Verify real Testnet deletions with disposable wallets on both target paths,
+  including raw validated transactions, exact fees and balance deltas. Never
+  delete or submit from the user's saved sample wallets during verification.
+- Keep existing sample sections, controls, ordering, inline errors and action
+  positions. Keep the selected tab and entered data through postbacks. Restore
+  old JSON state without erasing wallets, payments or monitoring checkpoints.
+- Update the sample's local NuGet package to the tested code. Keep temporary
+  builds, wallets, logs and verification outputs out of Git and remove them.
+
+Official references:
+https://xrpl.org/docs/references/protocol/transactions/types/accountdelete
+https://xrpl.org/docs/references/http-websocket-apis/public-api-methods/account-methods/account_objects
+https://github.com/XRPLF/xrpl.js/blob/main/packages/xrpl/src/sugar/autofill.ts

@@ -19,3 +19,8 @@ https://xrpl.org/docs/references/protocol/transactions/types/nftokenacceptoffer
 https://xrpl.org/docs/references/protocol/transactions/types/ticketcreate
 https://xrpl.org/docs/references/protocol/binary-format
 https://xrpl.org/docs/references/protocol/data-types/currency-formats
+
+account-delete-transactions.json contains independent AccountDelete signatures
+from the official xrpl.js SDK 5.3.0 using the same public test keys above. It
+covers secp256k1, Ed25519, absent/zero/maximum destination tags and type 21.
+Keep these expected blobs fixed; never regenerate them to conceal a regression.

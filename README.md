@@ -1,7 +1,7 @@
 # Ripple.MultiSupport
 
 A C# library for XRPL wallet generation, address validation, offline signing,
-XRP payments, history and incoming-payment monitoring.
+XRP payments, history, incoming-payment monitoring and account deletion.
 Targets **.NET Standard 2.0** (including ASP.NET Web Forms on .NET Framework 4.7.2+)
 and **.NET 8**.
 
@@ -26,6 +26,8 @@ dotnet add package Ripple.MultiSupport
 | | `GetNetworkInfoAsync()` | Read network ID (when reported), validated ledger and XRP reserve requirements |
 | | `GetPaymentQuoteAsync(sender, request)` | Validate and estimate debit, remaining balance and maximum payment without signing |
 | | `SendXrpAsync(seed, request)` | Sign and submit a direct XRP payment; wait for its result |
+| | `GetAccountDeleteQuoteAsync(sender, request)` | Check deletion eligibility, fee and remaining XRP transfer without signing |
+| | `DeleteAccountAsync(seed, request)` / `GetAccountDeleteAsync(receipt)` | Delete an eligible account or recover its saved result |
 | | `GetTransactionAsync(hash)` / `GetTransactionAsync(receipt)` | Query status; a saved receipt also allows proven expiry checks |
 | | `GetPaymentsAsync(address, request)` | Read validated incoming/outgoing XRP payment history |
 | | `WatchIncomingPaymentsAsync(address, callback, options, token)` | Monitor successful incoming XRP payments with checkpoint recovery |
@@ -97,6 +99,23 @@ A caller-supplied `HttpClient` controls its own redirect and transport policy.
   the balance update. Persist `SaveCheckpointAsync` checkpoints and resume with
   `Checkpoint` after restart. Without `Checkpoint`/`FromLedger`, monitoring starts
   with new ledgers. Callback failures stop monitoring and may cause replay.
+
+## Account deletion
+
+Use `AccountDeleteRequest` with a different, funded `Destination` and optional
+`DestinationTag`. Check `GetAccountDeleteQuoteAsync` for `BlockingReasons`.
+Deletion transfers the whole remaining balance, including releasable reserve,
+minus the fee; it does not return the full reserve without cost.
+The fee is the network's owner reserve and has a separate request-level
+`MaxFeeXrp` (default `0.2`). Conditions are checked again before signing;
+submission uses `fail_hard`. A validated failure can still charge the fee.
+
+Persist `AccountDeleteReceipt` in `OnPreparedAsync` before submission, just as
+for payments. Reconcile unresolved receipts with `GetAccountDeleteAsync` on the
+same endpoint after restart, before using that sender again. Credit
+`ReturnedAmountXrp` only after `Succeeded`. Ledger history and the account's keys
+are retained; the address can be funded again. See the
+[official deletion requirements](https://xrpl.org/docs/references/protocol/transactions/types/accountdelete).
 
 ## ASP.NET Web Forms
 

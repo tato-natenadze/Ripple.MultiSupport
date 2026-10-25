@@ -54,6 +54,8 @@
 
         public static readonly TransactionType SetFee = Add("SetFee", 101);
 
+        public static readonly TransactionType AccountDelete = Add("AccountDelete", 21);
+
         private TransactionType(string reference, int ordinal)
             : base(reference, ordinal)
         {

@@ -118,6 +118,16 @@ namespace Ripple.LibraryClasses.Signer
                     onError("A broker fee requires both `NFTokenBuyOffer` and `NFTokenSellOffer`");
                 }
             }
+
+            if (transactionType == TransactionType.AccountDelete)
+            {
+                if (obj.Has(Field.Account) && obj.Has(Field.Destination) && obj[Field.Account] != null &&
+                    obj[Field.Destination] != null && obj[Field.Account].ToString() == obj[Field.Destination].ToString())
+                    onError("`AccountDelete` requires a different destination account");
+                if (obj.Has(Field.Fee) && obj[Field.Fee] != null &&
+                    (!obj[Field.Fee].IsNative || obj[Field.Fee].DecimalValue() < 0))
+                    onError("`AccountDelete` requires a non-negative native XRP fee");
+            }
         }
 
         static TxFormat()
@@ -251,6 +261,11 @@ namespace Ripple.LibraryClasses.Signer
                     [Field.Balance] = Requirement.Optional,
                     [Field.Signature] = Requirement.Optional,
                     [Field.PublicKey] = Requirement.Optional
+                },
+                [TransactionType.AccountDelete] = new TxFormat
+                {
+                    [Field.Destination] = Requirement.Required,
+                    [Field.DestinationTag] = Requirement.Optional
                 }
             };
         }
