@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
@@ -16,7 +15,33 @@ namespace Ripple
 {
     public sealed partial class XrplClient
     {
-        private readonly ConcurrentDictionary<string, SemaphoreSlim> _accountGates = new ConcurrentDictionary<string, SemaphoreSlim>();
+        private readonly Dictionary<string, AccountGate> _accountGates = new Dictionary<string, AccountGate>(StringComparer.Ordinal);
+        private sealed class AccountGate
+        {
+            internal readonly SemaphoreSlim Semaphore = new SemaphoreSlim(1, 1);
+            internal int Users;
+        }
+
+        private AccountGate RentAccountGate(string account)
+        {
+            lock (_accountGates)
+            {
+                AccountGate gate;
+                if (!_accountGates.TryGetValue(account, out gate)) _accountGates.Add(account, gate = new AccountGate());
+                gate.Users++;
+                return gate;
+            }
+        }
+
+        private void ReturnAccountGate(string account, AccountGate gate)
+        {
+            lock (_accountGates)
+            {
+                if (--gate.Users != 0) return;
+                _accountGates.Remove(account);
+                gate.Semaphore.Dispose();
+            }
+        }
         // The receipt lock protects both levels. Keep sender lookup independent
         // of the number of other accounts being recovered.
         private readonly Dictionary<string, Dictionary<string, PaymentReceipt>> _pendingPayments =
@@ -51,12 +76,14 @@ namespace Ripple
             catch (Exception ex) when (ex is ArgumentException || ex is FormatException)
             { throw new ArgumentException("Invalid XRPL seed.", nameof(seed)); }
             if (sender == destination) throw new ArgumentException("A direct XRP payment requires different sender and destination.", nameof(payment));
-            var gate = _accountGates.GetOrAdd(sender, _ => new SemaphoreSlim(1, 1));
             using (var operation = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken, _lifetime.Token))
             {
-                await gate.WaitAsync(operation.Token).ConfigureAwait(false);
+                var gate = RentAccountGate(sender);
+                bool entered = false;
                 try
                 {
+                    await gate.Semaphore.WaitAsync(operation.Token).ConfigureAwait(false);
+                    entered = true;
                     PaymentReceipt previous;
                     await ResolvePendingPaymentsAsync(sender, operation.Token).ConfigureAwait(false);
                     var preflight = await ReadPaymentPreflightAsync(sender, destination, amount, tag, operation.Token, destinationTestNetwork).ConfigureAwait(false);
@@ -114,7 +141,11 @@ namespace Ripple
                     return result;
                     }
                 }
-                finally { gate.Release(); }
+                finally
+                {
+                    if (entered) gate.Semaphore.Release();
+                    ReturnAccountGate(sender, gate);
+                }
             }
         }
 

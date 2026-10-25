@@ -28,12 +28,14 @@ namespace Ripple
                 throw new ArgumentException("Memo exceeds 1000 UTF-8 bytes.", nameof(payment));
             if (senderAddress == destination)
                 throw new ArgumentException("A direct XRP payment requires different sender and destination.", nameof(payment));
-            var gate = _accountGates.GetOrAdd(senderAddress, _ => new SemaphoreSlim(1, 1));
             using (var operation = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken, _lifetime.Token))
             {
-                await gate.WaitAsync(operation.Token).ConfigureAwait(false);
+                var gate = RentAccountGate(senderAddress);
+                bool entered = false;
                 try
                 {
+                    await gate.Semaphore.WaitAsync(operation.Token).ConfigureAwait(false);
+                    entered = true;
                     await ResolvePendingPaymentsAsync(senderAddress, operation.Token).ConfigureAwait(false);
                     var state = await ReadPaymentPreflightAsync(senderAddress, destination, amount, tag, operation.Token, destinationTestNetwork).ConfigureAwait(false);
                     decimal debit = amount + state.Fee;
@@ -46,7 +48,11 @@ namespace Ripple
                         EstimatedMaximumAmountXrp = decimal.Floor(Math.Max(0m, state.Source.EstimatedSpendableXrp - state.Fee) * 1000000m) / 1000000m,
                         DestinationExists = state.Target.Exists, DestinationActivationReserveXrp = state.Ledger.BaseReserve };
                 }
-                finally { gate.Release(); }
+                finally
+                {
+                    if (entered) gate.Semaphore.Release();
+                    ReturnAccountGate(senderAddress, gate);
+                }
             }
         }
 
