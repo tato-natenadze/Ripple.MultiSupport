@@ -178,7 +178,7 @@ namespace Ripple.Tests
             using (var cancel = new CancellationTokenSource())
             {
                 var watch = client.WatchIncomingPaymentsAsync(TestTransactions.Destination, (p, ct) => Task.CompletedTask, cancellationToken: cancel.Token);
-                await firstRequest.Task;
+                await TestAwait.UntilAsync(firstRequest.Task);
                 Assert.AreEqual(1, requests);
                 cancel.CancelAfter(100); await Cancelled(watch);
                 Assert.AreEqual(1, requests);

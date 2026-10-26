@@ -163,6 +163,7 @@ namespace Ripple.Tests
         }
 
         [TestMethod]
+        [Timeout(15000)]
         public async Task RequestSnapshotIsStableWhileTheCallerChangesItsObject()
         {
             var entered = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
@@ -170,7 +171,7 @@ namespace Ripple.Tests
             var node = new AccountDeleteTests.Node(); int calls = 0, prepared = 0;
             node.Override = async (m, p, ct) => {
                 if (m == "server_info" && Interlocked.Increment(ref calls) == 1)
-                { entered.TrySetResult(true); await release.Task.ConfigureAwait(false); }
+                { entered.TrySetResult(true); await TestAwait.UntilAsync(release.Task).ConfigureAwait(false); }
                 return null;
             };
             var request = AccountDeleteTests.Request();
@@ -178,7 +179,7 @@ namespace Ripple.Tests
             using (var http = new HttpClient(new RpcHandler { Respond = node.Respond }))
             using (var client = new XrplClient(RpcHandler.Options(), http))
             {
-                var task = client.DeleteAccountAsync(TestTransactions.SecpSeed, request); await entered.Task;
+                var task = client.DeleteAccountAsync(TestTransactions.SecpSeed, request); await TestAwait.UntilAsync(entered.Task);
                 request.Destination = TestTransactions.Account; request.DestinationTag = 15; request.MaxFeeXrp = 0;
                 request.OnPreparedAsync = (r, ct) => throw new AssertFailedException("Mutated callback used");
                 release.TrySetResult(true);
@@ -189,17 +190,18 @@ namespace Ripple.Tests
         }
 
         [TestMethod]
+        [Timeout(15000)]
         public async Task CancellingAQuoteWaitingForDeletionDoesNotBreakTheSharedSenderGate()
         {
             var prepared = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
             var release = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
             var node = new AccountDeleteTests.Node(); var request = AccountDeleteTests.Request();
-            request.OnPreparedAsync = async (r, ct) => { prepared.TrySetResult(true); await release.Task.ConfigureAwait(false); };
+            request.OnPreparedAsync = async (r, ct) => { prepared.TrySetResult(true); await TestAwait.UntilAsync(release.Task).ConfigureAwait(false); };
             using (var http = new HttpClient(new RpcHandler { Respond = node.Respond }))
             using (var client = new XrplClient(RpcHandler.Options(), http))
             using (var cancel = new CancellationTokenSource())
             {
-                var deletion = client.DeleteAccountAsync(TestTransactions.SecpSeed, request); await prepared.Task;
+                var deletion = client.DeleteAccountAsync(TestTransactions.SecpSeed, request); await TestAwait.UntilAsync(prepared.Task);
                 var quote = client.GetAccountDeleteQuoteAsync(TestTransactions.Account, AccountDeleteTests.Request(), cancel.Token);
                 cancel.Cancel();
                 try { await quote; Assert.Fail("Cancelled waiting quote must not continue."); }

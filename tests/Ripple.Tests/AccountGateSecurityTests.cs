@@ -64,6 +64,7 @@ namespace Ripple.Tests
         }
 
         [TestMethod]
+        [Timeout(15000)]
         public async Task CancellingAWaiterCannotUnlockAnotherQuoteForTheSameSender()
         {
             var entered = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
@@ -71,7 +72,7 @@ namespace Ripple.Tests
             var server = new PaymentTests.Server(); int reads = 0;
             var handler = new RpcHandler { Respond = async (method, args, token) => {
                 if (method == "server_info" && Interlocked.Increment(ref reads) == 1)
-                { entered.SetResult(true); await release.Task.ConfigureAwait(false); }
+                { entered.SetResult(true); await TestAwait.UntilAsync(release.Task).ConfigureAwait(false); }
                 return await server.Respond(method, args, token).ConfigureAwait(false);
             } };
             using (var http = new HttpClient(handler))
@@ -81,7 +82,7 @@ namespace Ripple.Tests
             {
                 var payment = new XrpPaymentRequest { Destination = TestTransactions.Destination, AmountXrp = 1 };
                 var first = client.GetPaymentQuoteAsync(TestTransactions.Account, payment, deadline.Token);
-                await entered.Task;
+                await TestAwait.UntilAsync(entered.Task);
                 var second = client.GetPaymentQuoteAsync(TestTransactions.Account, payment, waiting.Token);
                 waiting.Cancel();
                 try { await second; Assert.Fail("The waiting quote was not cancelled."); } catch (OperationCanceledException) { }

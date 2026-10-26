@@ -81,6 +81,7 @@ namespace Ripple.Tests
         }
 
         [TestMethod]
+        [Timeout(15000)]
         public async Task ConcurrentOldFinalLookupCannotRemoveANewerPendingPayment()
         {
             var server = new PaymentTests.Server();
@@ -94,11 +95,11 @@ namespace Ripple.Tests
                 var release = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
                 handler.Respond = async (m, p, ct) => {
                     if (m == "tx" && (string)p["transaction"] == first.Receipt.Hash)
-                    { entered.TrySetResult(true); await release.Task.ConfigureAwait(false); return (JObject)final.DeepClone(); }
+                    { entered.TrySetResult(true); await TestAwait.UntilAsync(release.Task).ConfigureAwait(false); return (JObject)final.DeepClone(); }
                     return await server.Respond(m, p, ct).ConfigureAwait(false);
                 };
                 var lookup = client.GetTransactionAsync(first.Receipt);
-                await entered.Task;
+                await TestAwait.UntilAsync(entered.Task);
                 server.LoseSubmitResponse = true; server.NeverFind = true;
                 var second = await client.SendXrpAsync(TestTransactions.SecpSeed, Payment());
                 release.TrySetResult(true); await lookup;
@@ -124,6 +125,7 @@ namespace Ripple.Tests
         }
 
         [TestMethod]
+        [Timeout(15000)]
         public async Task ConcurrentStaleUnknownLookupCannotRestoreAFinalizedReceipt()
         {
             var server = new PaymentTests.Server();
@@ -140,13 +142,13 @@ namespace Ripple.Tests
                     if (m == "tx" && (string)p["transaction"] == first.Receipt.Hash)
                     {
                         int lookup = ++lookups;
-                        if (lookup == 1) { entered.TrySetResult(true); await release.Task.ConfigureAwait(false); return JObject.Parse("{'error':'txnNotFound','searched_all':false}"); }
+                        if (lookup == 1) { entered.TrySetResult(true); await TestAwait.UntilAsync(release.Task).ConfigureAwait(false); return JObject.Parse("{'error':'txnNotFound','searched_all':false}"); }
                         if (lookup == 2) return (JObject)final.DeepClone();
                         throw new HttpRequestException("old history unavailable");
                     }
                     return await server.Respond(m, p, ct).ConfigureAwait(false);
                 };
-                var stale = client.GetTransactionAsync(first.Receipt); await entered.Task;
+                var stale = client.GetTransactionAsync(first.Receipt); await TestAwait.UntilAsync(entered.Task);
                 Assert.AreEqual(TransactionStatus.Succeeded, (await client.GetTransactionAsync(first.Receipt)).Status);
                 release.TrySetResult(true); Assert.AreEqual(TransactionStatus.Unknown, (await stale).Status);
                 Assert.AreEqual(TransactionStatus.Succeeded, (await client.SendXrpAsync(TestTransactions.SecpSeed, Payment())).Status);

@@ -1,5 +1,4 @@
 using System;
-using System.Diagnostics;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -11,13 +10,14 @@ namespace Ripple.Tests
     public class AddressValidationTests
     {
         [TestMethod]
+        [Timeout(10000)]
         public void OversizedBase58InputIsRejectedPromptly()
         {
             Assert.IsTrue(RippleClient.ValidateAddress(TestTransactions.Account));
-            string oversized = "r" + new string('p', 29999);
-            var timer = Stopwatch.StartNew(); bool valid = RippleClient.ValidateAddress(oversized); timer.Stop();
-            Assert.IsFalse(valid);
-            Assert.IsTrue(timer.Elapsed < TimeSpan.FromMilliseconds(500), "Impossible address length must be rejected before quadratic Base58 decoding.");
+            // A large valid-alphabet payload exposes accidental Base58 decoding.
+            // The test deadline bounds a regression without measuring JIT/scheduling jitter.
+            string oversized = "r" + new string('p', 999999);
+            Assert.IsFalse(RippleClient.ValidateAddress(oversized));
         }
 
         [DataTestMethod]

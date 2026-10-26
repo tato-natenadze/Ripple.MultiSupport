@@ -170,13 +170,14 @@ namespace Ripple.Tests
         }
 
         [TestMethod]
+        [Timeout(15000)]
         public async Task QuoteSnapshotsCallerInputBeforeAwaiting()
         {
             var server = new PaymentTests.Server();
             var entered = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
             var release = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
             var handler = new RpcHandler { Respond = async (method, args, token) => {
-                if (method == "server_info") { entered.TrySetResult(true); await release.Task; }
+                if (method == "server_info") { entered.TrySetResult(true); await TestAwait.UntilAsync(release.Task); }
                 return await server.Respond(method, args, token);
             } };
             using (var http = new HttpClient(handler))
@@ -184,7 +185,7 @@ namespace Ripple.Tests
             {
                 var request = new XrpPaymentRequest { Destination = TestTransactions.Destination, AmountXrp = 1m, DestinationTag = 0 };
                 var pending = client.GetPaymentQuoteAsync(TestTransactions.Account, request);
-                await entered.Task;
+                await TestAwait.UntilAsync(entered.Task);
                 request.AmountXrp = 99m; request.Destination = TestTransactions.Account; request.DestinationTag = 77;
                 release.SetResult(true);
                 var quote = await pending;

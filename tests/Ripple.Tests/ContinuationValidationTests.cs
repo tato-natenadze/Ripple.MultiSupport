@@ -148,12 +148,13 @@ namespace Ripple.Tests
         }
 
         [TestMethod]
+        [Timeout(15000)]
         public async Task MutableRequestIsSnapshottedBeforeTheFirstAwait()
         {
             var entered = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
             var release = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
             var handler = new RpcHandler { Respond = async (m, p, ct) => {
-                if (m == "server_info") { entered.TrySetResult(true); await release.Task.ConfigureAwait(false); return RpcHandler.Ledger(); }
+                if (m == "server_info") { entered.TrySetResult(true); await TestAwait.UntilAsync(release.Task).ConfigureAwait(false); return RpcHandler.Ledger(); }
                 Assert.AreEqual(1, (int)p["limit"]); Assert.AreEqual(-1L, (long)p["ledger_index_min"]); Assert.AreEqual(100u, (uint)p["ledger_index_max"]);
                 return RpcHandler.History(TestTransactions.Account, 90, 100);
             } };
@@ -161,7 +162,7 @@ namespace Ripple.Tests
             using (var client = new XrplClient(RpcHandler.Options(), http))
             {
                 var request = new PaymentHistoryRequest { Limit = 1 };
-                var pending = client.GetPaymentsAsync(TestTransactions.Account, request); await entered.Task;
+                var pending = client.GetPaymentsAsync(TestTransactions.Account, request); await TestAwait.UntilAsync(entered.Task);
                 request.Limit = 401; request.FromLedger = 99; request.ToLedger = 999; request.ContinuationToken = "%%%";
                 release.TrySetResult(true); await pending;
             }

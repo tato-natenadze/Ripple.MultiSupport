@@ -123,14 +123,14 @@ namespace Ripple.Tests
                     if (m == "tx" && (string)p["transaction"] == first.Receipt.Hash)
                     {
                         if (Interlocked.Increment(ref oldQueries) == 1)
-                        { entered.TrySetResult(true); await release.Task.ConfigureAwait(false); return Missing(); }
+                        { entered.TrySetResult(true); await TestAwait.UntilAsync(release.Task).ConfigureAwait(false); return Missing(); }
                         return (JObject)final.DeepClone();
                     }
                     if (m == "tx" && (string)p["transaction"] == other.Hash) return Missing();
                     return await server.Respond(m, p, ct).ConfigureAwait(false);
                 };
                 var sending = client.SendXrpAsync(TestTransactions.SecpSeed, Payment());
-                await entered.Task;
+                await TestAwait.UntilAsync(entered.Task);
                 Assert.AreEqual(TransactionStatus.Succeeded, (await client.GetTransactionAsync(first.Receipt)).Status);
                 if (otherUnresolved) await client.GetTransactionAsync(other);
                 release.TrySetResult(true);

@@ -55,6 +55,7 @@ namespace Ripple.Tests
         }
 
         [TestMethod]
+        [Timeout(15000)]
         public async Task ConcurrentRecoveryRetainsBothUnresolvedHashes()
         {
             var a = Receipt(104); var b = Receipt(108, "2000000");
@@ -69,7 +70,7 @@ namespace Ripple.Tests
                     if (recovering)
                     {
                         if (Interlocked.Increment(ref readers) == 2) entered.TrySetResult(true);
-                        await ((string)p["transaction"] == a.Hash ? releaseA.Task : releaseB.Task).ConfigureAwait(false);
+                        await TestAwait.UntilAsync((string)p["transaction"] == a.Hash ? releaseA.Task : releaseB.Task).ConfigureAwait(false);
                         return Missing(false);
                     }
                     return Missing((string)p["transaction"] == a.Hash);
@@ -80,7 +81,7 @@ namespace Ripple.Tests
             using (var client = new XrplClient(RpcHandler.Options(), http))
             {
                 var first = client.GetTransactionAsync(a); var second = client.GetTransactionAsync(b);
-                await entered.Task; releaseA.TrySetResult(true); await first; releaseB.TrySetResult(true);
+                await TestAwait.UntilAsync(entered.Task); releaseA.TrySetResult(true); await first; releaseB.TrySetResult(true);
                 var recovered = await Task.WhenAll(first, second);
                 Assert.AreEqual(TransactionStatus.Unknown, recovered[0].Status);
                 Assert.AreEqual(TransactionStatus.Unknown, recovered[1].Status);

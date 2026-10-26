@@ -1,5 +1,4 @@
 using System;
-using System.Diagnostics;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Ripple.LibraryClasses.CreateAddress;
@@ -12,25 +11,21 @@ namespace Ripple.Tests
     public class Base58SecurityTests
     {
         [TestMethod]
-        [Timeout(30000)]
+        [Timeout(10000)]
         public void OversizedSeedsAreRejectedBeforeQuadraticDecoding()
         {
-            string input = "s" + new string('p', 29999);
-            var timer = Stopwatch.StartNew();
+            // Keep the abuse case large; use the test deadline instead of a microbenchmark.
+            string input = "s" + new string('p', 999999);
             Assert.ThrowsException<ArgumentException>(() => Seed.FromBase58(input));
-            timer.Stop();
-            Assert.IsTrue(timer.Elapsed < TimeSpan.FromMilliseconds(500), "Impossible seed length must be rejected before Base58 conversion.");
         }
 
         [TestMethod]
+        [Timeout(10000)]
         public void OversizedSingleVersionInputIsRejectedPromptly()
         {
             var codec = new B58(AddressCodec.Alphabet);
-            string input = new string('p', 30000);
-            var timer = Stopwatch.StartNew();
+            string input = new string('p', 1000000);
             Assert.ThrowsException<ArgumentException>(() => codec.Decode(input, B58.Version.With(28, 33)));
-            timer.Stop();
-            Assert.IsTrue(timer.Elapsed < TimeSpan.FromMilliseconds(500));
         }
 
         [TestMethod]

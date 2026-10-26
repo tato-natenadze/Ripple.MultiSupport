@@ -169,6 +169,7 @@ namespace Ripple.Tests
         }
 
         [TestMethod]
+        [Timeout(15000)]
         public async Task ClientDisposalCancelsAnIdleWatchAndPreventsDuplicateWatch()
         {
             var ready = new TaskCompletionSource<bool>();
@@ -180,7 +181,7 @@ namespace Ripple.Tests
                     ready.TrySetResult(true); await Task.Delay(10000, ct); return "{}";
                 } };
                 var watch = client.WatchIncomingPaymentsAsync(TestTransactions.Destination, (p, ct) => Task.CompletedTask);
-                await ready.Task;
+                await TestAwait.UntilAsync(ready.Task);
                 await Assert.ThrowsExceptionAsync<InvalidOperationException>(() => client.WatchIncomingPaymentsAsync(TestTransactions.Destination, (p, ct) => Task.CompletedTask));
                 client.Dispose(); await Cancelled(watch);
             }
