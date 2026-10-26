@@ -6,6 +6,7 @@ Targets **.NET Standard 2.0** (including ASP.NET Web Forms on .NET Framework 4.7
 and **.NET 8**.
 
 [NuGet](https://www.nuget.org/packages/Ripple.MultiSupport) ·
+[Web Forms sample](https://github.com/tato-natenadze/Ripple.WebForms.Sample) ·
 [XRPL documentation](https://xrpl.org/docs)
 
 ## Installation
