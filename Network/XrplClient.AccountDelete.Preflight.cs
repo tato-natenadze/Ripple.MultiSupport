@@ -83,9 +83,10 @@ namespace Ripple
             if (RequiredUInt(currentData, "Sequence") != source.Sequence || queued != 0)
                 reasons.Add("The account has pending or external transactions. Wait for validation before deletion.");
             uint observed = Math.Max(ledger.Index, ResponseUInt(current["ledger_current_index"], "ledger_current_index") ?? ledger.Index);
-            // Use the documented strict bound: Sequence + 256 < current ledger.
+            // rippled AccountDelete::preclaim: account/NFT sequence + 255 <= current ledger.
+            // https://github.com/XRPLF/rippled/blob/release/3.4.x/src/libxrpl/tx/transactors/account/AccountDelete.cpp
             // UInt64 arithmetic prevents either sequence bound from wrapping.
-            ulong earliest = Math.Max((ulong)source.Sequence + 257UL, (ulong)firstNft + minted + 257UL);
+            ulong earliest = Math.Max((ulong)source.Sequence + 255UL, (ulong)firstNft + minted + 255UL);
             ulong remaining = earliest > observed ? earliest - observed : 0;
             if (remaining != 0) reasons.Add("The account/NFT sequence is too recent for AccountDelete. Wait " + remaining + " more ledger(s).");
             if (earliest > uint.MaxValue || (ulong)observed + _options.LastLedgerOffset > uint.MaxValue)
