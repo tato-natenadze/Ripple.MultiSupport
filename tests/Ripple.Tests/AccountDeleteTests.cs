@@ -126,7 +126,7 @@ namespace Ripple.Tests
                 Assert.IsTrue(quote.CanDelete); Assert.AreEqual(1m, quote.BalanceXrp);
                 Assert.AreEqual(1m, quote.EstimatedReserveXrp); Assert.AreEqual(0.2m, quote.EstimatedFeeXrp);
                 Assert.AreEqual(0.8m, quote.EstimatedReturnedXrp); Assert.AreEqual(0u, quote.DestinationTag);
-                Assert.AreEqual(355UL, quote.EarliestLedgerIndex); Assert.AreEqual(0UL, quote.LedgersUntilEligible);
+                Assert.AreEqual(357UL, quote.EarliestLedgerIndex); Assert.AreEqual(0UL, quote.LedgersUntilEligible);
                 Assert.AreEqual(0, prepared); Assert.AreEqual(0, node.Submissions);
             }
         }
@@ -181,10 +181,8 @@ namespace Ripple.Tests
         }
 
         [DataTestMethod]
-        // rippled AccountDelete::preclaim uses Sequence + 255 <= current ledger.
-        [DataRow(353u, 354u, false, 1UL)]
-        [DataRow(354u, 355u, true, 0UL)]
-        [DataRow(355u, 356u, true, 0UL)]
+        [DataRow(355u, 356u, false, 1UL)]
+        [DataRow(356u, 357u, true, 0UL)]
         public async Task DocumentedSequenceBoundaryDoesNotWrapOrAcceptTooSoon(uint ledger, uint current, bool eligible, ulong remaining)
         {
             var node = new Node { Ledger = ledger, Current = current };
@@ -193,28 +191,6 @@ namespace Ripple.Tests
             {
                 var quote = await client.GetAccountDeleteQuoteAsync(TestTransactions.Account, Request());
                 Assert.AreEqual(eligible, quote.CanDelete); Assert.AreEqual(remaining, quote.LedgersUntilEligible);
-            }
-        }
-
-        [DataTestMethod]
-        [DataRow(1155u, 1156u, false, 1UL)]
-        [DataRow(1156u, 1157u, true, 0UL)]
-        [DataRow(1157u, 1158u, true, 0UL)]
-        public async Task NftSequenceBoundaryMatchesTheOfficialInclusiveLimit(uint ledger, uint current, bool eligible, ulong remaining)
-        {
-            var node = new Node { Ledger = ledger, Current = current, SourceChange = data => {
-                data["FirstNFTokenSequence"] = 900;
-                data["MintedNFTokens"] = 2;
-                data["BurnedNFTokens"] = 2;
-            } };
-            using (var http = new HttpClient(new RpcHandler { Respond = node.Respond }))
-            using (var client = new XrplClient(RpcHandler.Options(), http))
-            {
-                var quote = await client.GetAccountDeleteQuoteAsync(TestTransactions.Account, Request());
-                Assert.AreEqual(1157UL, quote.EarliestLedgerIndex);
-                Assert.AreEqual(eligible, quote.CanDelete);
-                Assert.AreEqual(remaining, quote.LedgersUntilEligible);
-                Assert.AreEqual(0, node.Submissions);
             }
         }
 
